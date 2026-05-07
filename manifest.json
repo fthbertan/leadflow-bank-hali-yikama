@@ -1,0 +1,20 @@
+{
+  "name": "Bank Halı Yıkama",
+  "short_name": "Halı Yıkama",
+  "description": "Sincan, Ankara'da profesyonel halı yıkama hizmetleri. Bank Halı Yıkama ile hijyenik, derinlemesine ve çevre dostu halı temizliği. Ücretsiz servis, müşteri memnuniyeti.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF9F6",
+  "theme_color": "#5B2C87",
+  "orientation": "portrait-primary",
+  "lang": "tr",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "lifestyle"]
+}

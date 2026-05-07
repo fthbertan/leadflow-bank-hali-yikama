@@ -1,0 +1,46 @@
+{
+  "services": [
+    {
+      "icon": "dry_cleaning",
+      "name": "Makine Halısı Yıkama",
+      "desc": "Modern ekipmanlarla derinlemesine ve hijyenik temizlik sağlıyoruz, halınızın dokusuna zarar vermeden parlaklığını geri getiriyoruz.",
+      "price": "₺30/m²'den",
+      "image": ""
+    },
+    {
+      "icon": "weekend",
+      "name": "El Dokuma & Yün Halı Yıkama",
+      "desc": "Değerli el dokuma ve yün halılarınıza özel, hassas ve doğal yöntemlerle, renklerini koruyarak yıkama hizmeti sunuyoruz.",
+      "price": "₺50/m²'den",
+      "image": ""
+    },
+    {
+      "icon": "bed",
+      "name": "Koltuk Takımı Yıkama",
+      "desc": "Koltuklarınızdaki derinlemesine kir, leke ve kötü kokuları profesyonelce temizleyerek yaşam alanlarınıza ferahlık katıyoruz.",
+      "price": "₺450/takım'dan",
+      "image": ""
+    },
+    {
+      "icon": "auto_awesome",
+      "name": "Yorgan & Battaniye Yıkama",
+      "desc": "Yorgan ve battaniyelerinizi hijyenik koşullarda, anti-alerjik ürünlerle yıkayıp, tam kurutma sonrası paketliyoruz.",
+      "price": "₺180/adet'ten",
+      "image": ""
+    },
+    {
+      "icon": "cleaning_services",
+      "name": "Özel Leke Çıkarma",
+      "desc": "Zorlu ve inatçı lekelere özel olarak geliştirdiğimiz formüller ve tekniklerle etkili çözümler sunuyoruz.",
+      "price": "Keşif Üzerine",
+      "image": ""
+    },
+    {
+      "icon": "local_shipping",
+      "name": "Ücretsiz Servis",
+      "desc": "Sincan ve çevresindeki tüm müşterilerimizden halılarınızı kapınızdan alıp, temizlenmiş olarak kapınıza teslim ediyoruz.",
+      "price": "Ücretsiz",
+      "image": ""
+    }
+  ]
+}

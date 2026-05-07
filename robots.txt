@@ -1,0 +1,12 @@
+# Bank Halı Yıkama — robots.txt
+User-agent: *
+Allow: /
+
+# Admin ve API erisimine izin verme
+Disallow: /api/
+Disallow: /admin/
+Disallow: /panel-*/
+Disallow: /data/
+
+# Sitemap
+Sitemap: https://bank-hali-yikama.com/sitemap.xml

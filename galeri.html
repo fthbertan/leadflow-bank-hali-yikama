@@ -1,0 +1,168 @@
+<?php $rootPath = __DIR__; ?>
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="tr">
+<head>
+<?php include $rootPath . '/includes/head-common.php'; ?>
+<title>Galeri | Bank Halı Yıkama</title>
+<meta name="description" content="Bank Halı Yıkama galeri - Profesyonel hizmetlerimizden kareler ve çalışmalarımız"/>
+<meta property="og:title" content="Galeri | Bank Halı Yıkama"/>
+<meta property="og:description" content="Bank Halı Yıkama galeri - Profesyonel hizmetlerimizden kareler"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://bank-hali-yikama.com/galeri.html"/>
+<meta property="og:image" content="https://bank-hali-yikama.com/images/heroweb-1.webp"/>
+<meta property="og:locale" content="tr_TR"/>
+<meta property="og:site_name" content="Bank Halı Yıkama"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Galeri | Bank Halı Yıkama"/>
+<meta name="twitter:description" content="Bank Halı Yıkama galeri - Profesyonel hizmetlerimizden kareler"/>
+<meta name="twitter:image" content="https://bank-hali-yikama.com/images/heroweb-1.webp"/>
+<link rel="canonical" href="https://bank-hali-yikama.com/galeri.html"/>
+<link rel="alternate" hreflang="tr" href="https://bank-hali-yikama.com/galeri.html"/>
+<link rel="alternate" hreflang="x-default" href="https://bank-hali-yikama.com/galeri.html"/>
+<link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+<style>
+:focus-visible { outline: 2px solid var(--lf-primary); outline-offset: 2px; border-radius: 4px; }
+    .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0; }
+    .text-gradient-gold { background: linear-gradient(135deg, var(--lf-primary), var(--lf-primary-light), var(--lf-primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+/* Lightbox */
+    #lightbox { display:none; }
+    #lightbox.active { display:flex; }
+    #lightbox img { max-height:85vh; max-width:90vw; object-fit:contain; border-radius:12px; box-shadow:0 25px 50px rgba(0,0,0,0.5); }
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ana Sayfa","item":"https://bank-hali-yikama.com/"},{"@type":"ListItem","position":2,"name":"Galeri"}]}
+</script>
+</head>
+<body class="bg-surface font-body text-on-surface selection:bg-primary/30 selection:text-on-primary" style="overflow-x:clip">
+
+<?php $pageType = 'sub'; include $rootPath . '/includes/navbar.php'; ?>
+
+<!-- Breadcrumb -->
+<div class="bg-surface-container-low border-b border-outline-variant/10 py-3 px-4 sm:px-6 lg:px-10">
+    <div class="max-w-7xl mx-auto flex items-center gap-2 text-xs text-on-surface-variant">
+        <a href="/" class="hover:text-primary transition-colors">Ana Sayfa</a>
+        <svg class="text-xs" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        <span class="text-primary font-semibold">Galeri</span>
+    </div>
+</div>
+
+<!-- Page Header -->
+<section class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-surface">
+    <div class="max-w-7xl mx-auto text-center">
+        <span class="text-primary font-label text-xs uppercase tracking-[0.2em] font-semibold block mb-4">Çalışmalarımız</span>
+        <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl text-on-background tracking-wide mb-4">Galeri</h1>
+        <p class="text-on-surface-variant text-lg max-w-2xl mx-auto">Profesyonel hizmetlerimizden kareler. Öncesi-sonrası fotoğraflar ve müşteri memnuniyeti.</p>
+        <div class="mt-6 text-sm text-on-surface-variant" id="galleryCount"></div>
+    </div>
+</section>
+
+<!-- Gallery Grid -->
+<section class="pb-20 sm:pb-32 px-4 sm:px-6 lg:px-8 bg-surface">
+    <div class="max-w-7xl mx-auto">
+        <div id="fullGalleryGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+            <!-- JS ile doldurulacak -->
+        </div>
+        <div id="galleryLoading" class="text-center py-12">
+            <svg class="text-primary animate-spin text-4xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
+            <p class="text-on-surface-variant text-sm mt-2">Görseller yükleniyor...</p>
+        </div>
+        <div id="galleryEmpty" class="text-center py-16 hidden">
+            <svg class="text-on-surface-variant/20" style="width:80px;height:80px;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z</svg>
+            <p class="text-on-surface-variant mt-4">Henüz galeri görseli eklenmemiş.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Lightbox -->
+<div id="lightbox" class="fixed inset-0 z-[300] items-center justify-center bg-black/90 backdrop-blur-sm" onclick="closeLightbox(event)">
+    <button onclick="closeLightbox(event)" class="absolute top-4 right-4 text-white/70 hover:text-white z-10 p-2">
+        <svg class="text-3xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    </button>
+    <button id="lbPrev" onclick="navigateLightbox(-1, event)" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white z-10 p-2">
+        <svg class="text-3xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+    <button id="lbNext" onclick="navigateLightbox(1, event)" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white z-10 p-2">
+        <svg class="text-3xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    </button>
+    <div class="text-center">
+        <img id="lbImage" src="" alt="" class="inline-block"/>
+        <p id="lbCaption" class="text-white/80 text-sm mt-4 font-medium"></p>
+        <p id="lbCounter" class="text-white/40 text-xs mt-1"></p>
+    </div>
+</div>
+
+<?php include $rootPath . '/includes/footer.php'; ?>
+
+<script>
+(function(){
+    var allImages = [];
+    var currentLbIndex = 0;
+
+    function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+    fetch('/api/gallery.php').then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+        document.getElementById('galleryLoading').style.display = 'none';
+        if(!d || !d.images){ document.getElementById('galleryEmpty').classList.remove('hidden'); return; }
+        var galleryImgs = d.images.filter(function(img){ return img.category === 'gallery'; });
+        if(!galleryImgs.length){ document.getElementById('galleryEmpty').classList.remove('hidden'); return; }
+
+        allImages = galleryImgs;
+        document.getElementById('galleryCount').textContent = galleryImgs.length + ' görsel';
+
+        var grid = document.getElementById('fullGalleryGrid');
+        var html = '';
+        galleryImgs.forEach(function(img, i){
+            var alt = img.alt_text || 'Galeri';
+            html += '<div class="aspect-square sm:aspect-[4/3] rounded-2xl overflow-hidden relative group cursor-pointer" onclick="openLightbox(' + i + ')">' +
+                '<img src="/' + img.filename + '" alt="' + esc(alt) + '" title="' + esc(alt) + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.parentElement.style.display=\'none\'">' +
+                '<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 sm:block hidden"><span class="text-white text-sm font-medium">' + esc(alt) + '</span></div>' +
+                '<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3 sm:hidden"><span class="text-white text-xs font-medium">' + esc(alt) + '</span></div>' +
+                '</div>';
+        });
+        grid.innerHTML = html;
+    }).catch(function(){
+        document.getElementById('galleryLoading').style.display = 'none';
+        document.getElementById('galleryEmpty').classList.remove('hidden');
+    });
+
+    window.openLightbox = function(index){
+        if(!allImages[index]) return;
+        currentLbIndex = index;
+        var img = allImages[index];
+        document.getElementById('lbImage').src = '/' + img.filename;
+        document.getElementById('lbImage').alt = img.alt_text || 'Galeri';
+        document.getElementById('lbCaption').textContent = img.alt_text || '';
+        document.getElementById('lbCounter').textContent = (index + 1) + ' / ' + allImages.length;
+        document.getElementById('lightbox').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    };
+
+    window.closeLightbox = function(e){
+        if(e && e.target !== e.currentTarget && !e.currentTarget.querySelector('span')) return;
+        e && e.stopPropagation();
+        document.getElementById('lightbox').classList.remove('active');
+        document.body.style.overflow = '';
+    };
+
+    window.navigateLightbox = function(dir, e){
+        e && e.stopPropagation();
+        var next = currentLbIndex + dir;
+        if(next < 0) next = allImages.length - 1;
+        if(next >= allImages.length) next = 0;
+        window.openLightbox(next);
+    };
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e){
+        if(!document.getElementById('lightbox').classList.contains('active')) return;
+        if(e.key === 'Escape') window.closeLightbox(e);
+        if(e.key === 'ArrowLeft') window.navigateLightbox(-1, e);
+        if(e.key === 'ArrowRight') window.navigateLightbox(1, e);
+    });
+})();
+</script>
+
+<?php include $rootPath . '/includes/floating-buttons.php'; ?>
+</body>
+</html>

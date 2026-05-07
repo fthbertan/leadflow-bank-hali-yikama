@@ -1,0 +1,19 @@
+{
+  "testimonials": [
+    {
+      "name": "Ayşe Yılmaz",
+      "text": "Bank Halı Yıkama ile çalıştığımdan beri halılarım hep pırıl pırıl. Gelen servis elemanları da çok güler yüzlü ve işlerini titizlikle yapıyorlar. Herkese tavsiye ederim.",
+      "role": "3 yıldır müşterimiz"
+    },
+    {
+      "name": "Mehmet Can",
+      "text": "Daha önce farklı yerlerle çalışmıştım ama Bank Halı Yıkama'nın temizlik kalitesi gerçekten bambaşka. Özellikle zorlu lekeleri bile harika çıkardılar. Sincan'daki en iyi adres!",
+      "role": "2 yıldır müşterimiz"
+    },
+    {
+      "name": "Zeynep Demir",
+      "text": "Yorumlara bakarak Bank Halı Yıkama'yı tercih ettim ve hiç pişman olmadım. Hem hızlı hem de çok kaliteli bir hizmet sundular. Halılarım resmen ilk günkü gibi oldu. Teşekkürler!",
+      "role": "1 yıldır müşterimiz"
+    }
+  ]
+}

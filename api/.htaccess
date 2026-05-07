@@ -1,0 +1,32 @@
+# LeadFlow — API klasörü güvenlik kuralları
+
+# Dizin listelemeyi kapat
+Options -Indexes
+
+# config.php'ye doğrudan erişimi engelle
+<Files "config.php">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</Files>
+
+# schema.sql'e doğrudan erişimi engelle
+<Files "schema.sql">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</Files>
+
+# sector_seed.php'ye doğrudan erişimi engelle
+<Files "sector_seed.php">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</Files>
+
+# Kilit dosyalarını ve rate limit dosyasını koru
+<FilesMatch "^\.(install_completed|import_completed|rate_limit\.json)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>

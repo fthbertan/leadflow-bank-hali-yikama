@@ -1,0 +1,2373 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data: blob:;"/>
+<meta http-equiv="X-Content-Type-Options" content="nosniff"/>
+<meta http-equiv="X-Frame-Options" content="DENY"/>
+<meta name="referrer" content="no-referrer"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Admin Panel</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>document.fonts&&document.fonts.ready.then(function(){document.documentElement.classList.add("fonts-loaded")})</script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; font-size: 0 !important; overflow: hidden; }
+    .fonts-loaded .material-symbols-outlined { font-size: inherit !important; overflow: visible; }
+    .sidebar-link.active { background: rgba(91,44,135,0.1); color: #5B2C87; border-right: 3px solid #5B2C87; }
+    .toast { animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s; }
+    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+    /* Editor toolbar */
+    .editor-btn { transition: all 0.15s; }
+    .editor-btn:hover { background: #F5F0FF; }
+    .editor-btn.active { background: #5B2C87; color: #FFFFFF; }
+    #blogContent { min-height: 400px; outline: none; line-height: 1.8; }
+    #blogContent h2 { font-size: 1.5rem; font-weight: 700; margin: 1.5rem 0 0.75rem; color: #1A1A2E; }
+    #blogContent h3 { font-size: 1.25rem; font-weight: 600; margin: 1.25rem 0 0.5rem; color: #2D3748; }
+    #blogContent p { margin-bottom: 0.75rem; }
+    #blogContent ul, #blogContent ol { padding-left: 1.5rem; margin-bottom: 0.75rem; }
+    #blogContent ul { list-style: disc; }
+    #blogContent ol { list-style: decimal; }
+    #blogContent blockquote { border-left: 3px solid #E0457B; padding: 0.5rem 1rem; margin: 1rem 0; background: rgba(224,69,123,0.05); }
+    #blogContent a { color: #5B2C87; text-decoration: underline; }
+</style>
+<script>
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                "panel-bg": "#FAF9F6",
+                "panel-surface": "#FFFFFF",
+                "panel-border": "#D8DDE3",
+                "panel-text": "#1A1A2E",
+                "panel-muted": "#5A6674",
+                "accent": "#5B2C87",
+                "accent-dim": "#8E5CC0",
+                "success": "#22c55e",
+                "danger": "#ef4444",
+                "warning": "#f59e0b"
+            }
+        }
+    }
+}
+</script>
+</head>
+<body class="bg-panel-bg text-panel-text">
+
+<!-- ═══════════════════ LOGIN SCREEN ═══════════════════ -->
+<div id="loginScreen" class="min-h-screen flex items-center justify-center px-4">
+    <div class="w-full max-w-sm">
+        <div class="text-center mb-8">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-accent-dim flex items-center justify-center mx-auto mb-4">
+                <span class="material-symbols-outlined text-3xl text-white" style="font-variation-settings:'FILL' 1">admin_panel_settings</span>
+            </div>
+            <h1 class="text-2xl font-bold">Yönetim Paneli</h1>
+            <p class="text-panel-muted text-sm mt-2">Devam etmek için giriş yapın</p>
+        </div>
+        <form id="loginForm" class="space-y-4">
+            <div>
+                <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">E-posta</label>
+                <input id="loginEmail" type="email" class="w-full bg-panel-surface border border-panel-border rounded-xl px-4 py-3 text-panel-text focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all" placeholder="admin@sirket.com" autocomplete="email"/>
+            </div>
+            <div>
+                <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Kullanıcı Adı</label>
+                <input id="loginUser" type="text" class="w-full bg-panel-surface border border-panel-border rounded-xl px-4 py-3 text-panel-text focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all" placeholder="Kullanıcı adı" autocomplete="username"/>
+            </div>
+            <div>
+                <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Şifre</label>
+                <input id="loginPass" type="password" class="w-full bg-panel-surface border border-panel-border rounded-xl px-4 py-3 text-panel-text focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all" placeholder="Parola" autocomplete="current-password"/>
+            </div>
+            <div id="loginError" class="hidden text-danger text-sm text-center py-2"></div>
+            <button type="submit" class="w-full bg-gradient-to-r from-accent-dim to-accent text-white font-bold py-3 rounded-xl hover:opacity-90 transition-opacity">
+                Giriş Yap
+            </button>
+        </form>
+        <div id="loginLocked" class="hidden text-center mt-4 text-warning text-sm">
+            <span class="material-symbols-outlined text-sm align-middle">lock</span>
+            Çok fazla deneme. <span id="lockTimer">30</span> saniye bekleyin.
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════ ADMIN PANEL ═══════════════════ -->
+<div id="adminPanel" class="hidden min-h-screen flex">
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-64 bg-panel-surface border-r border-panel-border flex flex-col fixed h-full z-40 transition-transform duration-300 lg:translate-x-0 -translate-x-full">
+        <div class="p-6 border-b border-panel-border">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-accent-dim flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white" style="font-variation-settings:'FILL' 1">dashboard</span>
+                </div>
+                <div>
+                    <div class="font-bold text-sm" id="sidebarBizName">Admin Panel</div>
+                    <div class="text-xs text-panel-muted">Yönetim</div>
+                </div>
+            </div>
+        </div>
+        <nav class="flex-1 py-4">
+            <a href="#" onclick="showPage('dashboard')" class="sidebar-link active flex items-center gap-3 px-6 py-3 text-sm text-panel-muted hover:text-panel-text hover:bg-panel-bg/30 transition-all" data-page="dashboard">
+                <span class="material-symbols-outlined text-xl">space_dashboard</span> Dashboard
+            </a>
+            <a href="#" onclick="showPage('services')" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-panel-muted hover:text-panel-text hover:bg-panel-bg/30 transition-all" data-page="services">
+                <span class="material-symbols-outlined text-xl">home_repair_service</span> Hizmetler
+            </a>
+            <a href="#" onclick="showPage('testimonials')" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-panel-muted hover:text-panel-text hover:bg-panel-bg/30 transition-all" data-page="testimonials">
+                <span class="material-symbols-outlined text-xl">reviews</span> Yorumlar
+            </a>
+            <a href="#" onclick="showPage('messages')" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-panel-muted hover:text-panel-text hover:bg-panel-bg/30 transition-all" data-page="messages">
+                <span class="material-symbols-outlined text-xl">mail</span> Mesajlar
+                <span id="unreadBadge" class="hidden ml-auto bg-danger text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+            </a>
+            <a href="#" onclick="showPage('gallery')" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-panel-muted hover:text-panel-text hover:bg-panel-bg/30 transition-all" data-page="gallery">
+                <span class="material-symbols-outlined text-xl">photo_library</span> Görseller
+            </a>
+            <a href="#" onclick="showPage('blogs')" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-panel-muted hover:text-panel-text hover:bg-panel-bg/30 transition-all" data-page="blogs">
+                <span class="material-symbols-outlined text-xl">article</span> Blog Yönetimi
+            </a>
+            <a href="#" onclick="showPage('qrcode')" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-panel-muted hover:text-panel-text hover:bg-panel-bg/30 transition-all" data-page="qrcode">
+                <span class="material-symbols-outlined text-xl">qr_code_2</span> QR Kod
+            </a>
+            <a href="#" onclick="showPage('settings')" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-panel-muted hover:text-panel-text hover:bg-panel-bg/30 transition-all" data-page="settings">
+                <span class="material-symbols-outlined text-xl">settings</span> Ayarlar
+            </a>
+        </nav>
+        <div class="p-4 border-t border-panel-border">
+            <button onclick="logout()" class="flex items-center gap-2 text-sm text-panel-muted hover:text-danger transition-colors w-full px-2 py-2">
+                <span class="material-symbols-outlined text-xl">logout</span> Çıkış Yap
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 lg:ml-64">
+        <!-- Top Bar -->
+        <header class="sticky top-0 z-30 bg-[#FAF9F6]/80 backdrop-blur-xl border-b border-panel-border px-4 sm:px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="lg:hidden text-panel-muted hover:text-panel-text">
+                    <span class="material-symbols-outlined text-2xl">menu</span>
+                </button>
+                <h2 id="pageTitle" class="text-lg font-bold">Dashboard</h2>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="../index.html" target="_blank" class="text-sm text-panel-muted hover:text-accent flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm">open_in_new</span> Siteyi Görüntüle
+                </a>
+            </div>
+        </header>
+
+        <!-- ═══════ DASHBOARD PAGE ═══════ -->
+        <div id="page-dashboard" class="page-content p-4 sm:p-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+                <div class="bg-panel-surface rounded-2xl p-6 border border-panel-border">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="material-symbols-outlined text-accent text-2xl">article</span>
+                        <span class="text-xs text-panel-muted bg-panel-bg px-2 py-1 rounded-full">Toplam</span>
+                    </div>
+                    <div class="text-3xl font-bold" id="statTotalBlogs">0</div>
+                    <div class="text-sm text-panel-muted mt-1">Blog Yazısı</div>
+                </div>
+                <div class="bg-panel-surface rounded-2xl p-6 border border-panel-border">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="material-symbols-outlined text-success text-2xl">check_circle</span>
+                        <span class="text-xs text-panel-muted bg-panel-bg px-2 py-1 rounded-full">Yayında</span>
+                    </div>
+                    <div class="text-3xl font-bold" id="statPublished">0</div>
+                    <div class="text-sm text-panel-muted mt-1">Yayınlanmış</div>
+                </div>
+                <div class="bg-panel-surface rounded-2xl p-6 border border-panel-border">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="material-symbols-outlined text-warning text-2xl">edit_note</span>
+                        <span class="text-xs text-panel-muted bg-panel-bg px-2 py-1 rounded-full">Bekleyen</span>
+                    </div>
+                    <div class="text-3xl font-bold" id="statDraft">0</div>
+                    <div class="text-sm text-panel-muted mt-1">Taslak</div>
+                </div>
+                <div class="bg-panel-surface rounded-2xl p-6 border border-panel-border cursor-pointer hover:border-accent/30 transition-colors" onclick="showPage('messages')">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="material-symbols-outlined text-danger text-2xl">mail</span>
+                        <span class="text-xs text-panel-muted bg-panel-bg px-2 py-1 rounded-full">Yeni</span>
+                    </div>
+                    <div class="text-3xl font-bold" id="statUnreadMessages">0</div>
+                    <div class="text-sm text-panel-muted mt-1">Okunmamış Mesaj</div>
+                </div>
+            </div>
+
+            <!-- Ziyaretci Istatistikleri -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
+                <div class="lg:col-span-2 bg-panel-surface rounded-2xl border border-panel-border p-6">
+                    <h3 class="font-bold mb-4">Son 14 Gün — Ziyaretçi Grafiği</h3>
+                    <div id="visitorChart" class="flex items-end gap-1 h-32"></div>
+                </div>
+                <div class="bg-panel-surface rounded-2xl border border-panel-border p-6">
+                    <h3 class="font-bold mb-4">Ziyaretçi Özeti</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-panel-muted">Bugün</span>
+                            <span class="font-bold" id="statVisitorsToday">0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-panel-muted">Bugün (Benzersiz)</span>
+                            <span class="font-bold" id="statVisitorsUnique">0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-panel-muted">Bu Hafta</span>
+                            <span class="font-bold" id="statVisitorsWeek">0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-panel-muted">Bu Ay</span>
+                            <span class="font-bold" id="statVisitorsMonth">0</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-3 border-t border-panel-border">
+                            <span class="text-sm text-panel-muted">Toplam</span>
+                            <span class="font-bold text-accent" id="statVisitorsTotal">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Son Bloglar -->
+            <div class="bg-panel-surface rounded-2xl border border-panel-border">
+                <div class="px-6 py-4 border-b border-panel-border flex justify-between items-center">
+                    <h3 class="font-bold">Son Blog Yazıları</h3>
+                    <button onclick="showPage('blogs')" class="text-accent text-sm hover:underline">Tümünü Gör</button>
+                </div>
+                <div id="dashboardRecentBlogs" class="divide-y divide-panel-border">
+                    <div class="px-6 py-8 text-center text-panel-muted">Henüz blog yazısı yok</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ BLOGS PAGE ═══════ -->
+        <div id="page-blogs" class="page-content hidden p-4 sm:p-8">
+            <!-- Blog List View -->
+            <div id="blogListView">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div class="relative w-full sm:w-72">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-panel-muted text-xl">search</span>
+                        <input id="blogSearch" type="text" placeholder="Blog ara..." class="w-full bg-panel-surface border border-panel-border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:ring-2 focus:ring-accent focus:border-transparent outline-none" oninput="filterBlogs()"/>
+                    </div>
+                    <div class="flex gap-3">
+                        <select id="blogFilter" class="bg-panel-surface border border-panel-border rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-accent" onchange="filterBlogs()">
+                            <option value="all">Tüm Yazılar</option>
+                            <option value="published">Yayında</option>
+                            <option value="draft">Taslak</option>
+                        </select>
+                        <button onclick="openBlogEditor()" class="bg-gradient-to-r from-accent-dim to-accent text-white font-bold px-6 py-2.5 rounded-xl text-sm flex items-center gap-2 hover:opacity-90 transition-opacity">
+                            <span class="material-symbols-outlined text-xl">add</span> Yeni Yazı
+                        </button>
+                    </div>
+                </div>
+                <div id="blogList" class="bg-panel-surface rounded-2xl border border-panel-border divide-y divide-panel-border">
+                    <div class="px-6 py-12 text-center text-panel-muted">
+                        <span class="material-symbols-outlined text-4xl block mb-2">article</span>
+                        Henüz blog yazısı yok. Hemen ilk yazınızı oluşturun!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Editor View -->
+            <div id="blogEditorView" class="hidden">
+                <div class="flex items-center gap-4 mb-6">
+                    <button onclick="closeBlogEditor()" class="text-panel-muted hover:text-panel-text">
+                        <span class="material-symbols-outlined text-2xl">arrow_back</span>
+                    </button>
+                    <h3 class="text-lg font-bold" id="editorTitle">Yeni Blog Yazısı</h3>
+                    <div class="flex-1"></div>
+                    <button onclick="saveBlog('draft')" class="border border-panel-border text-panel-muted px-4 py-2 rounded-xl text-sm hover:text-panel-text hover:border-panel-muted transition-all flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">save</span> Taslak Kaydet
+                    </button>
+                    <button onclick="saveBlog('published')" class="bg-gradient-to-r from-accent-dim to-accent text-white font-bold px-6 py-2 rounded-xl text-sm flex items-center gap-2 hover:opacity-90 transition-opacity">
+                        <span class="material-symbols-outlined text-sm">publish</span> Yayınla
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Editor Main -->
+                    <div class="lg:col-span-2 space-y-4">
+                        <input id="blogTitleInput" type="text" placeholder="Blog başlığı..." class="w-full bg-panel-surface border border-panel-border rounded-xl px-4 py-3 text-lg font-bold focus:ring-2 focus:ring-accent focus:border-transparent outline-none"/>
+
+                        <input id="blogSlug" type="text" placeholder="url-slug (otomatik)" class="w-full bg-panel-surface border border-panel-border rounded-xl px-4 py-3 text-sm text-panel-muted focus:ring-2 focus:ring-accent focus:border-transparent outline-none"/>
+
+                        <textarea id="blogSummary" placeholder="Kısa özet (SEO için önemli, max 160 karakter)..." rows="2" class="w-full bg-panel-surface border border-panel-border rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-accent focus:border-transparent outline-none resize-none"></textarea>
+
+                        <!-- Rich Text Editor -->
+                        <div class="bg-panel-surface border border-panel-border rounded-xl overflow-hidden">
+                            <div class="flex flex-wrap items-center gap-1 px-3 py-2 border-b border-panel-border bg-panel-bg/50">
+                                <button type="button" class="editor-btn p-1.5 rounded" onclick="execCmd('bold')" title="Kalın"><span class="material-symbols-outlined text-lg">format_bold</span></button>
+                                <button type="button" class="editor-btn p-1.5 rounded" onclick="execCmd('italic')" title="İtalik"><span class="material-symbols-outlined text-lg">format_italic</span></button>
+                                <button type="button" class="editor-btn p-1.5 rounded" onclick="execCmd('underline')" title="Altı Çizili"><span class="material-symbols-outlined text-lg">format_underlined</span></button>
+                                <div class="w-px h-6 bg-panel-border mx-1"></div>
+                                <button type="button" class="editor-btn p-1.5 rounded" onclick="execBlock('h2')" title="Başlık 2"><span class="text-sm font-bold">H2</span></button>
+                                <button type="button" class="editor-btn p-1.5 rounded" onclick="execBlock('h3')" title="Başlık 3"><span class="text-sm font-bold">H3</span></button>
+                                <button type="button" class="editor-btn p-1.5 rounded" onclick="execBlock('p')" title="Paragraf"><span class="text-sm">P</span></button>
+                                <div class="w-px h-6 bg-panel-border mx-1"></div>
+                                <button type="button" class="editor-btn p-1.5 rounded" onclick="execCmd('insertUnorderedList')" title="Madde İşareti"><span class="material-symbols-outlined text-lg">format_list_bulleted</span></button>
+                                <button type="button" class="editor-btn p-1.5 rounded" onclick="execCmd('insertOrderedList')" title="Numaralı Liste"><span class="material-symbols-outlined text-lg">format_list_numbered</span></button>
+                                <div class="w-px h-6 bg-panel-border mx-1"></div>
+                                <button type="button" class="editor-btn p-1.5 rounded" onclick="insertBlockquote()" title="Alıntı"><span class="material-symbols-outlined text-lg">format_quote</span></button>
+                                <button type="button" class="editor-btn p-1.5 rounded" onclick="insertLink()" title="Link"><span class="material-symbols-outlined text-lg">link</span></button>
+                                <div class="w-px h-6 bg-panel-border mx-1"></div>
+                                <button type="button" class="editor-btn p-1.5 rounded" onclick="execCmd('removeFormat')" title="Formatı Temizle"><span class="material-symbols-outlined text-lg">format_clear</span></button>
+                            </div>
+                            <div id="blogContent" contenteditable="true" class="px-4 py-4 text-panel-text text-sm" style="min-height: 400px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Editor Sidebar -->
+                    <div class="space-y-4">
+                        <div class="bg-panel-surface border border-panel-border rounded-xl p-4">
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Kapak Görseli</label>
+                            <div id="blogCoverPreview" class="mb-3 hidden">
+                                <div class="relative">
+                                    <img id="blogCoverImg" src="" alt="Kapak" class="w-full h-32 object-cover rounded-lg border border-panel-border"/>
+                                    <button type="button" onclick="removeBlogCover()" class="absolute top-1 right-1 bg-danger text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:opacity-80" title="Görseli Kaldır">&times;</button>
+                                </div>
+                            </div>
+                            <label class="flex items-center gap-2 cursor-pointer bg-panel-bg border border-panel-border rounded-lg px-3 py-2 text-sm hover:border-accent transition-colors">
+                                <span class="material-symbols-outlined text-lg text-panel-muted">upload</span>
+                                <span class="text-panel-muted" id="blogCoverLabel">Görsel Yükle (jpg, png, webp)</span>
+                                <input id="blogCoverFile" type="file" accept="image/jpeg,image/png,image/webp" class="hidden" onchange="handleBlogCoverUpload(this)"/>
+                            </label>
+                            <p class="text-[10px] text-panel-muted mt-1">Önerilen: 800×450px, max 5MB. <code>img/uploads/</code> klasörüne yüklenir.</p>
+                            <input id="blogCoverImage" type="hidden" value=""/>
+                        </div>
+
+                        <div class="bg-panel-surface border border-panel-border rounded-xl p-4">
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Kategori</label>
+                            <input id="blogCategory" type="text" placeholder="Bakım İpuçları" class="w-full bg-panel-bg border border-panel-border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-accent focus:border-transparent outline-none"/>
+                        </div>
+
+                        <div class="bg-panel-surface border border-panel-border rounded-xl p-4">
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Etiketler (virgülle ayırın)</label>
+                            <input id="blogTags" type="text" placeholder="ipuçları, haberler, sektör" class="w-full bg-panel-bg border border-panel-border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-accent focus:border-transparent outline-none"/>
+                        </div>
+
+                        <div class="bg-panel-surface border border-panel-border rounded-xl p-4">
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">SEO Açıklaması</label>
+                            <textarea id="blogMeta" rows="3" placeholder="Arama motorları için açıklama (max 160 karakter)" class="w-full bg-panel-bg border border-panel-border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-accent focus:border-transparent outline-none resize-none"></textarea>
+                            <div class="text-xs text-panel-muted mt-1"><span id="metaCharCount">0</span>/160</div>
+                        </div>
+
+                        <div class="bg-panel-surface border border-panel-border rounded-xl p-4">
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Önizleme</label>
+                            <div class="bg-panel-bg rounded-lg p-3">
+                                <div class="text-accent text-xs mb-1" id="previewUrl">blog/url-slug.html</div>
+                                <div class="text-sm font-bold mb-1" id="previewTitle">Blog Başlığı</div>
+                                <div class="text-xs text-panel-muted" id="previewMeta">SEO açıklaması burada görünür...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ MESSAGES PAGE ═══════ -->
+        <div id="page-messages" class="page-content hidden p-4 sm:p-8">
+            <div class="max-w-4xl space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <h2 class="text-2xl font-bold">İletişim Mesajları</h2>
+                    <div class="flex gap-3">
+                        <select id="messageFilter" class="bg-panel-surface border border-panel-border rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-accent" onchange="renderMessages()">
+                            <option value="all">Tüm Mesajlar</option>
+                            <option value="unread">Okunmamış</option>
+                            <option value="read">Okunmuş</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="messagesList" class="space-y-3">
+                    <div class="bg-panel-surface rounded-2xl border border-panel-border px-6 py-12 text-center text-panel-muted">
+                        <span class="material-symbols-outlined text-4xl block mb-2">mail</span>
+                        Henüz mesaj yok.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ GALLERY PAGE ═══════ -->
+        <div id="page-gallery" class="page-content hidden p-4 sm:p-8">
+            <div class="max-w-5xl space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <h2 class="text-2xl font-bold">Görsel Yönetimi</h2>
+                    <div class="flex gap-3">
+                        <select id="galleryFilter" class="bg-panel-surface border border-panel-border rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-accent" onchange="renderGallery()">
+                            <option value="all">Tüm Görseller</option>
+                            <option value="hero">Hero Slider</option>
+                            <option value="gallery">Galeri</option>
+                            <option value="general">Genel</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Upload Area -->
+                <div id="galleryUploadArea" class="bg-panel-surface rounded-2xl border-2 border-dashed border-panel-border p-8 text-center hover:border-accent/50 transition-colors cursor-pointer" onclick="document.getElementById('galleryFileInput').click()">
+                    <span class="material-symbols-outlined text-4xl text-panel-muted mb-2 block">cloud_upload</span>
+                    <p class="text-sm text-panel-muted">Görsel yüklemek için tıklayın veya sürükleyin</p>
+                    <p class="text-xs text-panel-muted mt-1">JPG, PNG, WebP, GIF — Maks. 5MB</p>
+                    <input id="galleryFileInput" type="file" accept="image/jpeg,image/png,image/webp,image/gif" class="hidden" onchange="uploadGalleryImage(this)" multiple/>
+                </div>
+
+                <!-- Upload category selector -->
+                <div id="galleryUploadOptions" class="bg-panel-surface rounded-2xl border border-panel-border p-4 flex items-center gap-4">
+                    <label class="text-sm font-medium">Yükleme Kategorisi:</label>
+                    <select id="uploadCategory" class="bg-panel-bg border border-panel-border rounded-xl px-3 py-2 text-sm outline-none">
+                        <option value="gallery">Galeri</option>
+                        <option value="hero">Hero Slider</option>
+                        <option value="general">Genel</option>
+                    </select>
+                    <div id="uploadProgress" class="flex-1 text-sm text-panel-muted"></div>
+                </div>
+
+                <!-- Gallery Grid -->
+                <div id="galleryGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div class="col-span-full bg-panel-surface rounded-2xl border border-panel-border px-6 py-12 text-center text-panel-muted">
+                        <span class="material-symbols-outlined text-4xl block mb-2">photo_library</span>
+                        Henüz görsel yok.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ SERVICES PAGE ═══════ -->
+        <div id="page-services" class="page-content hidden p-4 sm:p-8">
+            <div class="max-w-3xl space-y-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold">Hizmet Yönetimi</h2>
+                    <button onclick="addService()" class="bg-gradient-to-r from-accent-dim to-accent text-white font-bold px-6 py-2.5 rounded-xl text-sm flex items-center gap-2 hover:opacity-90 transition-opacity">
+                        <span class="material-symbols-outlined text-sm">add</span> Yeni Hizmet
+                    </button>
+                </div>
+                <p class="text-panel-muted text-sm">Hizmetlerinizi ekleyin, düzenleyin veya silin. Fiyat alanını boş bırakırsanız fiyat gösterilmez.</p>
+                <div id="servicesList" class="space-y-4"></div>
+                <div class="flex justify-end">
+                    <button onclick="saveServices()" class="bg-gradient-to-r from-accent-dim to-accent text-white font-bold px-8 py-3 rounded-xl text-sm flex items-center gap-2 hover:opacity-90 transition-opacity">
+                        <span class="material-symbols-outlined text-sm">save</span> Hizmetleri Kaydet
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ TESTIMONIALS PAGE ═══════ -->
+        <div id="page-testimonials" class="page-content hidden p-4 sm:p-8">
+            <div class="max-w-3xl space-y-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold">Yorum Yönetimi</h2>
+                    <button onclick="addTestimonial()" class="bg-gradient-to-r from-accent-dim to-accent text-white font-bold px-6 py-2.5 rounded-xl text-sm flex items-center gap-2 hover:opacity-90 transition-opacity">
+                        <span class="material-symbols-outlined text-sm">add</span> Yeni Yorum
+                    </button>
+                </div>
+                <p class="text-panel-muted text-sm">Müşteri yorumlarını ekleyin, düzenleyin veya silin.</p>
+                <div id="testimonialsList" class="space-y-4"></div>
+                <div class="flex justify-end">
+                    <button onclick="saveTestimonials()" class="bg-gradient-to-r from-accent-dim to-accent text-white font-bold px-8 py-3 rounded-xl text-sm flex items-center gap-2 hover:opacity-90 transition-opacity">
+                        <span class="material-symbols-outlined text-sm">save</span> Yorumları Kaydet
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ QR CODE PAGE ═══════ -->
+        <div id="page-qrcode" class="page-content hidden p-4 sm:p-8">
+            <div class="max-w-3xl space-y-6">
+                <h2 class="text-2xl font-bold">QR Kod Üretici</h2>
+                <p class="text-panel-muted text-sm">Hazır QR kodları indirin veya özel URL ile QR kod oluşturun. Kartvizit, broşür ve vitrin için kullanabilirsiniz.</p>
+
+                <!-- Hazir QR Kodlar -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="bg-panel-surface rounded-2xl border border-panel-border p-6 text-center">
+                        <span class="material-symbols-outlined text-accent text-3xl mb-3 block">language</span>
+                        <h3 class="font-bold text-sm mb-2">Web Sitesi</h3>
+                        <div id="qrSitePreview" class="bg-panel-bg rounded-xl p-4 mb-3 flex items-center justify-center">
+                            <img id="qrSiteImg" src="" alt="QR" class="w-32 h-32" style="display:none"/>
+                            <span class="text-panel-muted text-xs" id="qrSitePlaceholder">Yükleniyor...</span>
+                        </div>
+                        <button onclick="downloadQR('site')" class="text-accent text-sm hover:underline flex items-center gap-1 mx-auto">
+                            <span class="material-symbols-outlined text-sm">download</span> PNG İndir
+                        </button>
+                    </div>
+                    <div class="bg-panel-surface rounded-2xl border border-panel-border p-6 text-center">
+                        <span class="material-symbols-outlined text-success text-3xl mb-3 block">chat</span>
+                        <h3 class="font-bold text-sm mb-2">WhatsApp</h3>
+                        <div class="bg-panel-bg rounded-xl p-4 mb-3 flex items-center justify-center">
+                            <img id="qrWhatsappImg" src="" alt="QR" class="w-32 h-32" style="display:none"/>
+                            <span class="text-panel-muted text-xs" id="qrWhatsappPlaceholder">Yükleniyor...</span>
+                        </div>
+                        <button onclick="downloadQR('whatsapp')" class="text-accent text-sm hover:underline flex items-center gap-1 mx-auto">
+                            <span class="material-symbols-outlined text-sm">download</span> PNG İndir
+                        </button>
+                    </div>
+                    <div class="bg-panel-surface rounded-2xl border border-panel-border p-6 text-center">
+                        <span class="material-symbols-outlined text-warning text-3xl mb-3 block">location_on</span>
+                        <h3 class="font-bold text-sm mb-2">Google Maps</h3>
+                        <div class="bg-panel-bg rounded-xl p-4 mb-3 flex items-center justify-center">
+                            <img id="qrMapsImg" src="" alt="QR" class="w-32 h-32" style="display:none"/>
+                            <span class="text-panel-muted text-xs" id="qrMapsPlaceholder">Yükleniyor...</span>
+                        </div>
+                        <button onclick="downloadQR('maps')" class="text-accent text-sm hover:underline flex items-center gap-1 mx-auto">
+                            <span class="material-symbols-outlined text-sm">download</span> PNG İndir
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ozel QR -->
+                <div class="bg-panel-surface rounded-2xl border border-panel-border p-6">
+                    <h3 class="font-bold mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-accent">tune</span> Özel QR Kod</h3>
+                    <div class="flex gap-3">
+                        <input id="customQrUrl" type="text" placeholder="https://..." class="flex-1 bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-accent"/>
+                        <button onclick="generateCustomQR()" class="bg-gradient-to-r from-accent-dim to-accent text-white font-bold px-6 py-2.5 rounded-xl text-sm hover:opacity-90 transition-opacity">Oluştur</button>
+                    </div>
+                    <div id="customQrResult" class="hidden mt-4 text-center">
+                        <div class="bg-panel-bg rounded-xl p-4 inline-block">
+                            <img id="customQrImg" src="" alt="QR" class="w-48 h-48"/>
+                        </div>
+                        <div class="mt-3">
+                            <button onclick="downloadQR('custom')" class="text-accent text-sm hover:underline flex items-center gap-1 mx-auto">
+                                <span class="material-symbols-outlined text-sm">download</span> PNG İndir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ SETTINGS PAGE ═══════ -->
+        <div id="page-settings" class="page-content hidden p-4 sm:p-8">
+            <div class="max-w-3xl space-y-6">
+                <!-- İşletme Bilgileri -->
+                <div class="bg-panel-surface rounded-2xl border border-panel-border">
+                    <div class="px-6 py-4 border-b border-panel-border">
+                        <h3 class="font-bold flex items-center gap-2"><span class="material-symbols-outlined text-accent">store</span> İşletme Bilgileri</h3>
+                    </div>
+                    <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">İşletme Adı</label>
+                            <input id="setBizName" type="text" class="w-full bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-accent outline-none"/>
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Telefon</label>
+                            <input id="setPhone" type="text" class="w-full bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-accent outline-none"/>
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">E-posta</label>
+                            <input id="setEmail" type="email" class="w-full bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-accent outline-none"/>
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">WhatsApp Numarası</label>
+                            <input id="setWhatsapp" type="text" class="w-full bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-accent outline-none" placeholder="905XXXXXXXXX"/>
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">2. Telefon Numarası</label>
+                            <input id="setPhone2" type="text" class="w-full bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-accent outline-none" placeholder="0532 466 96 71"/>
+                            <p class="text-panel-muted text-xs mt-1">Üst barda telefon yanında görünecek 2. numara</p>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Adres</label>
+                            <input id="setAddress" type="text" class="w-full bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-accent outline-none"/>
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Çalışma Saatleri</label>
+                            <input id="setHours" type="text" class="w-full bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-accent outline-none" placeholder="Pzt-Cmt: 08:00 - 20:00"/>
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Slogan / Alt Başlık</label>
+                            <input id="setSubtitle" type="text" class="w-full bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-accent outline-none"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Yazar Bilgileri -->
+                <div class="bg-panel-surface rounded-2xl border border-panel-border">
+                    <div class="px-6 py-4 border-b border-panel-border">
+                        <h3 class="font-bold flex items-center gap-2"><span class="material-symbols-outlined text-accent">edit_note</span> Blog Yazar Bilgileri</h3>
+                    </div>
+                    <div class="p-6 grid grid-cols-1 gap-4">
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Yazar Adı</label>
+                            <input id="setBlogAuthorName" type="text" class="w-full bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-accent outline-none" placeholder="Firma Adı Uzman Ekibi"/>
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Yazar Açıklaması</label>
+                            <textarea id="setBlogAuthorBio" rows="3" class="w-full bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-accent outline-none resize-none" placeholder="Blog yazarı hakkında kısa açıklama..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sosyal Medya -->
+                <div class="bg-panel-surface rounded-2xl border border-panel-border">
+                    <div class="px-6 py-4 border-b border-panel-border">
+                        <h3 class="font-bold flex items-center gap-2"><span class="material-symbols-outlined text-accent">share</span> Sosyal Medya</h3>
+                    </div>
+                    <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Instagram</label>
+                            <input id="setInstagram" type="text" class="w-full bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-accent outline-none" placeholder="@kullaniciadi"/>
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Facebook</label>
+                            <input id="setFacebook" type="text" class="w-full bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-accent outline-none" placeholder="facebook.com/sayfa"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WhatsApp Şablonları -->
+                <div class="bg-panel-surface rounded-2xl border border-panel-border">
+                    <div class="px-6 py-4 border-b border-panel-border flex justify-between items-center">
+                        <h3 class="font-bold flex items-center gap-2"><span class="material-symbols-outlined text-accent">chat</span> WhatsApp Mesaj Şablonları</h3>
+                        <button onclick="addWhatsappTemplate()" class="text-accent text-sm hover:underline flex items-center gap-1">
+                            <span class="material-symbols-outlined text-sm">add</span> Ekle
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-panel-muted text-sm mb-4">Müşteriler WhatsApp butonuna tıkladığında bu şablonlardan birini seçebilir.</p>
+                        <div id="waTemplatesList" class="space-y-3"></div>
+                    </div>
+                </div>
+
+                <!-- Özel Günler / Tatiller -->
+                <div class="bg-panel-surface rounded-2xl border border-panel-border">
+                    <div class="px-6 py-4 border-b border-panel-border flex justify-between items-center">
+                        <h3 class="font-bold flex items-center gap-2"><span class="material-symbols-outlined text-accent">event_busy</span> Özel Günler / Tatiller</h3>
+                        <button onclick="addSpecialDay()" class="text-accent text-sm hover:underline flex items-center gap-1">
+                            <span class="material-symbols-outlined text-sm">add</span> Ekle
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-panel-muted text-sm mb-4">Tatil günlerini ekleyin. Bu günlerde sitenizde "Kapalı" badge'i gösterilir.</p>
+                        <div id="specialDaysList" class="space-y-3"></div>
+                    </div>
+                </div>
+
+                <!-- Güvenlik Ayarları -->
+                <div class="bg-panel-surface rounded-2xl border border-panel-border">
+                    <div class="px-6 py-4 border-b border-panel-border">
+                        <h3 class="font-bold flex items-center gap-2"><span class="material-symbols-outlined text-accent">lock</span> Güvenlik Ayarları</h3>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Yetkili E-posta Adresleri</label>
+                            <div id="adminEmailList" class="space-y-2 mb-2"></div>
+                            <div class="flex gap-2">
+                                <input id="newAdminEmail" type="email" class="flex-1 bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-accent outline-none" placeholder="yeni@eposta.com"/>
+                                <button type="button" onclick="addAdminEmail()" class="bg-accent/20 text-accent px-4 py-2.5 rounded-xl text-sm hover:bg-accent/30 transition-colors flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-sm">add</span> Ekle
+                                </button>
+                            </div>
+                            <p class="text-xs text-panel-muted mt-1">Bu e-postalardan herhangi biriyle giriş yapılabilir</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Kullanıcı Adı Değiştir</label>
+                            <input id="setNewUser" type="text" class="w-full bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-accent outline-none" placeholder="Yeni kullanıcı adı (boş bırakılırsa değişmez)"/>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Mevcut Şifre</label>
+                                <input id="setOldPass" type="password" class="w-full bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-accent outline-none"/>
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Yeni Şifre</label>
+                                <input id="setNewPass" type="password" class="w-full bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-accent outline-none"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kaydet Butonu -->
+                <div class="flex justify-end gap-3">
+                    <button onclick="saveSettings()" class="bg-gradient-to-r from-accent-dim to-accent text-white font-bold px-8 py-3 rounded-xl text-sm flex items-center gap-2 hover:opacity-90 transition-opacity">
+                        <span class="material-symbols-outlined text-sm">save</span> Ayarları Kaydet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Toast Container -->
+<div id="toastContainer" class="fixed top-4 right-4 z-[200] space-y-2"></div>
+
+<!-- Delete Confirm Modal -->
+<div id="deleteModal" class="hidden fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-panel-surface border border-panel-border rounded-2xl p-6 max-w-sm w-full">
+        <div class="text-center">
+            <span class="material-symbols-outlined text-danger text-4xl mb-4 block">warning</span>
+            <h3 class="text-lg font-bold mb-2">Silmek istediğinize emin misiniz?</h3>
+            <p class="text-panel-muted text-sm mb-6" id="deleteModalText">Bu blog yazısı kalıcı olarak silinecek.</p>
+            <div class="flex gap-3">
+                <button onclick="closeDeleteModal()" class="flex-1 border border-panel-border py-2.5 rounded-xl text-sm hover:bg-panel-bg transition-colors">İptal</button>
+                <button onclick="confirmDelete()" class="flex-1 bg-danger text-white py-2.5 rounded-xl text-sm font-bold hover:opacity-90 transition-opacity">Sil</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// SECURITY: HTTPS ENFORCEMENT
+// ═══════════════════════════════════════════════════════
+if (location.protocol === 'http:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+    location.replace('https://' + location.host + location.pathname);
+}
+
+// ═══════════════════════════════════════════════════════
+// CONFIG & STATE
+// ═══════════════════════════════════════════════════════
+const DATA_PATH = '../data/';
+const BLOG_PATH = '/blog/';
+const API_BASE = '/api';
+// Inline veriler — site üretiminde Python tarafından gömülür (file:// protokolünde de çalışır)
+const INLINE_SETTINGS = {"business_name": "Bank Halı Yıkama", "phone": "05456876161", "phone_raw": "05456876161", "email": "", "address": "Plevne Mahallesi Plevne Sokak No:5/a Sincan/Ankara", "working_hours": "Pzt-Cmt: 08:00 - 19:00, Pazar: Kapalı", "working_hours_short": "Pzt-Cmt: 08:00 - 19:00, Pazar: Kapalı", "whatsapp_number": "905456876161", "hero_subtitle": "Ankara'da Profesyonel Halı Yıkama", "footer_description": "Bank Halı Yıkama, Sincan ve Ankara'da halılarınız için profesyonel, güvenilir ve hijyenik temizlik çözümleri sunar.", "cta_title": "Halılarınız Bizimle Güvende", "cta_description": "Hijyenik ve derinlemesine temizlik garantisiyle halılarınıza özenle yaklaşıyoruz.", "map_embed_url": "https://maps.google.com/maps?q=Plevne%20Mahallesi%20Plevne%20Sokak%20No%3A5%2Fa%20Sincan%2FAnkara&output=embed&hl=tr", "map_link_url": "https://www.google.com/maps/search/?api=1&query=Plevne%20Mahallesi%20Plevne%20Sokak%20No%3A5%2Fa%20Sincan%2FAnkara", "instagram": "https://www.instagram.com/hayati_bank?utm_source=qr&igsh=MXBkZHppeDhydGZzNg==", "facebook": "", "tiktok": "https://www.tiktok.com/@hayati_bank1?_r=1&_t=ZS-966kPmHot61"};
+const INLINE_BLOGS = {"blogs": [{"id": "blog_hali-bakimi-ipuclari-profesyonel-yikamadan-once-ve-sonra", "slug": "hali-bakimi-ipuclari-profesyonel-yikamadan-once-ve-sonra", "title": "Halı Bakımı İpuçları: Profesyonel Yıkamadan Önce ve Sonra", "category": "Bakım İpuçları", "summary": "Halılarınızın ömrünü uzatmak ve her zaman temiz kalmasını sağlamak için Bank Halı Yıkama'dan pratik ipuçları. Profesyonel temizlik öncesi ve sonrası neler yapmalısınız?", "content": "<h2>Halı Bakımı İpuçları: Profesyonel Yıkamadan Önce ve Sonra<\/h2><p>Halılar, evlerimizin hem dekoratif bir parçası hem de konfor kaynaklarıdır. Ancak zamanla kirlenir, lekelenir ve toz, bakteri gibi istenmeyen misafirlere ev sahipliği yapmaya başlarlar. Halılarınızın ömrünü uzatmak, parlaklığını korumak ve her zaman hijyenik kalmasını sağlamak için düzenli bakım ve profesyonel temizlik şarttır. Bank Halı Yıkama olarak, halılarınız için profesyonel yıkama hizmeti sunmanın yanı sıra, evde uygulayabileceğiniz etkili bakım ipuçlarını da sizlerle paylaşmak istiyoruz.<\/p><h3>Profesyonel Yıkamadan Önce Yapılması Gerekenler<\/h3><p>Halılarınızı Bank Halı Yıkama'ya teslim etmeden önce atabileceğiniz birkaç basit adım, temizlik sürecini daha verimli hale getirecektir:<\/p><ul><li><b>Kabataslak Temizlik:<\/b> Halınızın üzerindeki büyük parçacıkları (kırıntılar, saçlar vb.) elektrik süpürgesiyle veya elle temizleyin. Bu, yıkama işleminin daha derinlemesine olmasını sağlar.<\/li><li><b>Lekeleri Belirleyin:<\/b> Halınızdaki belirgin lekeleri servis ekibimize bildirin. Lekenin türü ve ne zaman oluştuğu bilgisi, doğru leke çıkarma yönteminin seçilmesi için çok önemlidir.<\/li><li><b>Değerli Eşyaları Kaldırın:<\/b> Halının üzerinde bulunan küçük mobilyaları veya dekoratif objeleri kaldırarak, ekibimizin halıya kolayca ulaşmasını sağlayın.<\/li><\/ul><p>Bu ön hazırlıklar, halınızın daha hızlı ve etkili bir şekilde temizlenmesine yardımcı olacaktır. Unutmayın, profesyonel bir halı yıkama firması olarak bizler, halınızın türüne ve kirlilik derecesine göre en uygun yıkama yöntemini belirleriz.<\/p><h3>Profesyonel Yıkama Sonrası Bakım<\/h3><p>Bank Halı Yıkama'dan pırıl pırıl ve mis gibi kokan halılarınızı teslim aldıktan sonra da yapmanız gerekenler var:<\/p><ul><li><b>Tamamen Kuruduğundan Emin Olun:<\/b> Halılarınızı teslim aldığınızda tamamen kuru olduğundan emin olun. Nemli kalan halılar küf ve bakteri oluşumuna zemin hazırlayabilir. Bank Halı Yıkama olarak, halılarınızı özel kurutma odalarımızda tam kuruluk sağlayarak teslim ediyoruz.<\/li><li><b>Hava Aldırın:<\/b> Yeni yıkanmış halılarınızı evinize serdikten sonra, odanın iyi havalandırıldığından emin olun. Bu, halının nefes almasına ve kokusunun tam oturmasına yardımcı olur.<\/li><li><b>Düzenli Süpürme:<\/b> Halınızın ilk günkü temizliğini korumak için haftada en az iki kez elektrik süpürgesiyle süpürün. Özellikle yüksek trafikli alanlarda bu sıklığı artırabilirsiniz. Süpürme sırasında halı fırçasını değil, sadece vakum özelliğini kullanmaya özen gösterin.<\/li><li><b>Dökülenlere Hızlı Müdahale:<\/b> Halınızın üzerine bir şey döküldüğünde hemen müdahale edin. Lekeyi dağıtmadan, temiz bir bez veya kağıt havlu ile nazikçe emdirin. Kesinlikle ovmayın! Ardından, lekenin türüne uygun bir temizleyici ile (varsa) hafifçe silip kuru bir bezle durulayın. Ağır lekeler için Bank Halı Yıkama'nın leke çıkarma uzmanlarından destek almaktan çekinmeyin.<\/li><li><b>Güneş Işığından Koruma:<\/b> Uzun süreli doğrudan güneş ışığına maruz kalmak halılarınızın renklerinin solmasına neden olabilir. Perdeler veya jaluziler kullanarak halılarınızı koruyun.<\/li><li><b>Ayakkabı Kuralı:<\/b> Mümkünse, ev içinde ayakkabı çıkarmayı bir alışkanlık haline getirin. Bu, dışarıdan gelen kir ve mikropların halılarınıza taşınmasını büyük ölçüde engeller.<\/li><\/ul><h3>Neden Bank Halı Yıkama?<\/h3><p>Bank Halı Yıkama olarak, sadece halılarınızı temizlemekle kalmıyor, aynı zamanda onların değerini anlıyor ve ömrünü uzatmak için çabalıyoruz. Kullandığımız çevre dostu ürünler ve son teknoloji makinelerimizle, hem halılarınızın sağlığını hem de sizin ve ailenizin sağlığını ön planda tutuyoruz. Uzman ekibimiz, her tür halıya (makine halısı, el dokuma, yün, ipek vb.) özel bir yaklaşımla, en iyi temizlik deneyimini sunar.<\/p><blockquote>\"Halılarınızın sadece temiz değil, aynı zamanda hijyenik ve ilk günkü canlılığıyla geri dönmesini istiyorsanız, Bank Halı Yıkama doğru adresinizdir.\"<\/blockquote><p>Düzenli ve doğru bakım ile profesyonel halı yıkama hizmetini bir araya getirerek, evinizdeki halıların güzelliğini ve hijyenini uzun yıllar boyunca koruyabilirsiniz. Unutmayın, temiz bir halı, sağlıklı bir yaşam alanının anahtarıdır. Sincan ve çevresinde halı yıkama ihtiyaçlarınız için bize ulaşmaktan çekinmeyin.<\/p>", "tags": ["halı bakımı", "halı yıkama ipuçları", "profesyonel temizlik", "bank halı yıkama", "leke çıkarma", "sincan halı yıkama"], "meta_description": "Halılarınızın ömrünü uzatmak ve temizliğini korumak için profesyonel yıkama öncesi ve sonrası ipuçları. Bank Halı Yıkama ile halı bakım rehberi.", "status": "published", "date": "01 Mart 2026", "read_time": "3", "created_at": "2026-03-01T00:00:00.000Z", "updated_at": "2026-03-01T00:00:00.000Z"}, {"id": "blog_profesyonel-hali-yikamanin-onemi-sagliginiz-ve-halilariniz-icin-neden-sart", "slug": "profesyonel-hali-yikamanin-onemi-sagliginiz-ve-halilariniz-icin-neden-sart", "title": "Profesyonel Halı Yıkamanın Önemi: Sağlık ve Halılarınız İçin Neden Şart?", "category": "Rehber", "summary": "Evde yapılan temizliğin yetersiz kaldığı durumlar ve profesyonel halı yıkamanın sağlığınıza ve halılarınızın ömrüne katkıları. Bank Halı Yıkama farkını keşfedin.", "content": "<h2>Profesyonel Halı Yıkamanın Önemi: Sağlık ve Halılarınız İçin Neden Şart?<\/h2><p>Halılar, evlerimizin atmosferine sıcaklık ve estetik katan önemli eşyalardır. Ancak zamanla toz, kir, alerjenler, evcil hayvan tüyleri ve mikroorganizmalar gibi birçok istenmeyen maddeyi barındırabilirler. Düzenli elektrik süpürgesi ile temizlik yapmak önemli olsa da, bu yüzeysel bir temizlikten öteye geçmez. Gerçek derinlemesine temizlik ve hijyen için profesyonel halı yıkama hizmeti kaçınılmazdır.<\/p><h3>Evde Yapılan Temizliğin Sınırları<\/h3><p>Birçok ev sahibi, halılarını kendi imkanlarıyla temizlemeye çalışır. Ancak ev tipi halı yıkama makineleri veya deterjanlar genellikle halının derinliklerine işlemiş kirleri ve alerjenleri tamamen ortadan kaldıramaz. Aksine, yanlış ürün kullanımı veya aşırı nem, halının dokusuna zarar verebilir, renk solmasına yol açabilir veya halının dibinde küf ve kötü koku oluşumuna neden olabilir. Bu durum, özellikle çocuklu veya alerjisi olan aileler için ciddi sağlık riskleri taşıyabilir.<\/p><h3>Profesyonel Halı Yıkamanın Sağlık Faydaları<\/h3><p>Bank Halı Yıkama olarak sunduğumuz profesyonel hizmetin en önemli avantajlarından biri, sağlığınıza olan katkısıdır:<\/p><ul><li><b>Alerjen ve Mikropları Ortadan Kaldırma:<\/b> Halılar, polen, ev tozu akarları, hayvan tüyleri gibi alerjenleri kolayca hapseder. Profesyonel yıkama makineleri ve özel solüsyonlar, bu alerjenleri ve gözle görülmeyen mikropları halıdan derinlemesine arındırarak astım ve alerji semptomlarını azaltır.<\/li><li><b>Daha Temiz Hava Kalitesi:<\/b> Kirli halılar, evin hava kalitesini olumsuz etkileyen partikülleri havaya yayabilir. Temiz bir halı, iç mekan hava kalitesini iyileştirerek daha sağlıklı bir nefes alma ortamı sunar.<\/li><li><b>Kötü Kokuların Giderilmesi:<\/b> Halıya sinen yemek, evcil hayvan veya nem kokuları zamanla evin genel atmosferini bozar. Profesyonel yıkama, bu tür kötü kokuların kaynağını ortadan kaldırarak halılarınıza ve evinize ferah bir koku kazandırır.<\/li><\/ul><h3>Halılarınızın Ömrünü Uzatma ve Estetiğini Koruma<\/h3><p>Profesyonel halı yıkama sadece sağlık için değil, halılarınızın korunması için de hayati öneme sahiptir:<\/p><ul><li><b>Derinlemesine Kir Temizliği:<\/b> Halı liflerinin arasına yerleşen kum, toprak gibi aşındırıcı partiküller zamanla halının liflerini yıpratır. Profesyonel yöntemler, bu kirleri derinlemesine temizleyerek halınızın lif yapısını korur.<\/li><li><b>Renk ve Dokunun Korunması:<\/b> Bank Halı Yıkama olarak halınızın türüne (yün, ipek, sentetik, el dokuma vb.) uygun, özel şampuanlar ve yıkama teknikleri kullanırız. Bu, renklerin solmasını önler ve halınızın dokusunun orijinal yumuşaklığını ve parlaklığını korur.<\/li><li><b>Leke Çıkarma Uzmanlığı:<\/b> Profesyonel firmalar, farklı leke türlerine (yağ, kahve, mürekkep vb.) özel çözümler ve ekipmanlar kullanarak, evde çıkarılması zor veya imkansız görünen lekeleri bile başarıyla çıkarabilir. Bu, halınızın estetik görünümünü geri kazandırır.<\/li><\/ul><blockquote>\"Halılarınız sadece birer zemin kaplaması değil, aynı zamanda evinizin ruhunu yansıtan değerli eşyalardır. Onlara hak ettikleri değeri ve bakımı Bank Halı Yıkama güvencesiyle verin.\"<\/blockquote><p>Sonuç olarak, Bank Halı Yıkama'nın sunduğu profesyonel halı yıkama hizmeti, halılarınızın sadece daha temiz görünmesini sağlamakla kalmaz, aynı zamanda evinizdeki hava kalitesini iyileştirir, alerjenleri azaltır ve halılarınızın ömrünü önemli ölçüde uzatır. Sincan ve çevresindeki müşterilerimiz için en iyi hizmeti sunmak adına sürekli olarak kendimizi geliştiriyoruz. Sağlıklı, hijyenik ve uzun ömürlü halılar için profesyonel desteğe güvenin.<\/p>", "tags": ["profesyonel halı yıkama", "halı temizliği", "sağlık", "alerjen", "sincan halı yıkama", "bank halı yıkama"], "meta_description": "Profesyonel halı yıkamanın sağlığınız ve halılarınızın ömrü için neden önemli olduğunu öğrenin. Bank Halı Yıkama ile derinlemesine temizlik.", "status": "published", "date": "22 Şubat 2026", "read_time": "3", "created_at": "2026-03-01T00:00:00.000Z", "updated_at": "2026-03-01T00:00:00.000Z"}, {"id": "blog_zorlu-hali-lekelerine-kesin-cozumler-bank-hali-yikama-farki", "slug": "zorlu-hali-lekelerine-kesin-cozumler-bank-hali-yikama-farki", "title": "Zorlu Halı Lekelerine Kesin Çözümler: Bank Halı Yıkama Farkı", "category": "Leke Çıkarma", "summary": "Kahve, şarap, yağ ve çamur gibi inatçı halı lekeleriyle başa çıkmak için Bank Halı Yıkama'nın profesyonel yaklaşımları ve etkili çözümleri.", "content": "<h2>Zorlu Halı Lekelerine Kesin Çözümler: Bank Halı Yıkama Farkı<\/h2><p>Halılarımız, evimizin en çok kullanılan eşyalarından biri olduğu için lekelere maruz kalması kaçınılmazdır. Misafir ağırlarken dökülen kahve, çocukların oyun oynarken bıraktığı izler, evcil hayvan kazaları veya mutfaktan sıçrayan yağ lekeleri... Bazen ne kadar uğraşsak da, bu inatçı lekeler halının derinliklerine işleyerek can sıkıcı bir görüntü oluşturabilir. Bank Halı Yıkama olarak, zorlu halı lekelerine karşı uzman çözümlerimizle halılarınızı ilk günkü temizliğine kavuşturuyoruz.<\/p><h3>Evde Leke Çıkarma Denemeleri ve Riskleri<\/h3><p>Birçok kişi, halıdaki lekeyi gördüğünde panikleyerek evdeki çeşitli temizlik malzemeleriyle müdahale etmeye çalışır. Ancak bu durum, genellikle lekenin daha da yayılmasına, halının renginin solmasına veya dokusunun zarar görmesine neden olabilir. Yanlış ürün seçimi veya hatalı uygulama, lekeyi kalıcı hale getirerek profesyonel müdahaleyi bile zorlaştırabilir.<\/p><ul><li><b>Yanlış Ürün Kullanımı:<\/b> Her leke türü, farklı bir kimyasal reaksiyon gerektirir. Örneğin, asidik bir leke için alkali bir ürün kullanmak, lekeyi sabitleyebilir veya halıya zarar verebilir.<\/li><li><b>Aşırı Ovma:<\/b> Lekeyi çıkarmak için sertçe ovmak, lekeyi halının liflerine daha derinlemesine itebilir ve halının dokusunu yıpratabilir.<\/li><li><b>Aşırı Su Kullanımı:<\/b> Çok fazla su kullanmak, halının altına sızarak küf ve kötü koku oluşumuna yol açabilir.<\/li><\/ul><p>Bu nedenlerle, zorlu lekelerde riske girmek yerine, Bank Halı Yıkama gibi profesyonel bir firmadan destek almak en doğru yaklaşımdır.<\/p><h3>Bank Halı Yıkama'nın Leke Çıkarma Uzmanlığı<\/h3><p>Bank Halı Yıkama olarak, leke çıkarma konusunda özel eğitim almış uzman bir ekibe ve son teknoloji ekipmanlara sahibiz. İşte leke çıkarma sürecindeki fark yaratan yaklaşımlarımız:<\/p><ul><li><b>Leke Tespiti ve Analizi:<\/b> Her lekeye aynı yöntemle yaklaşılmaz. Uzmanlarımız, lekenin türünü (organik, inorganik, yağ bazlı vb.), ne zaman oluştuğunu ve halının lif yapısını dikkatlice analiz eder. Bu, doğru leke çıkarma solüsyonunun ve tekniğinin belirlenmesi için kritik öneme sahiptir.<\/li><li><b>Özel Leke Çıkarma Solüsyonları:<\/b> Piyasadaki genel temizleyicilerin aksine, Bank Halı Yıkama olarak her leke türü için özel olarak formüle edilmiş, çevre dostu ve halı dostu profesyonel leke çıkarıcılar kullanırız. Bu ürünler, lekeyi çözerken halının rengine ve dokusuna zarar vermez.<\/li><li><b>Profesyonel Ekipmanlar:<\/b> Yüksek emiş gücüne sahip özel vakum makineleri ve buhar temizleyicilerle, leke ve kir kalıntılarını halının derinliklerinden çıkarırız. Bu sayede leke yeniden yüzeye çıkma riskini en aza indiririz.<\/li><li><b>Uygulama Bilgisi ve Tecrübe:<\/b> Lekeye müdahale süresi, uygulanacak basınç ve kullanılacak araçlar, lekenin tamamen temizlenmesi için büyük önem taşır. Uzman ekibimiz, bu konulardaki bilgi ve tecrübeleriyle en inatçı lekelere bile meydan okur.<\/li><\/ul><h3>Hangi Tür Lekelerde Yardımcı Olabiliriz?<\/h3><p>Bank Halı Yıkama olarak, birçok farklı leke türünde etkili çözümler sunuyoruz:<\/p><ul><li>Kahve, çay ve meyve suyu lekeleri<\/li><li>Şarap ve alkol lekeleri<\/li><li>Yağ ve gıda lekeleri<\/li><li>Çamur ve toprak lekeleri<\/li><li>Mürekkep ve kalem lekeleri<\/li><li>Evcil hayvan idrarı ve dışkısı lekeleri<\/li><li>Kan lekeleri<\/li><li>Oje ve boya lekeleri<\/li><\/ul><blockquote>\"Halılarınızdaki inatçı lekeler sizi çaresiz hissettirmesin. Bank Halı Yıkama'nın profesyonel leke çıkarma hizmetiyle halılarınıza yeni bir hayat verin!\"<\/blockquote><p>Lekelerle kendi başınıza mücadele etmek yerine, Bank Halı Yıkama'nın uzman ekibine güvenin. Sincan ve çevresindeki en zorlu halı lekelerinde bile kesin ve kalıcı çözümler sunarak, halılarınızı tertemiz ve ilk günkü gibi size teslim ediyoruz. Lekeli halılarınız için bize ulaşarak ücretsiz keşif ve danışmanlık hizmetimizden yararlanabilirsiniz. Unutmayın, erken müdahale leke çıkarma şansını artırır!<\/p>", "tags": ["leke çıkarma", "halı lekesi", "inatçı leke", "profesyonel leke çıkarma", "bank halı yıkama", "sincan"], "meta_description": "Zorlu halı lekelerine Bank Halı Yıkama'nın profesyonel çözümleriyle veda edin. Kahve, şarap, yağ lekeleri için etkili temizlik.", "status": "published", "date": "15 Şubat 2026", "read_time": "3", "created_at": "2026-03-01T00:00:00.000Z", "updated_at": "2026-03-01T00:00:00.000Z"}, {"id": "blog_hali-secimi-ve-bakimi-evinize-en-uygun-hali-nasil-secilir-ve-omru-nasil-uzatilir", "slug": "hali-secimi-ve-bakimi-evinize-en-uygun-hali-nasil-secilir-ve-omru-nasil-uzatilir", "title": "Halı Seçimi ve Bakımı: Evinize En Uygun Halı Nasıl Seçilir?", "category": "Rehber", "summary": "Evinize en uygun halıyı seçerken nelere dikkat etmelisiniz? Halı türleri, malzeme özellikleri ve halınızın ömrünü uzatacak pratik bakım ipuçları.", "content": "<h2>Halı Seçimi ve Bakımı: Evinize En Uygun Halı Nasıl Seçilir ve Ömrü Nasıl Uzatılır?<\/h2><p>Halılar, bir evin karakterini ve sıcaklığını belirleyen en önemli dekoratif unsurlardan biridir. Doğru halı seçimi, sadece estetik bir görünüm sağlamakla kalmaz, aynı zamanda yaşam alanlarınızın konforunu ve fonksiyonelliğini de artırır. Ancak yüzlerce farklı model, malzeme ve desen arasından doğru seçimi yapmak zor olabilir. Bank Halı Yıkama olarak, evinize en uygun halıyı seçmenize yardımcı olacak ipuçları ve halılarınızın ömrünü uzatacak bakım önerileri sunuyoruz.<\/p><h3>Halı Seçerken Nelere Dikkat Etmeli?<\/h3><p>Halı alırken sadece rengine ve desenine değil, odanın fonksiyonuna, trafik yoğunluğuna ve kişisel ihtiyaçlarınıza göre bazı önemli faktörleri göz önünde bulundurmalısınız:<\/p><ul><li><b>Odanın Fonksiyonu ve Trafik Yoğunluğu:<\/b><\/li><ul><li><b>Salon ve Oturma Odası:<\/b> Bu alanlar genellikle evin en yoğun kullanılan yerleridir. Bu nedenle dayanıklı, kolay temizlenebilir ve aşınmaya dirençli halılar tercih edilmelidir. Yün veya sentetik (polyester, polipropilen) halılar iyi birer seçenek olabilir.<\/li><li><b>Yatak Odası:<\/b> Daha az trafikli ve daha çok konfor aranan bu alanlarda, yumuşak, kalın tüylü ve sıcak tutan halılar (örneğin shaggy halılar) tercih edilebilir.<\/li><li><b>Çocuk Odası:<\/b> Lekelere karşı dirençli, anti-alerjik ve kolay temizlenebilir sentetik halılar veya özel çocuk halıları idealdir.<\/li><li><b>Koridorlar ve Giriş Alanları:<\/b> Yüksek trafik ve kire maruz kalma riski nedeniyle, koyu renkli, desenli ve dayanıklı halılar uygun olacaktır.<\/li><\/ul><li><b>Malzeme Türü:<\/b><\/li><ul><li><b>Yün Halılar:<\/b> Doğal, dayanıklı, esnek, leke tutmaz (doğal lanolin içeriği sayesinde) ve ateşe dayanıklıdır. Ancak fiyatları sentetiklere göre daha yüksektir ve özel bakım gerektirebilirler.<\/li><li><b>İpek Halılar:<\/b> Lüks, parlak ve yumuşaktır. Genellikle el dokuması olup çok değerlidir. Hassas yapıları nedeniyle özel temizlik ve bakım gerektirir.<\/li><\/li><li><b>Sentetik Halılar (Polyester, Polipropilen, Naylon):<\/b> Genellikle daha uygun fiyatlı, leke tutmaz (özellikle polipropilen), dayanıklı ve renk çeşitliliği fazladır. Kolay temizlenebilir olmaları da avantajdır.<\/li><li><b>Pamuk Halılar:<\/b> Yumuşak, nefes alabilen ve doğal bir malzemedir. Genellikle yıkanabilir ve alerjisi olanlar için uygundur.<\/li><\/ul><li><b>Renk ve Desen:<\/b> Odanın genel dekorasyonu, duvar renkleri ve mobilyalarla uyumlu bir renk ve desen seçmek önemlidir. Küçük odalarda açık renkler ve sade desenler, alanı daha geniş gösterirken, büyük odalarda koyu renkler veya cesur desenler kullanabilirsiniz.<\/li><li><b>Boyut:<\/b> Halının odanın boyutuna uygun olması gerekir. Çok küçük bir halı odanın dağınık görünmesine neden olabilirken, çok büyük bir halı boğucu bir etki yaratabilir. Genellikle mobilyaların ayaklarının altına girecek veya odanın büyük bir bölümünü kaplayacak şekilde seçilir.<\/li><\/ul><h3>Halınızın Ömrünü Uzatmak İçin Bakım İpuçları<\/h3><p>Evinize en uygun halıyı seçtikten sonra, onun güzelliğini ve dayanıklılığını uzun yıllar korumak için düzenli ve doğru bakım şarttır:<\/p><ul><li><b>Düzenli Süpürme:<\/b> Haftada en az iki kez, yüksek trafikli alanlarda daha sık olmak üzere elektrik süpürgesiyle halınızı süpürün. Bu, toz ve kirin liflere derinlemesine işlemesini engeller.<\/li><li><b>Lekelere Anında Müdahale:<\/b> Halının üzerine bir şey döküldüğünde hemen temiz bir bez veya kağıt havlu ile bastırarak lekeyi emdirin. Kesinlikle ovmayın! Lekenin türüne uygun temizleyici kullanın veya Bank Halı Yıkama'dan profesyonel destek alın.<\/li><li><b>Profesyonel Yıkama:<\/b> Halılarınızın türüne ve kullanım sıklığına göre yılda en az bir veya iki kez Bank Halı Yıkama gibi profesyonel bir firmada yıkatın. Profesyonel temizlik, derinlemesine kirleri, alerjenleri ve mikropları temizleyerek halınızın ömrünü uzatır ve hijyenini sağlar.<\/li><li><b>Mobilya Ayaklarına Koruyucu:<\/b> Ağır mobilyaların halı üzerinde bıraktığı izleri önlemek için mobilya ayaklarının altına koruyucu pedler yerleştirin.<\/li><li><b>Direkt Güneş Işığından Koruma:<\/b> Direkt güneş ışığı, halınızın renklerinin solmasına neden olabilir. Perdeler veya jaluziler kullanarak halınızı koruyun.<\/li><li><b>Halınızı Periyodik Olarak Döndürün:<\/b> Halınızın üzerindeki aşınma ve solmayı dengelemek için, altı ayda bir veya yılda bir halınızın yönünü değiştirin.<\/li><\/ul><blockquote>\"Doğru seçilmiş ve düzenli bakımı yapılan bir halı, evinizin en değerli parçalarından biri olmaya devam eder. Bank Halı Yıkama olarak, halılarınızın uzun ömürlü ve pırıl pırıl kalması için yanınızdayız.\"<\/blockquote><p>Unutmayın, halı seçimi bir yatırım, bakımı ise bu yatırımın korunmasıdır. Bank Halı Yıkama, Sincan ve çevresindeki müşterilerine hem kaliteli halı yıkama hizmetleri sunmakta hem de halı bakımı konusunda bilgi ve destek sağlamaktadır. Halılarınızla ilgili her türlü soru ve ihtiyacınızda bize ulaşmaktan çekinmeyin.<\/p>", "tags": ["halı seçimi", "halı bakımı", "halı türleri", "sentetik halı", "yün halı", "bank halı yıkama", "sincan"], "meta_description": "Evinize en uygun halıyı seçmek ve halınızın ömrünü uzatmak için ipuçları. Halı türleri, malzeme özellikleri ve bakım rehberi.", "status": "published", "date": "08 Şubat 2026", "read_time": "3", "created_at": "2026-03-01T00:00:00.000Z", "updated_at": "2026-03-01T00:00:00.000Z"}, {"id": "blog_anti-alerjik-hali-yikama-saglikli-bir-ev-icin-neler-yapilmali", "slug": "anti-alerjik-hali-yikama-saglikli-bir-ev-icin-neler-yapilmali", "title": "Anti-Alerjik Halı Yıkama: Sağlıklı Bir Ev İçin Neler Yapılmalı?", "category": "Sağlık", "summary": "Alerjisi olanlar için anti-alerjik halı yıkamanın önemi ve Bank Halı Yıkama'nın sağlıklı evler için sunduğu özel çözümler. Ev tozu akarlarından kurtulun.", "content": "<h2>Anti-Alerjik Halı Yıkama: Sağlıklı Bir Ev İçin Neler Yapılmalı?<\/h2><p>Evlerimiz, özellikle alerjisi olan bireyler için potansiyel bir alerjen kaynağı olabilir. Halılar, ev tozu akarları, polen, evcil hayvan tüyleri, mantar sporları ve diğer alerjenleri kolayca hapseder. Bu durum, alerjik reaksiyonları, astım semptomlarını ve solunum yolu rahatsızlıklarını tetikleyebilir. Bank Halı Yıkama olarak, sağlıklı ve alerjensiz yaşam alanları yaratmanın önemini biliyor, bu yüzden anti-alerjik halı yıkama hizmetleriyle yanınızda yer alıyoruz.<\/p><h3>Alerjenler ve Halılar Arasındaki Bağlantı<\/h3><p>Halılar, sıcak, nemli ve karanlık ortamları seven ev tozu akarları için ideal bir yaşam alanı sunar. Bu mikroskobik canlılar, özellikle yatak odası halılarında ve oturma odası halılarında yoğunlaşabilir. Akarların dışkıları ve parçacıkları, alerjisi olan kişilerde hapşırma, burun akıntısı, göz kaşıntısı, öksürük ve hatta astım atakları gibi semptomlara neden olabilir. Normal elektrik süpürgesi veya yüzeysel temizlik, bu alerjenleri halının derinliklerinden tamamen uzaklaştırmak için yeterli değildir.<\/p><h3>Anti-Alerjik Halı Yıkamanın Önemi<\/h3><p>Anti-alerjik halı yıkama, sadece görünür kirleri değil, aynı zamanda halının derinliklerine yerleşmiş gözle görülmeyen alerjenleri ve mikroorganizmaları hedef alır. Bu özel temizlik süreci, alerjisi olanlar ve hassas bünyeli bireyler için çok daha sağlıklı bir yaşam alanı sunar.<\/p><h3>Bank Halı Yıkama'nın Anti-Alerjik Yaklaşımı<\/h3><p>Bank Halı Yıkama olarak, anti-alerjik halı yıkama hizmetlerimizde aşağıdaki prensipleri benimsemekteyiz:<\/p><ul><li><b>Özel Anti-Alerjik Şampuanlar:<\/b> Kullandığımız halı şampuanları, alerjenleri nötralize eden, antibakteriyel ve antifungal özelliklere sahip özel formüllere sahiptir. Bu ürünler, hem halınıza zarar vermez hem de kalıntı bırakmaz.<\/li><li><b>Derinlemesine Vakumlama ve Yıkama:<\/b> Yüksek emiş gücüne sahip profesyonel makinelerimizle halının her santimetrekaresi derinlemesine vakumlanır. Ardından, yüksek basınçlı su ve anti-alerjik şampuanlar kullanılarak, ev tozu akarları, polenler ve diğer alerjenler halı liflerinden tamamen arındırılır.<\/li><li><b>Tam Kurutma ve Dezenfeksiyon:<\/b> Yıkama sonrası halıların tamamen kuruması, küf ve bakteri oluşumunu engellemek için kritik öneme sahiptir. Özel kurutma odalarımızda, halılar optimum nem seviyesine ulaşana kadar bekletilir. Ayrıca, bu süreçte ultraviyole (UV) ışık veya ozon jeneratörleri gibi ek dezenfeksiyon yöntemleri de uygulanabilir.<\/li><li><b>Çevre Dostu ve Güvenli Ürünler:<\/b> Kullandığımız tüm ürünler, insan sağlığına ve çevreye dost, biyolojik olarak parçalanabilen ve kalıntı bırakmayan niteliktedir.<\/li><li><b>Düzenli Bakım Programları:<\/b> Alerjisi olan aileler için düzenli anti-alerjik halı yıkama programları öneriyoruz. Bu, evin sürekli olarak alerjenlerden arınmış kalmasını sağlar.<\/li><\/ul><h3>Kimler İçin Uygundur?<\/h3><p>Anti-alerjik halı yıkama hizmetimiz özellikle aşağıdaki kişiler için hayati önem taşır:<\/p><ul><li>Astım ve alerjisi olan bireyler<\/li><li>Küçük çocuklar ve bebekler<\/li><li>Evcil hayvan sahibi olanlar<\/li><li>Solunum yolu rahatsızlıkları olanlar<\/li><li>Genel olarak daha hijyenik ve sağlıklı bir yaşam alanı arayan herkes<\/li><\/ul><blockquote>\"Sağlıklı bir ev, sağlıklı bir yaşam demektir. Bank Halı Yıkama ile alerjenlere veda edin, ferah ve hijyenik bir ortamda nefes alın.\"<\/blockquote><p>Halılarınız sadece birer dekorasyon unsuru değil, aynı zamanda evinizin havasını ve genel hijyenini etkileyen önemli yüzeylerdir. Bank Halı Yıkama olarak Sincan ve çevresinde, anti-alerjik halı yıkama hizmetlerimizle, ailenizin sağlığına katkıda bulunmaktan gurur duyuyoruz. Evinizdeki alerjen yükünü azaltmak ve daha sağlıklı bir yaşam alanı yaratmak için bize ulaşın. Ücretsiz danışmanlık ve keşif hizmetlerimizden yararlanarak, halılarınızın ihtiyacına özel çözümlerimizi keşfedin.<\/p>", "tags": ["anti-alerjik", "halı yıkama", "sağlıklı ev", "ev tozu akarı", "alerji", "bank halı yıkama", "sincan"], "meta_description": "Alerjisi olanlar için anti-alerjik halı yıkamanın önemi ve Bank Halı Yıkama'nın sağlıklı evler için çözümleri. Ev tozu akarlarından kurtulun.", "status": "published", "date": "01 Şubat 2026", "read_time": "3", "created_at": "2026-03-01T00:00:00.000Z", "updated_at": "2026-03-01T00:00:00.000Z"}, {"id": "blog_cevre-dostu-hali-yikama-surdurulebilirlik-anlayisimiz", "slug": "cevre-dostu-hali-yikama-surdurulebilirlik-anlayisimiz", "title": "Çevre Dostu Halı Yıkama: Bank Halı Yıkama'nın Sürdürülebilir Yaklaşımı", "category": "Sürdürülebilirlik", "summary": "Çevreye duyarlı halı yıkama yöntemlerimizle hem halılarınızı hem de doğayı koruyoruz. Bank Halı Yıkama'nın sürdürülebilirlik anlayışını keşfedin.", "content": "<h2>Çevre Dostu Halı Yıkama: Bank Halı Yıkama'nın Sürdürülebilir Yaklaşımı<\/h2><p>Günümüzde çevre bilinci her zamankinden daha önemli hale gelmiştir. Tüketiciler olarak, kullandığımız ürünlerden aldığımız hizmetlere kadar her alanda çevresel etkiyi göz önünde bulunduruyoruz. Halı yıkama sektörü de bu hassasiyetten payını alıyor. Bank Halı Yıkama olarak, sadece halılarınızı pırıl pırıl yapmakla kalmıyor, aynı zamanda çevreye duyarlı ve sürdürülebilir yöntemlerle hizmet vererek gezegenimizi koruma misyonunu üstleniyoruz.<\/p><h3>Neden Çevre Dostu Halı Yıkama?<\/h3><p>Geleneksel halı yıkama yöntemleri, kimyasal içerikli deterjanlar ve yüksek su tüketimi ile çevreye olumsuz etkilerde bulunabilir. Bu kimyasallar, atık sular aracılığıyla toprağa ve su kaynaklarına karışarak ekosistemi tehdit edebilir. Ayrıca, bu tür maddeler, yıkanan halılarda kalıntı bırakarak insan ve evcil hayvan sağlığı için de risk oluşturabilir. Çevre dostu halı yıkama, bu riskleri minimize ederek hem doğayı hem de sizin sağlığınızı korumayı hedefler.<\/p><h3>Bank Halı Yıkama'nın Sürdürülebilir Yaklaşımı<\/h3><p>Bank Halı Yıkama olarak, sürdürülebilir bir gelecek için attığımız adımlar ve benimsediğimiz çevre dostu prensipler şunlardır:<\/p><ul><li><b>Biyolojik Çözünürlüklü ve Bitkisel Bazlı Ürünler:<\/b> Kullandığımız tüm şampuanlar ve temizleyiciler, ağır kimyasallar, fosfatlar, optik ağartıcılar ve parabenler içermez. Doğada kısa sürede çözünebilen, bitkisel bazlı ve insan sağlığına zararsız ürünleri tercih ediyoruz. Bu sayede, atık sularımızın çevreye verdiği zararı minimuma indiriyoruz ve halılarınızda hiçbir zararlı kalıntı bırakmıyoruz.<\/li><li><b>Su Tasarrufu Sağlayan Teknolojiler:<\/b> Modern yıkama makinelerimiz, su tüketimini optimize eden özel teknolojilere sahiptir. Geleneksel yöntemlere göre çok daha az su kullanarak aynı etkin temizliği sağlıyoruz. Ayrıca, geri dönüştürülmüş su kullanımı gibi uygulamaları da süreçlerimize entegre etmeye çalışıyoruz.<\/li><li><b>Enerji Verimliliği:<\/b> Tesisimizde kullandığımız makineler ve kurutma sistemleri, enerji verimliliği yüksek modellerden seçilmiştir. Enerji tüketimini azaltarak karbon ayak izimizi küçültmeyi hedefliyoruz. Güneş enerjisi panelleri gibi yenilenebilir enerji kaynaklarını değerlendirme potansiyelimizi sürekli araştırıyoruz.<\/li><li><b>Atık Yönetimi ve Geri Dönüşüm:<\/b> Yıkama sürecinde ortaya çıkan katı atıklar ve ambalaj malzemeleri için etkin bir atık yönetim sistemi uyguluyoruz. Geri dönüştürülebilir tüm malzemeleri ayrıştırarak doğaya geri kazandırılmasını sağlıyoruz.<\/li><li><b>Hava Kalitesi Kontrolü:<\/b> Kullandığımız ürünler, iç mekan hava kalitesini olumsuz etkileyen uçucu organik bileşikleri (VOC) içermez. Bu, hem çalışanlarımız hem de müşterilerimiz için daha sağlıklı bir ortam yaratır.<\/li><\/ul><h3>Çevre Dostu Yıkamanın Avantajları<\/h3><p>Bank Halı Yıkama'nın çevre dostu hizmetlerini tercih etmeniz size ve çevrenize birçok fayda sağlar:<\/p><ul><li><b>Daha Sağlıklı Yaşam Alanları:<\/b> Kimyasal kalıntılarından arındırılmış halılar, özellikle çocuklu aileler, evcil hayvan sahipleri ve alerjisi olanlar için daha güvenli ve sağlıklı bir ortam sunar.<\/li><li><b>Halılarınızın Ömrünü Uzatma:<\/b> Sert kimyasallar, halı liflerine zarar verebilir ve ömrünü kısaltabilir. Çevre dostu ürünler, halınızın dokusunu ve renklerini korurken, daha uzun süre yeni gibi kalmasına yardımcı olur.<\/li><li><b>Doğayı Koruma Bilinci:<\/b> Çevre dostu hizmetleri tercih ederek, su kaynaklarının korunmasına, kimyasal kirliliğin azaltılmasına ve enerji tasarrufuna doğrudan katkıda bulunursunuz.<\/li><li><b>Kötü Koku Yok:<\/b> Doğal bazlı temizleyiciler, sentetik kokular yerine ferah ve doğal bir temizlik kokusu bırakır.<\/li><\/ul><blockquote>\"Bank Halı Yıkama olarak, gelecek nesillere daha yaşanabilir bir dünya bırakmak için üzerimize düşen sorumluluğu biliyor, her yıkamada sürdürülebilirlik ilkesini benimsiyoruz.\"<\/blockquote><p>Sincan ve çevresindeki halı yıkama ihtiyaçlarınızda, hem halılarınızın en iyi şekilde temizlendiğinden hem de çevresel etkimizin minimumda olduğundan emin olmak için Bank Halı Yıkama'yı tercih edin. Sağlıklı, temiz ve çevreye duyarlı bir hizmet anlayışıyla sizleri bekliyoruz. Daha fazla bilgi ve ücretsiz keşif için bize ulaşmaktan çekinmeyin.<\/p>", "tags": ["çevre dostu", "sürdürülebilir halı yıkama", "eco-friendly", "bank halı yıkama", "sincan", "doğa dostu temizlik", "yeşil temizlik"], "meta_description": "Bank Halı Yıkama'nın çevre dostu ve sürdürülebilir halı yıkama yöntemleriyle hem doğayı hem de ailenizi koruyun. Sincan'da yeşil temizlik.", "status": "published", "date": "25 Ocak 2026", "read_time": "3", "created_at": "2026-03-01T00:00:00.000Z", "updated_at": "2026-03-01T00:00:00.000Z"}]};
+const INLINE_SERVICES = {"services": [{"icon": "dry_cleaning", "name": "Makine Halısı Yıkama", "desc": "Modern ekipmanlarla derinlemesine ve hijyenik temizlik sağlıyoruz, halınızın dokusuna zarar vermeden parlaklığını geri getiriyoruz.", "price": "₺30/m²'den", "image": ""}, {"icon": "weekend", "name": "El Dokuma & Yün Halı Yıkama", "desc": "Değerli el dokuma ve yün halılarınıza özel, hassas ve doğal yöntemlerle, renklerini koruyarak yıkama hizmeti sunuyoruz.", "price": "₺50/m²'den", "image": ""}, {"icon": "bed", "name": "Koltuk Takımı Yıkama", "desc": "Koltuklarınızdaki derinlemesine kir, leke ve kötü kokuları profesyonelce temizleyerek yaşam alanlarınıza ferahlık katıyoruz.", "price": "₺450/takım'dan", "image": ""}, {"icon": "auto_awesome", "name": "Yorgan & Battaniye Yıkama", "desc": "Yorgan ve battaniyelerinizi hijyenik koşullarda, anti-alerjik ürünlerle yıkayıp, tam kurutma sonrası paketliyoruz.", "price": "₺180/adet'ten", "image": ""}, {"icon": "cleaning_services", "name": "Özel Leke Çıkarma", "desc": "Zorlu ve inatçı lekelere özel olarak geliştirdiğimiz formüller ve tekniklerle etkili çözümler sunuyoruz.", "price": "Keşif Üzerine", "image": ""}, {"icon": "local_shipping", "name": "Ücretsiz Servis", "desc": "Sincan ve çevresindeki tüm müşterilerimizden halılarınızı kapınızdan alıp, temizlenmiş olarak kapınıza teslim ediyoruz.", "price": "Ücretsiz", "image": ""}]};
+const INLINE_TESTIMONIALS = {"testimonials": [{"name": "Ayşe Yılmaz", "text": "Bank Halı Yıkama ile çalıştığımdan beri halılarım hep pırıl pırıl. Gelen servis elemanları da çok güler yüzlü ve işlerini titizlikle yapıyorlar. Herkese tavsiye ederim.", "role": "3 yıldır müşterimiz"}, {"name": "Mehmet Can", "text": "Daha önce farklı yerlerle çalışmıştım ama Bank Halı Yıkama'nın temizlik kalitesi gerçekten bambaşka. Özellikle zorlu lekeleri bile harika çıkardılar. Sincan'daki en iyi adres!", "role": "2 yıldır müşterimiz"}, {"name": "Zeynep Demir", "text": "Yorumlara bakarak Bank Halı Yıkama'yı tercih ettim ve hiç pişman olmadım. Hem hızlı hem de çok kaliteli bir hizmet sundular. Halılarım resmen ilk günkü gibi oldu. Teşekkürler!", "role": "1 yıldır müşterimiz"}]};
+let settings = {};
+let blogs = [];
+let services = [];
+let testimonials = [];
+let messages = [];
+let galleryImages = [];
+let waTemplates = [];
+let specialDays = [];
+let editingBlogId = null;
+let deleteCallback = null;
+
+// ═══════════════════════════════════════════════════════
+// AUTH — Server-side authentication (session cookie)
+// Tüm kimlik doğrulama sunucu tarafında yapılır.
+// Hassas bilgiler (token, hash) istemci tarafında YOKTUR.
+// ═══════════════════════════════════════════════════════
+
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('loginEmail').value.trim();
+    const user = document.getElementById('loginUser').value.trim();
+    const pass = document.getElementById('loginPass').value;
+    const errorEl = document.getElementById('loginError');
+
+    if (!user || !pass) {
+        errorEl.textContent = 'Kullanıcı adı ve şifre zorunlu';
+        errorEl.classList.remove('hidden');
+        return;
+    }
+
+    try {
+        const res = await fetch('/api/auth.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({ email: email, user: user, pass: pass })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+            errorEl.classList.add('hidden');
+            document.getElementById('loginLocked').classList.add('hidden');
+            showAdminPanel();
+        } else if (res.status === 429) {
+            // Rate limited
+            errorEl.classList.add('hidden');
+            document.getElementById('loginLocked').classList.remove('hidden');
+            let remaining = data.remaining || 30;
+            document.getElementById('lockTimer').textContent = remaining;
+            const timer = setInterval(function() {
+                remaining--;
+                document.getElementById('lockTimer').textContent = remaining;
+                if (remaining <= 0) {
+                    clearInterval(timer);
+                    document.getElementById('loginLocked').classList.add('hidden');
+                }
+            }, 1000);
+        } else {
+            // Başarısız giriş
+            const attempts = data.attempts || 0;
+            errorEl.textContent = data.error || 'Giriş başarısız';
+            if (attempts > 0) errorEl.textContent += ' (' + attempts + '/5)';
+            errorEl.classList.remove('hidden');
+
+            if (data.locked) {
+                errorEl.classList.add('hidden');
+                document.getElementById('loginLocked').classList.remove('hidden');
+                let remaining = data.remaining || 30;
+                document.getElementById('lockTimer').textContent = remaining;
+                const timer = setInterval(function() {
+                    remaining--;
+                    document.getElementById('lockTimer').textContent = remaining;
+                    if (remaining <= 0) {
+                        clearInterval(timer);
+                        document.getElementById('loginLocked').classList.add('hidden');
+                    }
+                }, 1000);
+            }
+        }
+    } catch (err) {
+        errorEl.textContent = 'Sunucu bağlantısı kurulamadı';
+        errorEl.classList.remove('hidden');
+    }
+});
+
+async function checkSession() {
+    try {
+        const res = await fetch('/api/auth.php', { credentials: 'same-origin' });
+        if (res.ok) {
+            const data = await res.json();
+            if (data.authenticated) {
+                showAdminPanel();
+                return;
+            }
+        }
+    } catch(e) {
+        // Sunucu erişilemez — login ekranını göster
+    }
+    document.getElementById('loginScreen').classList.remove('hidden');
+}
+
+function showAdminPanel() {
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('adminPanel').classList.remove('hidden');
+    loadData();
+}
+
+async function logout() {
+    try {
+        await fetch('/api/auth.php?action=logout', {
+            method: 'POST',
+            credentials: 'same-origin'
+        });
+    } catch(e) {}
+    document.getElementById('adminPanel').classList.add('hidden');
+    document.getElementById('loginScreen').classList.remove('hidden');
+    document.getElementById('loginEmail').value = '';
+    document.getElementById('loginUser').value = '';
+    document.getElementById('loginPass').value = '';
+}
+
+// ═══════════════════════════════════════════════════════
+// SECURITY: XSS SANITIZER
+// ═══════════════════════════════════════════════════════
+function sanitizeHTML(html) {
+    // İzin verilen etiketler
+    const allowedTags = ['h2','h3','h4','p','br','strong','b','em','i','u','a','ul','ol','li','blockquote','span','div'];
+    const allowedAttrs = ['href','target','rel','class','style'];
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    function cleanNode(node) {
+        const children = Array.from(node.childNodes);
+        children.forEach(function(child) {
+            if (child.nodeType === 3) return; // text node — OK
+            if (child.nodeType === 1) { // element
+                const tag = child.tagName.toLowerCase();
+                if (!allowedTags.includes(tag)) {
+                    // Etiket izinli değilse içeriğini koru, etiketi kaldır
+                    while (child.firstChild) child.parentNode.insertBefore(child.firstChild, child);
+                    child.parentNode.removeChild(child);
+                    return;
+                }
+                // Tehlikeli attribute'ları kaldır
+                Array.from(child.attributes).forEach(function(attr) {
+                    if (!allowedAttrs.includes(attr.name.toLowerCase())) {
+                        child.removeAttribute(attr.name);
+                    }
+                    // javascript: URL'lerini engelle
+                    if (attr.name === 'href' && attr.value.toLowerCase().trim().startsWith('javascript:')) {
+                        child.setAttribute('href', '#');
+                    }
+                });
+                // Tüm linklere rel="noopener noreferrer" ekle
+                if (tag === 'a') {
+                    child.setAttribute('rel', 'noopener noreferrer');
+                    child.setAttribute('target', '_blank');
+                }
+                // event handler'ları temizle (onclick, onload vb.)
+                Array.from(child.attributes).forEach(function(attr) {
+                    if (attr.name.toLowerCase().startsWith('on')) {
+                        child.removeAttribute(attr.name);
+                    }
+                });
+                cleanNode(child);
+            } else {
+                // Comment vs. — kaldır
+                child.parentNode.removeChild(child);
+            }
+        });
+    }
+
+    cleanNode(doc.body);
+    return doc.body.innerHTML;
+}
+
+// Input sanitization (text inputs)
+function sanitizeText(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// ═══════════════════════════════════════════════════════
+// DATA LOADING
+// ═══════════════════════════════════════════════════════
+async function loadData() {
+    // Veri yükleme sırası: 1) PHP API  2) Statik dosya  3) Inline veri
+    try {
+        // Önce PHP API dene
+        const fetchOpts = { credentials: 'same-origin' };
+        const [settingsRes, blogsRes, servicesRes, testimonialsRes, messagesRes, galleryRes, waRes, specialRes] = await Promise.all([
+            fetch('/api/settings.php', fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null),
+            fetch('/api/blogs.php', fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null),
+            fetch('/api/services.php', fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null),
+            fetch('/api/testimonials.php', fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null),
+            fetch('/api/messages.php', fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null),
+            fetch('/api/gallery.php', fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null),
+            fetch('/api/whatsapp_templates.php', fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null),
+            fetch('/api/special_days.php', fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null),
+        ]);
+
+        if (settingsRes && Object.keys(settingsRes).length > 0) {
+            settings = settingsRes;
+        } else {
+            // API boş veya erişilemez — statik dosya dene
+            try {
+                const staticSettings = await fetch(DATA_PATH + 'settings.json').then(r => r.ok ? r.json() : null);
+                settings = staticSettings || INLINE_SETTINGS || {};
+            } catch (e) {
+                settings = INLINE_SETTINGS || {};
+            }
+        }
+
+        if (blogsRes && blogsRes.blogs) {
+            blogs = blogsRes.blogs;
+        } else {
+            try {
+                const staticBlogs = await fetch(DATA_PATH + 'blogs.json').then(r => r.ok ? r.json() : null);
+                blogs = (staticBlogs && staticBlogs.blogs) ? staticBlogs.blogs : (INLINE_BLOGS.blogs || []);
+            } catch (e) {
+                blogs = (INLINE_BLOGS && INLINE_BLOGS.blogs) ? INLINE_BLOGS.blogs : [];
+            }
+        }
+
+        if (servicesRes && servicesRes.services) {
+            services = servicesRes.services;
+        } else {
+            services = (INLINE_SERVICES && INLINE_SERVICES.services) ? INLINE_SERVICES.services : [];
+        }
+
+        if (testimonialsRes && testimonialsRes.testimonials) {
+            testimonials = testimonialsRes.testimonials;
+        } else {
+            testimonials = (INLINE_TESTIMONIALS && INLINE_TESTIMONIALS.testimonials) ? INLINE_TESTIMONIALS.testimonials : [];
+        }
+
+        if (messagesRes && messagesRes.messages) {
+            messages = messagesRes.messages;
+        }
+
+        if (galleryRes && galleryRes.images) {
+            galleryImages = galleryRes.images;
+        }
+
+        if (waRes && waRes.templates) {
+            waTemplates = waRes.templates;
+        }
+        if (specialRes && specialRes.special_days) {
+            specialDays = specialRes.special_days;
+        }
+    } catch (e) {
+        settings = INLINE_SETTINGS || {};
+        blogs = (INLINE_BLOGS && INLINE_BLOGS.blogs) ? INLINE_BLOGS.blogs : [];
+        services = (INLINE_SERVICES && INLINE_SERVICES.services) ? INLINE_SERVICES.services : [];
+        testimonials = (INLINE_TESTIMONIALS && INLINE_TESTIMONIALS.testimonials) ? INLINE_TESTIMONIALS.testimonials : [];
+    }
+    populateSettings();
+    renderDashboard();
+    renderBlogList();
+    renderServicesList();
+    renderTestimonialsList();
+    renderMessages();
+    updateUnreadBadge();
+    renderGallery();
+    renderWaTemplates();
+    renderSpecialDays();
+    loadVisitorStats();
+    loadQRCodes();
+    document.getElementById('sidebarBizName').textContent = settings.business_name || 'Admin Panel';
+}
+
+function saveDataToFile(filename, data) {
+    // Fallback: dosya indirme (API yoksa)
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
+async function saveToAPI(endpoint, data) {
+    // MySQL'e kaydet, başarısızsa dosya indir
+    try {
+        const res = await fetch('/api/' + endpoint + '.php', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify(data)
+        });
+        if (res.status === 401) {
+            showToast('Oturum süresi dolmuş, lütfen tekrar giriş yapın.', 'danger');
+            logout();
+            return false;
+        }
+        if (!res.ok) throw new Error('API hata: ' + res.status);
+        return true;
+    } catch (e) {
+        console.warn('API kayıt başarısız, dosya indiriliyor:', e);
+        saveDataToFile(endpoint + '.json', data);
+        showToast('API bağlantısı yok — dosya indirildi.', 'warning');
+        return false;
+    }
+}
+
+// ═══════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════
+function showPage(page) {
+    document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
+    document.getElementById('page-' + page).classList.remove('hidden');
+    document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+    document.querySelector('[data-page="' + page + '"]').classList.add('active');
+
+    const titles = { dashboard: 'Dashboard', messages: 'İletişim Mesajları', gallery: 'Görsel Yönetimi', services: 'Hizmet Yönetimi', testimonials: 'Yorum Yönetimi', blogs: 'Blog Yönetimi', qrcode: 'QR Kod Üretici', settings: 'Ayarlar' };
+    document.getElementById('pageTitle').textContent = titles[page] || page;
+
+    // Close mobile sidebar
+    document.getElementById('sidebar').classList.add('-translate-x-full');
+}
+
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('-translate-x-full');
+}
+
+// ═══════════════════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════════════════
+function renderDashboard() {
+    const published = blogs.filter(b => b.status === 'published');
+    const drafts = blogs.filter(b => b.status === 'draft');
+    const unread = messages.filter(m => !parseInt(m.is_read));
+
+    document.getElementById('statTotalBlogs').textContent = blogs.length;
+    document.getElementById('statPublished').textContent = published.length;
+    document.getElementById('statDraft').textContent = drafts.length;
+    document.getElementById('statUnreadMessages').textContent = unread.length;
+
+    if (blogs.length > 0) {
+        const sorted = [...blogs].sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+
+        let html = '';
+        sorted.slice(0, 5).forEach(function(blog) {
+            const statusClass = blog.status === 'published' ? 'text-success' : 'text-warning';
+            const statusText = blog.status === 'published' ? 'Yayında' : 'Taslak';
+            html += '<div class="px-6 py-3 flex items-center justify-between">' +
+                '<div class="flex-1 min-w-0">' +
+                '<div class="text-sm font-medium truncate">' + escapeHtml(blog.title || 'Başlıksız') + '</div>' +
+                '<div class="text-xs text-panel-muted">' + escapeHtml(blog.category || '') + ' · ' + formatDateTR(blog.date) + '</div>' +
+                '</div>' +
+                '<span class="text-xs font-medium ' + statusClass + ' ml-4">' + statusText + '</span>' +
+                '</div>';
+        });
+        document.getElementById('dashboardRecentBlogs').innerHTML = html;
+    }
+}
+
+// ═══════════════════════════════════════════════════════
+// BLOG MANAGEMENT
+// ═══════════════════════════════════════════════════════
+function renderBlogList() {
+    const search = (document.getElementById('blogSearch').value || '').toLowerCase();
+    const filter = document.getElementById('blogFilter').value;
+
+    let filtered = blogs.filter(function(b) {
+        if (filter !== 'all' && b.status !== filter) return false;
+        if (search && !(b.title || '').toLowerCase().includes(search) && !(b.category || '').toLowerCase().includes(search)) return false;
+        return true;
+    });
+
+    if (filtered.length === 0) {
+        document.getElementById('blogList').innerHTML = '<div class="px-6 py-12 text-center text-panel-muted"><span class="material-symbols-outlined text-4xl block mb-2">article</span>' +
+            (blogs.length === 0 ? 'Henüz blog yazısı yok. Hemen ilk yazınızı oluşturun!' : 'Aramanızla eşleşen sonuç bulunamadı.') + '</div>';
+        return;
+    }
+
+    let html = '';
+    filtered.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+    filtered.forEach(function(blog) {
+        const statusBadge = blog.status === 'published'
+            ? '<span class="bg-success/10 text-success text-xs px-2 py-0.5 rounded-full">Yayında</span>'
+            : '<span class="bg-warning/10 text-warning text-xs px-2 py-0.5 rounded-full">Taslak</span>';
+        var thumb = blog.cover_image
+            ? '<img src="' + escapeAttr(blog.cover_image) + '" class="w-12 h-12 rounded-lg object-cover border border-panel-border flex-shrink-0" onerror="this.style.display=&quot;none&quot;"/>'
+            : '<div class="w-12 h-12 rounded-lg bg-panel-bg border border-panel-border flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-panel-muted text-lg">article</span></div>';
+        html += '<div class="px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">' +
+            thumb +
+            '<div class="flex-1 min-w-0">' +
+            '<div class="flex items-center gap-2 mb-1">' +
+            '<span class="text-sm font-medium truncate">' + escapeHtml(blog.title || 'Başlıksız') + '</span>' +
+            statusBadge +
+            '</div>' +
+            '<div class="text-xs text-panel-muted">' + escapeHtml(blog.category || 'Kategori yok') + ' · ' + formatDateTR(blog.date) + ' · ' + (blog.read_time || '5') + ' dk okuma</div>' +
+            '</div>' +
+            '<div class="flex items-center gap-2">' +
+            '<button onclick="toggleFeatured(\'' + blog.id + '\')" class="p-2 hover:bg-panel-bg rounded-lg transition-colors" title="' + (blog.is_featured ? 'Anasayfadan Kaldır' : 'Anasayfada Göster') + '"><span class="material-symbols-outlined text-lg ' + (blog.is_featured ? 'text-warning' : 'text-panel-muted hover:text-warning') + '">' + (blog.is_featured ? 'star' : 'star_border') + '</span></button>' +
+            '<button onclick="editBlog(\'' + blog.id + '\')" class="p-2 hover:bg-panel-bg rounded-lg transition-colors" title="Düzenle"><span class="material-symbols-outlined text-lg text-panel-muted hover:text-accent">edit</span></button>' +
+            '<button onclick="openDeleteModal(\'' + blog.id + '\')" class="p-2 hover:bg-panel-bg rounded-lg transition-colors" title="Sil"><span class="material-symbols-outlined text-lg text-panel-muted hover:text-danger">delete</span></button>' +
+            (blog.status === 'published' ? '<a href="' + BLOG_PATH + blog.slug + '" target="_blank" class="p-2 hover:bg-panel-bg rounded-lg transition-colors" title="Görüntüle"><span class="material-symbols-outlined text-lg text-panel-muted hover:text-accent">open_in_new</span></a>' : '') +
+            '</div></div>';
+    });
+    document.getElementById('blogList').innerHTML = html;
+}
+
+function filterBlogs() { renderBlogList(); }
+
+function toggleFeatured(id) {
+    var blog = blogs.find(function(b) { return b.id === id; });
+    if (!blog) return;
+    var featuredCount = blogs.filter(function(b) { return b.is_featured && b.id !== id; }).length;
+    if (!blog.is_featured && featuredCount >= 3) {
+        showToast('En fazla 3 blog anasayfada gösterilebilir. Önce birini kaldırın.', 'warning');
+        return;
+    }
+    blog.is_featured = blog.is_featured ? 0 : 1;
+    saveToAPI('blogs', { blogs: blogs });
+    renderBlogList();
+    showToast(blog.is_featured ? 'Anasayfaya eklendi' : 'Anasayfadan kaldırıldı', 'success');
+}
+
+function formatDateTR(d) {
+    if (!d || d === '0000-00-00') return '';
+    var months = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+    var parts = String(d).split('-');
+    if (parts.length !== 3) return d;
+    return parseInt(parts[2]) + ' ' + months[parseInt(parts[1])-1] + ' ' + parts[0];
+}
+
+function generateSlug(title) {
+    return title.toLowerCase()
+        .replace(/ş/g, 's').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/ı/g, 'i')
+        .replace(/Ş/g, 's').replace(/Ğ/g, 'g').replace(/Ü/g, 'u').replace(/Ö/g, 'o').replace(/Ç/g, 'c').replace(/İ/g, 'i')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '')
+        .substring(0, 60);
+}
+
+function generateId() {
+    return 'blog_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 5);
+}
+
+function openBlogEditor(blogId) {
+    document.getElementById('blogListView').classList.add('hidden');
+    document.getElementById('blogEditorView').classList.remove('hidden');
+
+    if (blogId) {
+        editingBlogId = blogId;
+        const blog = blogs.find(b => b.id === blogId);
+        if (blog) {
+            document.getElementById('editorTitle').textContent = 'Blog Düzenle';
+            document.getElementById('blogTitleInput').value = blog.title || '';
+            document.getElementById('blogSlug').value = blog.slug || '';
+            document.getElementById('blogSummary').value = blog.summary || '';
+            document.getElementById('blogContent').innerHTML = blog.content || '';
+            document.getElementById('blogCategory').value = blog.category || '';
+            document.getElementById('blogTags').value = (blog.tags || []).join(', ');
+            document.getElementById('blogMeta').value = blog.meta_description || '';
+            setBlogCoverPreview(blog.cover_image || '');
+        }
+    } else {
+        editingBlogId = null;
+        document.getElementById('editorTitle').textContent = 'Yeni Blog Yazısı';
+        document.getElementById('blogTitleInput').value = '';
+        document.getElementById('blogSlug').value = '';
+        document.getElementById('blogSummary').value = '';
+        document.getElementById('blogContent').innerHTML = '';
+        document.getElementById('blogCategory').value = '';
+        document.getElementById('blogTags').value = '';
+        document.getElementById('blogMeta').value = '';
+        setBlogCoverPreview('');
+    }
+    updatePreview();
+}
+
+function closeBlogEditor() {
+    document.getElementById('blogEditorView').classList.add('hidden');
+    document.getElementById('blogListView').classList.remove('hidden');
+    editingBlogId = null;
+}
+
+function editBlog(id) { openBlogEditor(id); }
+
+function setBlogCoverPreview(url) {
+    const preview = document.getElementById('blogCoverPreview');
+    const img = document.getElementById('blogCoverImg');
+    const hidden = document.getElementById('blogCoverImage');
+    const fileInput = document.getElementById('blogCoverFile');
+    if (url) {
+        img.src = url;
+        hidden.value = url;
+        preview.classList.remove('hidden');
+    } else {
+        img.src = '';
+        hidden.value = '';
+        preview.classList.add('hidden');
+    }
+    if (fileInput) fileInput.value = '';
+}
+
+function removeBlogCover() {
+    setBlogCoverPreview('');
+}
+
+function handleBlogCoverUpload(input) {
+    if (!input.files || !input.files[0]) return;
+    const file = input.files[0];
+    if (file.size > 5 * 1024 * 1024) {
+        showToast('Dosya boyutu max 5MB olmalı', 'danger');
+        input.value = '';
+        return;
+    }
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('category', 'general');
+    formData.append('alt_text', document.getElementById('blogTitleInput').value || 'Blog kapak görseli');
+    document.getElementById('blogCoverLabel').textContent = 'Yükleniyor...';
+    fetch(API_BASE + '/gallery.php', {
+        method: 'POST',
+        credentials: 'same-origin',
+        body: formData
+    })
+    .then(r => r.json())
+    .then(data => {
+        document.getElementById('blogCoverLabel').textContent = 'Görsel Yükle (jpg, png, webp)';
+        if (data.success && data.image && data.image.filename) {
+            const url = '/' + data.image.filename;
+            setBlogCoverPreview(url);
+            showToast('Kapak görseli yüklendi', 'success');
+        } else {
+            showToast(data.error || 'Yükleme başarısız', 'danger');
+        }
+    })
+    .catch(() => {
+        document.getElementById('blogCoverLabel').textContent = 'Görsel Yükle (jpg, png, webp)';
+        showToast('Yükleme hatası', 'danger');
+    });
+}
+
+function saveBlog(status) {
+    const title = document.getElementById('blogTitleInput').value.trim();
+    if (!title) {
+        showToast('Blog başlığı gerekli', 'danger');
+        return;
+    }
+
+    const slug = document.getElementById('blogSlug').value.trim() || generateSlug(title);
+    const rawContent = document.getElementById('blogContent').innerHTML;
+    const content = sanitizeHTML(rawContent);
+    const summary = sanitizeText(document.getElementById('blogSummary').value.trim());
+    const category = sanitizeText(document.getElementById('blogCategory').value.trim());
+    const tags = document.getElementById('blogTags').value.split(',').map(t => sanitizeText(t.trim())).filter(t => t);
+    const metaDesc = sanitizeText(document.getElementById('blogMeta').value.trim());
+
+    // Okuma süresi hesapla
+    const wordCount = content.replace(/<[^>]*>/g, '').split(/\s+/).length;
+    const readTime = Math.max(3, Math.ceil(wordCount / 200)).toString();
+
+    const now = new Date();
+    const isoDate = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+
+    const coverImage = document.getElementById('blogCoverImage').value || '';
+
+    const blogData = {
+        id: editingBlogId || generateId(),
+        slug: slug,
+        title: title,
+        category: category,
+        summary: summary,
+        content: content,
+        tags: tags,
+        meta_description: metaDesc || summary,
+        cover_image: coverImage,
+        status: status,
+        is_featured: editingBlogId ? (blogs.find(b => b.id === editingBlogId) || {}).is_featured || 0 : 0,
+        date: isoDate,
+        read_time: readTime,
+        created_at: editingBlogId ? (blogs.find(b => b.id === editingBlogId) || {}).created_at || now.toISOString() : now.toISOString(),
+        updated_at: now.toISOString()
+    };
+
+    if (editingBlogId) {
+        const idx = blogs.findIndex(b => b.id === editingBlogId);
+        if (idx >= 0) blogs[idx] = blogData;
+    } else {
+        blogs.push(blogData);
+    }
+
+    // Veritabanına kaydet
+    saveToAPI('blogs', { blogs: blogs });
+
+    showToast(status === 'published' ? 'Blog yayınlandı!' : 'Taslak kaydedildi!', 'success');
+    closeBlogEditor();
+    renderBlogList();
+    renderDashboard();
+}
+
+function openDeleteModal(id) {
+    const blog = blogs.find(b => b.id === id);
+    document.getElementById('deleteModalText').textContent = '"' + (blog ? blog.title : '') + '" yazısı kalıcı olarak silinecek.';
+    document.getElementById('deleteModal').classList.remove('hidden');
+    deleteCallback = function() {
+        blogs = blogs.filter(b => b.id !== id);
+        saveToAPI('blogs', { blogs: blogs });
+        renderBlogList();
+        renderDashboard();
+        showToast('Blog silindi', 'success');
+    };
+}
+
+function closeDeleteModal() {
+    document.getElementById('deleteModal').classList.add('hidden');
+    deleteCallback = null;
+}
+
+function confirmDelete() {
+    if (deleteCallback) deleteCallback();
+    closeDeleteModal();
+}
+
+// ═══════════════════════════════════════════════════════
+// RICH TEXT EDITOR
+// ═══════════════════════════════════════════════════════
+function execCmd(cmd, val) {
+    document.execCommand(cmd, false, val || null);
+    document.getElementById('blogContent').focus();
+}
+
+function execBlock(tag) {
+    document.execCommand('formatBlock', false, '<' + tag + '>');
+    document.getElementById('blogContent').focus();
+}
+
+function insertBlockquote() {
+    document.execCommand('formatBlock', false, '<blockquote>');
+    document.getElementById('blogContent').focus();
+}
+
+function insertLink() {
+    const url = prompt('Link URL:', 'https://');
+    if (url) {
+        document.execCommand('createLink', false, url);
+        document.getElementById('blogContent').focus();
+    }
+}
+
+// Auto-slug from title
+document.addEventListener('DOMContentLoaded', function() {
+    const titleInput = document.getElementById('blogTitleInput');
+    if (titleInput) {
+        titleInput.addEventListener('input', function() {
+            if (!editingBlogId) {
+                document.getElementById('blogSlug').value = generateSlug(this.value);
+            }
+            updatePreview();
+        });
+    }
+    const metaInput = document.getElementById('blogMeta');
+    if (metaInput) {
+        metaInput.addEventListener('input', function() {
+            document.getElementById('metaCharCount').textContent = this.value.length;
+            updatePreview();
+        });
+    }
+});
+
+function updatePreview() {
+    const title = document.getElementById('blogTitleInput').value || 'Blog Başlığı';
+    const slug = document.getElementById('blogSlug').value || 'url-slug';
+    const meta = document.getElementById('blogMeta').value || 'SEO açıklaması burada görünür...';
+    document.getElementById('previewTitle').textContent = title;
+    document.getElementById('previewUrl').textContent = 'blog/' + slug + '.html';
+    document.getElementById('previewMeta').textContent = meta;
+}
+
+// ═══════════════════════════════════════════════════════
+// SETTINGS
+// ═══════════════════════════════════════════════════════
+async function populateSettings() {
+    document.getElementById('setBizName').value = settings.business_name || '';
+    document.getElementById('setPhone').value = settings.phone || '';
+    document.getElementById('setEmail').value = settings.email || '';
+    document.getElementById('setWhatsapp').value = settings.whatsapp_number || '';
+    document.getElementById('setPhone2').value = settings.phone2 || '';
+    document.getElementById('setAddress').value = settings.address || '';
+    document.getElementById('setHours').value = settings.working_hours || '';
+    document.getElementById('setSubtitle').value = settings.hero_subtitle || '';
+    document.getElementById('setInstagram').value = settings.instagram || '';
+    document.getElementById('setFacebook').value = settings.facebook || '';
+    document.getElementById('setBlogAuthorName').value = settings.blog_author_name || '';
+    document.getElementById('setBlogAuthorBio').value = settings.blog_author_bio || '';
+    // Yetkili e-posta listesini DB'den yükle
+    try {
+        const emailRes = await fetch('/api/auth.php?action=get_emails', { credentials: 'same-origin' });
+        if (emailRes.ok) {
+            const emailData = await emailRes.json();
+            adminEmails = emailData.emails || [];
+        }
+    } catch(e) {}
+    renderAdminEmails();
+}
+
+// Admin e-postaları — settings API üzerinden DB'de saklanır
+let adminEmails = [];
+
+function getAdminEmails() {
+    return adminEmails;
+}
+
+function renderAdminEmails() {
+    var emails = getAdminEmails();
+    var container = document.getElementById('adminEmailList');
+    container.innerHTML = '';
+    if (emails.length === 0) {
+        container.innerHTML = '<p class="text-xs text-warning bg-warning/10 rounded-xl px-4 py-2.5"><span class="material-symbols-outlined text-sm align-middle">info</span> Varsayılan e-posta(lar) aktif. Değiştirmek için yeni e-posta ekleyin.</p>';
+        return;
+    }
+    for (var i = 0; i < emails.length; i++) {
+        var div = document.createElement('div');
+        div.className = 'flex items-center gap-2 bg-panel-bg border border-panel-border rounded-xl px-4 py-2.5';
+        div.innerHTML = '<span class="material-symbols-outlined text-accent text-sm">mail</span>' +
+            '<span class="flex-1 text-sm">' + emails[i].replace(/</g, '&lt;') + '</span>' +
+            '<button type="button" onclick="removeAdminEmail(' + i + ')" class="text-panel-muted hover:text-danger transition-colors" title="Kaldır">' +
+            '<span class="material-symbols-outlined text-sm">close</span></button>';
+        container.appendChild(div);
+    }
+}
+
+function addAdminEmail() {
+    var input = document.getElementById('newAdminEmail');
+    var email = input.value.trim().toLowerCase();
+    if (!email || !email.includes('@')) {
+        showToast('Geçerli bir e-posta adresi girin', 'danger');
+        return;
+    }
+    if (adminEmails.indexOf(email) !== -1) {
+        showToast('Bu e-posta zaten ekli', 'warning');
+        return;
+    }
+    adminEmails.push(email);
+    saveAdminEmails(adminEmails);
+    input.value = '';
+    renderAdminEmails();
+    showToast('E-posta eklendi', 'success');
+}
+
+function removeAdminEmail(index) {
+    if (adminEmails.length <= 1) {
+        showToast('En az bir yetkili e-posta olmalı', 'danger');
+        return;
+    }
+    adminEmails.splice(index, 1);
+    saveAdminEmails(adminEmails);
+    renderAdminEmails();
+    showToast('E-posta kaldırıldı', 'success');
+}
+
+async function saveAdminEmails(emails) {
+    // Sunucu tarafında hash'lenip DB'ye kaydedilir
+    try {
+        await fetch('/api/auth.php?action=update_emails', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({ emails: emails })
+        });
+    } catch(e) {
+        showToast('E-posta kaydetme hatası', 'danger');
+    }
+}
+
+// ═══════════════════════════════════════════════════════
+// SERVICES MANAGEMENT
+// ═══════════════════════════════════════════════════════
+function renderServicesList() {
+    const container = document.getElementById('servicesList');
+    if (!container) return;
+    if (!services.length) {
+        container.innerHTML = '<p class="text-panel-muted text-sm text-center py-8">Henüz hizmet eklenmemiş.</p>';
+        return;
+    }
+    let html = '';
+    services.forEach(function(svc, i) {
+        const hasImage = svc.image && svc.image.length > 0;
+        const imgPreview = hasImage
+            ? '<img src="/' + sanitizeText(svc.image) + '" class="w-full h-full object-cover rounded-xl" alt=""/>'
+            : '<span class="material-symbols-outlined text-accent text-2xl">' + escapeHtml(svc.icon || 'cleaning_services') + '</span>';
+
+        html += '<div class="bg-panel-surface rounded-2xl border border-panel-border p-6">'
+            + '<div class="flex justify-between items-start mb-4">'
+            + '<div class="flex items-center gap-3">'
+            + '<div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center overflow-hidden">' + imgPreview + '</div>'
+            + '<span class="font-bold">' + escapeHtml(svc.name || 'Yeni Hizmet') + '</span></div>'
+            + '<button onclick="removeService(' + i + ')" class="text-danger hover:bg-danger/10 p-1.5 rounded-lg transition-colors">'
+            + '<span class="material-symbols-outlined text-lg">delete</span></button></div>'
+
+            // Görsel yükleme alanı
+            + '<div class="mb-4">'
+            + '<label class="block text-xs uppercase tracking-widest text-panel-muted mb-2">Hizmet Görseli</label>'
+            + '<div class="flex items-center gap-3">'
+            + '<div id="svcImgPreview' + i + '" class="w-24 h-16 rounded-lg bg-panel-bg border border-panel-border flex items-center justify-center overflow-hidden">'
+            + (hasImage ? '<img src="/' + sanitizeText(svc.image) + '" class="w-full h-full object-cover" alt=""/>' : '<span class="material-symbols-outlined text-panel-muted">image</span>')
+            + '</div>'
+            + '<label class="cursor-pointer bg-accent/10 hover:bg-accent/20 text-accent px-4 py-2 rounded-xl text-sm font-medium transition-colors">'
+            + '<span class="material-symbols-outlined text-sm align-middle mr-1">upload</span> Görsel Yükle'
+            + '<input type="file" accept="image/*" class="hidden" onchange="uploadServiceImage(' + i + ', this)"/></label>'
+            + (hasImage ? '<button onclick="services[' + i + '].image=\'\';renderServicesList()" class="text-danger text-xs hover:underline">Kaldır</button>' : '')
+            + '</div></div>'
+
+            + '<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">'
+            + '<div><label class="block text-xs uppercase tracking-widest text-panel-muted mb-1">Hizmet Adı</label>'
+            + '<input type="text" value="' + sanitizeText(svc.name || '') + '" onchange="services[' + i + '].name=this.value" class="w-full bg-panel-bg border border-panel-border rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-accent outline-none"/></div>'
+            + '<div><label class="block text-xs uppercase tracking-widest text-panel-muted mb-1">İkon (görsel yoksa)</label>'
+            + '<input type="text" value="' + sanitizeText(svc.icon || '') + '" onchange="services[' + i + '].icon=this.value" class="w-full bg-panel-bg border border-panel-border rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-accent outline-none" placeholder="dry_cleaning"/></div>'
+            + '<div class="sm:col-span-2"><label class="block text-xs uppercase tracking-widest text-panel-muted mb-1">Açıklama</label>'
+            + '<input type="text" value="' + sanitizeText(svc.desc || '') + '" onchange="services[' + i + '].desc=this.value" class="w-full bg-panel-bg border border-panel-border rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-accent outline-none"/></div>'
+            + '<div><label class="block text-xs uppercase tracking-widest text-panel-muted mb-1">Kart Fiyatı (özet, boş bırakılabilir)</label>'
+            + '<input type="text" value="' + sanitizeText(svc.price || '') + '" onchange="services[' + i + '].price=this.value" class="w-full bg-panel-bg border border-panel-border rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-accent outline-none" placeholder="₺80/m²\'den"/></div>'
+            + '</div>'
+
+            // Fiyat kalemleri
+            + '<div class="mt-4 pt-4 border-t border-panel-border/50">'
+            + '<div class="flex justify-between items-center mb-2">'
+            + '<label class="text-xs uppercase tracking-widest text-panel-muted font-medium">Fiyat Kalemleri</label>'
+            + '<button onclick="addServiceItem(' + i + ')" class="text-accent text-xs hover:underline flex items-center gap-1"><span class="material-symbols-outlined text-sm">add</span> Kalem Ekle</button>'
+            + '</div>';
+
+        var items = svc.items || [];
+        if (items.length > 0) {
+            html += '<div class="space-y-2">';
+            items.forEach(function(item, ii) {
+                html += '<div class="flex items-center gap-2 bg-panel-bg/50 rounded-lg px-3 py-2">'
+                    + '<input type="text" value="' + sanitizeText(item.name || '') + '" onchange="services[' + i + '].items[' + ii + '].name=this.value" class="flex-1 min-w-0 bg-transparent text-sm outline-none" placeholder="Hizmet adı"/>'
+                    + '<input type="text" value="' + sanitizeText(item.description || '') + '" onchange="services[' + i + '].items[' + ii + '].description=this.value" class="w-24 bg-transparent text-sm outline-none text-panel-muted" placeholder="Açıklama"/>'
+                    + '<input type="text" value="' + sanitizeText(item.price || '') + '" onchange="services[' + i + '].items[' + ii + '].price=this.value" class="w-16 bg-transparent text-sm outline-none text-right font-medium" placeholder="₺"/>'
+                    + '<input type="text" value="' + sanitizeText(item.unit || '') + '" onchange="services[' + i + '].items[' + ii + '].unit=this.value" class="w-12 bg-transparent text-sm outline-none text-panel-muted" placeholder="m²"/>'
+                    + '<button onclick="removeServiceItem(' + i + ',' + ii + ')" class="text-danger/50 hover:text-danger flex-shrink-0"><span class="material-symbols-outlined text-base">close</span></button>'
+                    + '</div>';
+            });
+            html += '</div>';
+        } else {
+            html += '<p class="text-panel-muted text-xs text-center py-2">Henüz fiyat kalemi yok.</p>';
+        }
+        html += '</div></div>';
+    });
+    container.innerHTML = html;
+}
+
+async function uploadServiceImage(index, input) {
+    const file = input.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+        showToast('Dosya boyutu 5MB\'dan büyük olamaz', 'danger');
+        return;
+    }
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('category', 'general');
+    formData.append('alt_text', services[index].name || 'Hizmet görseli');
+    try {
+        const res = await fetch('/api/gallery.php', {
+            method: 'POST',
+            credentials: 'same-origin',
+            body: formData
+        });
+        const data = await res.json();
+        if (data.image && data.image.filename) {
+            services[index].image = data.image.filename;
+            renderServicesList();
+            showToast('Görsel yüklendi', 'success');
+        } else {
+            showToast(data.error || 'Yükleme hatası', 'danger');
+        }
+    } catch (e) {
+        showToast('Görsel yüklenemedi', 'danger');
+    }
+}
+
+function addServiceItem(svcIndex) {
+    if (!services[svcIndex].items) services[svcIndex].items = [];
+    services[svcIndex].items.push({ name: '', description: '', price: '', unit: '' });
+    renderServicesList();
+}
+
+function removeServiceItem(svcIndex, itemIndex) {
+    services[svcIndex].items.splice(itemIndex, 1);
+    renderServicesList();
+}
+
+function addService() {
+    services.push({ icon: 'cleaning_services', name: '', desc: '', price: '', image: '', items: [] });
+    renderServicesList();
+    showToast('Yeni hizmet eklendi', 'success');
+}
+
+function removeService(index) {
+    services.splice(index, 1);
+    renderServicesList();
+    showToast('Hizmet silindi', 'warning');
+}
+
+async function saveServices() {
+    const saved = await saveToAPI('services', { services: services });
+    if (saved) showToast('Hizmetler kaydedildi!', 'success');
+}
+
+// ═══════════════════════════════════════════════════════
+// TESTIMONIALS MANAGEMENT
+// ═══════════════════════════════════════════════════════
+function renderTestimonialsList() {
+    const container = document.getElementById('testimonialsList');
+    if (!container) return;
+    if (!testimonials.length) {
+        container.innerHTML = '<p class="text-panel-muted text-sm text-center py-8">Henüz yorum eklenmemiş.</p>';
+        return;
+    }
+    let html = '';
+    testimonials.forEach(function(t, i) {
+        html += '<div class="bg-panel-surface rounded-2xl border border-panel-border p-6">'
+            + '<div class="flex justify-between items-start mb-4">'
+            + '<div class="flex items-center gap-3">'
+            + '<div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">'
+            + '<span class="material-symbols-outlined text-accent">person</span></div>'
+            + '<span class="font-bold">' + escapeHtml(t.name || 'Yeni Yorum') + '</span></div>'
+            + '<button onclick="removeTestimonial(' + i + ')" class="text-danger hover:bg-danger/10 p-1.5 rounded-lg transition-colors">'
+            + '<span class="material-symbols-outlined text-lg">delete</span></button></div>'
+            + '<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">'
+            + '<div><label class="block text-xs uppercase tracking-widest text-panel-muted mb-1">Ad Soyad</label>'
+            + '<input type="text" value="' + sanitizeText(t.name || '') + '" onchange="testimonials[' + i + '].name=this.value" class="w-full bg-panel-bg border border-panel-border rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-accent outline-none"/></div>'
+            + '<div><label class="block text-xs uppercase tracking-widest text-panel-muted mb-1">Açıklama (ör: 3 yıldır müşterimiz)</label>'
+            + '<input type="text" value="' + sanitizeText(t.role || '') + '" onchange="testimonials[' + i + '].role=this.value" class="w-full bg-panel-bg border border-panel-border rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-accent outline-none"/></div>'
+            + '<div class="sm:col-span-2"><label class="block text-xs uppercase tracking-widest text-panel-muted mb-1">Yorum</label>'
+            + '<textarea onchange="testimonials[' + i + '].text=this.value" class="w-full bg-panel-bg border border-panel-border rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-accent outline-none resize-none" rows="3">' + sanitizeText(t.text || '') + '</textarea></div>'
+            + '</div></div>';
+    });
+    container.innerHTML = html;
+}
+
+function addTestimonial() {
+    testimonials.push({ name: '', text: '', role: '' });
+    renderTestimonialsList();
+    showToast('Yeni yorum eklendi', 'success');
+}
+
+function removeTestimonial(index) {
+    testimonials.splice(index, 1);
+    renderTestimonialsList();
+    showToast('Yorum silindi', 'warning');
+}
+
+async function saveTestimonials() {
+    const saved = await saveToAPI('testimonials', { testimonials: testimonials });
+    if (saved) showToast('Yorumlar kaydedildi!', 'success');
+}
+
+async function saveSettings() {
+    settings.business_name = document.getElementById('setBizName').value.trim();
+    settings.phone = document.getElementById('setPhone').value.trim();
+    settings.email = document.getElementById('setEmail').value.trim();
+    settings.whatsapp_number = document.getElementById('setWhatsapp').value.trim();
+    settings.phone2 = document.getElementById('setPhone2').value.trim();
+    settings.phone2_raw = settings.phone2.replace(/\s+/g, '').replace(/[^\d+]/g, '');
+    settings.address = document.getElementById('setAddress').value.trim();
+    settings.working_hours = document.getElementById('setHours').value.trim();
+    settings.working_hours_short = settings.working_hours;
+    settings.hero_subtitle = document.getElementById('setSubtitle').value.trim();
+    settings.instagram = document.getElementById('setInstagram').value.trim();
+    settings.facebook = document.getElementById('setFacebook').value.trim();
+    settings.blog_author_name = document.getElementById('setBlogAuthorName').value.trim();
+    settings.blog_author_bio = document.getElementById('setBlogAuthorBio').value.trim();
+
+    // Kullanıcı adı ve şifre değiştirme — sunucu tarafında yapılır
+    const newUser = document.getElementById('setNewUser').value.trim();
+    const oldPass = document.getElementById('setOldPass').value;
+    const newPass = document.getElementById('setNewPass').value;
+
+    if (newUser || newPass) {
+        try {
+            const credData = {};
+            if (newUser) {
+                if (newUser.length < 3) {
+                    showToast('Kullanıcı adı en az 3 karakter olmalı', 'danger');
+                    return;
+                }
+                credData.new_user = newUser;
+            }
+            if (newPass) {
+                if (newPass.length < 8) {
+                    showToast('Yeni şifre en az 8 karakter olmalı', 'danger');
+                    return;
+                }
+                if (!oldPass) {
+                    showToast('Mevcut şifrenizi girin', 'danger');
+                    return;
+                }
+                credData.old_pass = oldPass;
+                credData.new_pass = newPass;
+            }
+            const credRes = await fetch('/api/auth.php?action=change_credentials', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify(credData)
+            });
+            const credResult = await credRes.json();
+            if (credRes.ok && credResult.success) {
+                document.getElementById('setNewUser').value = '';
+                document.getElementById('setOldPass').value = '';
+                document.getElementById('setNewPass').value = '';
+                showToast(credResult.message || 'Bilgiler güncellendi', 'success');
+            } else {
+                showToast(credResult.error || 'Güncelleme başarısız', 'danger');
+                return;
+            }
+        } catch(e) {
+            showToast('Sunucu bağlantısı hatası', 'danger');
+            return;
+        }
+    }
+
+    const saved = await saveToAPI('settings', settings);
+    document.getElementById('sidebarBizName').textContent = settings.business_name || 'Admin Panel';
+
+    // WhatsApp sablonlari kaydet
+    fetch('/api/whatsapp_templates.php', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin',
+        body: JSON.stringify({ templates: waTemplates })
+    }).catch(function(){});
+
+    // Ozel gunler kaydet
+    fetch('/api/special_days.php', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin',
+        body: JSON.stringify({ special_days: specialDays })
+    }).catch(function(){});
+
+    if (saved) showToast('Ayarlar kaydedildi!', 'success');
+}
+
+// ═══════════════════════════════════════════════════════
+// HTML GENERATION (Client-side)
+// ═══════════════════════════════════════════════════════
+async function getBlogDetailTemplate() {
+    try {
+        // Try to load from the template location
+        const res = await fetch('../blog/blog-detail-template.html');
+        if (res.ok) return await res.text();
+    } catch(e) {}
+    // Fallback: generate minimal template
+    return generateFallbackDetailTemplate();
+}
+
+async function getBlogListTemplate() {
+    try {
+        const res = await fetch('../blog/blog-list-template.html');
+        if (res.ok) return await res.text();
+    } catch(e) {}
+    return generateFallbackListTemplate();
+}
+
+function generateFallbackDetailTemplate() {
+    return '<!DOCTYPE html><html lang="tr"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1.0" name="viewport"/><title>{{BLOG_TITLE}} | {{BUSINESS_NAME}}</title><meta name="description" content="{{BLOG_META_DESCRIPTION}}"/></head><body><h1>{{BLOG_TITLE}}</h1><p>{{BLOG_DATE}} · {{BLOG_READ_TIME}} dk</p><div>{{BLOG_CONTENT}}</div><a href="../index.html">Ana Sayfa</a></body></html>';
+}
+
+function generateFallbackListTemplate() {
+    return '<!DOCTYPE html><html lang="tr"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1.0" name="viewport"/><title>Blog | {{BUSINESS_NAME}}</title></head><body><h1>Blog</h1><div>{{BLOG_CARDS_HTML}}</div><a href="../index.html">Ana Sayfa</a></body></html>';
+}
+
+function buildBlogCardHTML(blog, fromBlogDir) {
+    const prefix = fromBlogDir ? '' : 'blog/';
+    return '<a href="' + prefix + blog.slug + '.html" style="display:block;background:#141d32;border-radius:1rem;border:1px solid #3a3428;overflow:hidden;text-decoration:none;color:inherit;margin-bottom:1.5rem;">' +
+        '<div style="height:12rem;background:linear-gradient(135deg,rgba(242,195,107,0.1),rgba(26,37,64,1));display:flex;align-items:center;justify-content:center;position:relative;">' +
+        '<span style="font-size:4rem;color:rgba(216,210,198,0.1);">&#9998;</span>' +
+        '<div style="position:absolute;top:1rem;left:1rem;"><span style="background:rgba(139,105,20,0.7);color:#f2c36b;padding:0.25rem 0.75rem;border-radius:9999px;font-size:0.65rem;font-weight:600;text-transform:uppercase;">' + (blog.category || 'Blog') + '</span></div></div>' +
+        '<div style="padding:1.5rem;">' +
+        '<div style="font-size:0.75rem;color:#9a9488;margin-bottom:0.75rem;">' + formatDateTR(blog.date) + ' · ' + (blog.read_time || '5') + ' dk okuma</div>' +
+        '<h3 style="font-family:Playfair Display,serif;font-size:1.125rem;color:#e8e2d6;margin-bottom:0.75rem;">' + blog.title + '</h3>' +
+        '<p style="font-size:0.875rem;color:#9a9488;margin-bottom:1rem;">' + (blog.summary || '') + '</p>' +
+        '<span style="color:#f2c36b;font-size:0.875rem;font-weight:600;">Devamını Oku →</span>' +
+        '</div></a>';
+}
+
+function buildBlogTagsHTML(tags) {
+    return (tags || []).map(function(tag) {
+        return '<span style="background:#1a2540;color:#9a9488;font-size:0.75rem;padding:0.375rem 0.75rem;border-radius:9999px;border:1px solid #3a3428;display:inline-block;margin:0.25rem;">' + tag + '</span>';
+    }).join('');
+}
+
+function buildRelatedPostsHTML(allBlogs, currentSlug) {
+    let html = '';
+    let count = 0;
+    for (let i = 0; i < allBlogs.length; i++) {
+        if (allBlogs[i].slug === currentSlug || allBlogs[i].status !== 'published') continue;
+        if (count >= 3) break;
+        html += buildBlogCardHTML(allBlogs[i], true);
+        count++;
+    }
+    return html;
+}
+
+function buildTopBarSocialHTML() {
+    let html = '';
+    const ig = (settings.instagram || '').replace('@','').trim();
+    const fb = (settings.facebook || '').trim();
+    if (ig) {
+        html += '<a href="https://www.instagram.com/' + ig + '" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity" title="Instagram"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>';
+    }
+    if (fb) {
+        const fbUrl = fb.indexOf('http') === 0 ? fb : 'https://facebook.com/' + fb;
+        html += '<a href="' + fbUrl + '" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity" title="Facebook"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>';
+    }
+    return html;
+}
+
+function buildFooterSocialHTML() {
+    let html = '';
+    const ig = (settings.instagram || '').replace('@','').trim();
+    const fb = (settings.facebook || '').trim();
+    if (ig) {
+        html += '<a href="https://www.instagram.com/' + ig + '" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#E0457B] hover:border-[#E0457B] transition-all group" title="Instagram"><svg class="w-4 h-4 fill-white/60 group-hover:fill-white transition-colors" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>';
+    }
+    if (fb) {
+        const fbUrl = fb.indexOf('http') === 0 ? fb : 'https://facebook.com/' + fb;
+        html += '<a href="' + fbUrl + '" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#E0457B] hover:border-[#E0457B] transition-all group" title="Facebook"><svg class="w-4 h-4 fill-white/60 group-hover:fill-white transition-colors" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>';
+    }
+    return html;
+}
+
+function replacePlaceholders(html, blog) {
+    const titleShort = (blog.title || '').length > 40 ? blog.title.substring(0, 40) + '...' : blog.title;
+    const replacements = {
+        '{{BLOG_TITLE}}': blog.title || '',
+        '{{BLOG_TITLE_SHORT}}': titleShort,
+        '{{BLOG_META_DESCRIPTION}}': blog.meta_description || blog.summary || '',
+        '{{BLOG_CATEGORY}}': blog.category || 'Blog',
+        '{{BLOG_DATE}}': blog.date || '',
+        '{{BLOG_READ_TIME}}': blog.read_time || '5',
+        '{{BLOG_SUMMARY}}': blog.summary || '',
+        '{{BLOG_CONTENT}}': blog.content || '',
+        '{{BLOG_TAGS_HTML}}': buildBlogTagsHTML(blog.tags),
+        '{{BLOG_TITLE_ENCODED}}': encodeURIComponent(blog.title || ''),
+        '{{BLOG_URL_ENCODED}}': '',
+        '{{RELATED_POSTS_HTML}}': buildRelatedPostsHTML(blogs, blog.slug),
+        '{{BUSINESS_NAME}}': settings.business_name || '',
+        '{{PHONE}}': settings.phone || '',
+        '{{PHONE_RAW}}': settings.phone_raw || '',
+        '{{EMAIL}}': settings.email || '',
+        '{{ADDRESS}}': settings.address || '',
+        '{{WORKING_HOURS}}': settings.working_hours || '',
+        '{{WORKING_HOURS_SHORT}}': settings.working_hours_short || '',
+        '{{WHATSAPP_NUMBER}}': settings.whatsapp_number || '',
+        '{{HERO_SUBTITLE}}': settings.hero_subtitle || '',
+        '{{FOOTER_DESCRIPTION}}': settings.footer_description || '',
+        '{{CTA_TITLE}}': settings.cta_title || '',
+        '{{CTA_DESCRIPTION}}': settings.cta_description || '',
+        '{{MAP_EMBED_URL}}': settings.map_embed_url || '',
+        '{{MAP_LINK_URL}}': settings.map_link_url || '',
+        '{{LOGO_LETTER}}': (settings.business_name || 'L')[0].toUpperCase(),
+        '{{TOP_BAR_SOCIAL_HTML}}': buildTopBarSocialHTML(),
+        '{{SOCIAL_LINKS_HTML}}': buildFooterSocialHTML()
+    };
+
+    for (const key in replacements) {
+        html = html.split(key).join(replacements[key]);
+    }
+    return html;
+}
+
+async function generateBlogHTML(blog) {
+    const template = await getBlogDetailTemplate();
+    const html = replacePlaceholders(template, blog);
+
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = blog.slug + '.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
+async function generateBlogListHTML() {
+    const publishedBlogs = blogs.filter(b => b.status === 'published');
+    if (publishedBlogs.length === 0) return;
+
+    const template = await getBlogListTemplate();
+    let cardsHTML = '';
+    publishedBlogs.forEach(function(blog) {
+        cardsHTML += buildBlogCardHTML(blog, true);
+    });
+
+    let html = template;
+    html = html.split('{{BLOG_CARDS_HTML}}').join(cardsHTML);
+    html = html.split('{{BLOG_LIST_DESCRIPTION}}').join((settings.business_name || '') + ' olarak sizler için hazırladığımız bilgilendirici blog yazılarımız.');
+    html = replacePlaceholders(html, { title: 'Blog', summary: '', content: '', tags: [], meta_description: '', category: '', date: '', read_time: '', slug: '' });
+
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'blog-index.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
+// ═══════════════════════════════════════════════════════
+// QR CODE GENERATOR
+// ═══════════════════════════════════════════════════════
+function loadQRCodes() {
+    var siteUrl = window.location.origin;
+    var waNumber = settings.whatsapp_number || '';
+    var mapUrl = settings.map_link_url || '';
+
+    // Site QR
+    if (siteUrl) {
+        var siteImg = document.getElementById('qrSiteImg');
+        siteImg.src = '/api/qrcode.php?size=300&text=' + encodeURIComponent(siteUrl);
+        siteImg.onload = function() { siteImg.style.display = 'block'; document.getElementById('qrSitePlaceholder').style.display = 'none'; };
+        siteImg.onerror = function() { document.getElementById('qrSitePlaceholder').textContent = 'Yüklenemedi'; };
+    }
+
+    // WhatsApp QR
+    if (waNumber) {
+        var waImg = document.getElementById('qrWhatsappImg');
+        var waUrl = 'https://wa.me/' + waNumber;
+        waImg.src = '/api/qrcode.php?size=300&text=' + encodeURIComponent(waUrl);
+        waImg.onload = function() { waImg.style.display = 'block'; document.getElementById('qrWhatsappPlaceholder').style.display = 'none'; };
+        waImg.onerror = function() { document.getElementById('qrWhatsappPlaceholder').textContent = 'Yüklenemedi'; };
+    } else {
+        document.getElementById('qrWhatsappPlaceholder').textContent = 'WhatsApp numarası ayarlanmamış';
+    }
+
+    // Maps QR
+    if (mapUrl) {
+        var mapsImg = document.getElementById('qrMapsImg');
+        mapsImg.src = '/api/qrcode.php?size=300&text=' + encodeURIComponent(mapUrl);
+        mapsImg.onload = function() { mapsImg.style.display = 'block'; document.getElementById('qrMapsPlaceholder').style.display = 'none'; };
+        mapsImg.onerror = function() { document.getElementById('qrMapsPlaceholder').textContent = 'Yüklenemedi'; };
+    } else {
+        document.getElementById('qrMapsPlaceholder').textContent = 'Harita URL ayarlanmamış';
+    }
+}
+
+function generateCustomQR() {
+    var url = document.getElementById('customQrUrl').value.trim();
+    if (!url) { showToast('URL giriniz', 'warning'); return; }
+    var img = document.getElementById('customQrImg');
+    img.src = '/api/qrcode.php?size=400&text=' + encodeURIComponent(url);
+    document.getElementById('customQrResult').classList.remove('hidden');
+}
+
+function downloadQR(type) {
+    var imgEl;
+    if (type === 'site') imgEl = document.getElementById('qrSiteImg');
+    else if (type === 'whatsapp') imgEl = document.getElementById('qrWhatsappImg');
+    else if (type === 'maps') imgEl = document.getElementById('qrMapsImg');
+    else if (type === 'custom') imgEl = document.getElementById('customQrImg');
+    if (!imgEl || !imgEl.src) { showToast('QR kod bulunamadı', 'warning'); return; }
+
+    var a = document.createElement('a');
+    a.href = imgEl.src;
+    a.download = 'qr-' + type + '.png';
+    a.click();
+}
+
+function escapeAttr(str) {
+    return (str || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ═══════════════════════════════════════════════════════
+// WHATSAPP TEMPLATES MANAGEMENT
+// ═══════════════════════════════════════════════════════
+function renderWaTemplates() {
+    var container = document.getElementById('waTemplatesList');
+    if (!container) return;
+    if (waTemplates.length === 0) {
+        container.innerHTML = '<div class="text-center text-panel-muted py-4">Henüz şablon eklenmemiş.</div>';
+        return;
+    }
+    var html = '';
+    waTemplates.forEach(function(t, i) {
+        html += '<div class="flex items-start gap-3 bg-panel-bg rounded-xl p-3 border border-panel-border">' +
+            '<div class="flex-1 space-y-2">' +
+            '<input type="text" value="' + escapeAttr(t.title) + '" onchange="waTemplates[' + i + '].title=this.value" class="w-full bg-panel-surface border border-panel-border rounded-lg px-3 py-1.5 text-sm font-medium outline-none focus:ring-2 focus:ring-accent" placeholder="Şablon adı"/>' +
+            '<textarea onchange="waTemplates[' + i + '].message=this.value" rows="2" class="w-full bg-panel-surface border border-panel-border rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-accent resize-none" placeholder="Mesaj metni">' + escapeHtml(t.message) + '</textarea>' +
+            '</div>' +
+            '<button onclick="waTemplates.splice(' + i + ',1);renderWaTemplates()" class="text-danger hover:text-danger/70 mt-2"><span class="material-symbols-outlined text-lg">delete</span></button>' +
+            '</div>';
+    });
+    container.innerHTML = html;
+}
+
+function addWhatsappTemplate() {
+    waTemplates.push({ title: '', message: '' });
+    renderWaTemplates();
+}
+
+// ═══════════════════════════════════════════════════════
+// SPECIAL DAYS MANAGEMENT
+// ═══════════════════════════════════════════════════════
+function renderSpecialDays() {
+    var container = document.getElementById('specialDaysList');
+    if (!container) return;
+    if (specialDays.length === 0) {
+        container.innerHTML = '<div class="text-center text-panel-muted py-4">Henüz özel gün eklenmemiş.</div>';
+        return;
+    }
+    var html = '';
+    specialDays.forEach(function(d, i) {
+        html += '<div class="flex items-center gap-3 bg-panel-bg rounded-xl p-3 border border-panel-border">' +
+            '<input type="date" value="' + (d.date || '') + '" onchange="specialDays[' + i + '].date=this.value" class="bg-panel-surface border border-panel-border rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-accent"/>' +
+            '<input type="text" value="' + escapeAttr(d.title) + '" onchange="specialDays[' + i + '].title=this.value" class="flex-1 bg-panel-surface border border-panel-border rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-accent" placeholder="Tatil adı"/>' +
+            '<label class="flex items-center gap-1 text-sm text-panel-muted whitespace-nowrap">' +
+            '<input type="checkbox" ' + (parseInt(d.is_closed) ? 'checked' : '') + ' onchange="specialDays[' + i + '].is_closed=this.checked?1:0" class="rounded"/> Kapalı' +
+            '</label>' +
+            '<button onclick="specialDays.splice(' + i + ',1);renderSpecialDays()" class="text-danger hover:text-danger/70"><span class="material-symbols-outlined text-lg">delete</span></button>' +
+            '</div>';
+    });
+    container.innerHTML = html;
+}
+
+function addSpecialDay() {
+    specialDays.push({ date: '', title: '', is_closed: 1 });
+    renderSpecialDays();
+}
+
+// ═══════════════════════════════════════════════════════
+// VISITOR STATISTICS
+// ═══════════════════════════════════════════════════════
+async function loadVisitorStats() {
+    try {
+        var res = await fetch('/api/track.php', {
+            credentials: 'same-origin'
+        });
+        if (!res.ok) return;
+        var data = await res.json();
+
+        document.getElementById('statVisitorsToday').textContent = data.today || 0;
+        document.getElementById('statVisitorsUnique').textContent = data.today_unique || 0;
+        document.getElementById('statVisitorsWeek').textContent = data.week || 0;
+        document.getElementById('statVisitorsMonth').textContent = data.month || 0;
+        document.getElementById('statVisitorsTotal').textContent = data.total || 0;
+
+        // Bar grafik ciz
+        if (data.daily && data.daily.length > 0) {
+            var maxCount = Math.max.apply(null, data.daily.map(function(d) { return d.count; }));
+            if (maxCount === 0) maxCount = 1;
+            var chartHtml = '';
+            data.daily.forEach(function(d) {
+                var height = Math.max(4, Math.round((d.count / maxCount) * 100));
+                var dayLabel = d.day.substring(5); // MM-DD
+                var isToday = d.day === new Date().toISOString().split('T')[0];
+                var barColor = isToday ? 'bg-accent' : 'bg-accent/40';
+                chartHtml += '<div class="flex-1 flex flex-col items-center gap-1">' +
+                    '<span class="text-[10px] text-panel-muted font-medium">' + d.count + '</span>' +
+                    '<div class="w-full ' + barColor + ' rounded-t transition-all" style="height:' + height + '%" title="' + d.day + ': ' + d.count + ' ziyaretçi"></div>' +
+                    '<span class="text-[9px] text-panel-muted">' + dayLabel + '</span>' +
+                    '</div>';
+            });
+            document.getElementById('visitorChart').innerHTML = chartHtml;
+        }
+    } catch (e) {
+        // Istatistikler yuklenemezse sessizce devam et
+    }
+}
+
+// ═══════════════════════════════════════════════════════
+// GALLERY MANAGEMENT
+// ═══════════════════════════════════════════════════════
+function renderGallery() {
+    var filter = document.getElementById('galleryFilter').value;
+    var filtered = galleryImages.filter(function(img) {
+        if (filter !== 'all') return img.category === filter;
+        return true;
+    });
+
+    var grid = document.getElementById('galleryGrid');
+    if (filtered.length === 0) {
+        grid.innerHTML = '<div class="col-span-full bg-panel-surface rounded-2xl border border-panel-border px-6 py-12 text-center text-panel-muted">' +
+            '<span class="material-symbols-outlined text-4xl block mb-2">photo_library</span>' +
+            (galleryImages.length === 0 ? 'Henüz görsel yok.' : 'Bu kategoride görsel yok.') + '</div>';
+        return;
+    }
+
+    var html = '';
+    filtered.forEach(function(img) {
+        var catLabel = {hero:'Hero',gallery:'Galeri',general:'Genel'}[img.category] || img.category;
+        var catColor = {hero:'bg-accent',gallery:'bg-success',general:'bg-warning'}[img.category] || 'bg-panel-muted';
+        html += '<div class="group relative bg-panel-surface rounded-xl border border-panel-border overflow-hidden">' +
+            '<div class="aspect-square bg-panel-bg">' +
+            '<img src="../' + escapeHtml(img.filename) + '" alt="' + escapeHtml(img.alt_text || '') + '" class="w-full h-full object-cover" onerror="this.style.display=&quot;none&quot;">' +
+            '</div>' +
+            '<div class="p-2">' +
+            '<span class="' + catColor + ' text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">' + catLabel + '</span>' +
+            '<p class="text-xs text-panel-muted mt-1 truncate">' + escapeHtml(img.alt_text || img.original_name || '') + '</p>' +
+            '</div>' +
+            '<div class="absolute top-2 right-2 hidden group-hover:flex gap-1">' +
+            '<button onclick="editGalleryImage(' + img.id + ')" class="bg-white/90 p-1 rounded-lg shadow hover:bg-white transition-colors">' +
+            '<span class="material-symbols-outlined text-sm text-accent">edit</span></button>' +
+            '<button onclick="deleteGalleryImage(' + img.id + ')" class="bg-white/90 p-1 rounded-lg shadow hover:bg-white transition-colors">' +
+            '<span class="material-symbols-outlined text-sm text-danger">delete</span></button>' +
+            '</div></div>';
+    });
+    grid.innerHTML = html;
+}
+
+async function uploadGalleryImage(input) {
+    var files = input.files;
+    if (!files || files.length === 0) return;
+
+    var category = document.getElementById('uploadCategory').value;
+    var progressEl = document.getElementById('uploadProgress');
+    var total = files.length;
+    var done = 0;
+
+    for (var i = 0; i < files.length; i++) {
+        progressEl.textContent = 'Yükleniyor... (' + (done + 1) + '/' + total + ')';
+        var formData = new FormData();
+        formData.append('image', files[i]);
+        formData.append('category', category);
+        formData.append('alt_text', '');
+
+        try {
+            var res = await fetch('/api/gallery.php', {
+                method: 'POST',
+                credentials: 'same-origin',
+                body: formData
+            });
+            var json = await res.json();
+            if (json.success && json.image) {
+                galleryImages.unshift(json.image);
+                done++;
+            } else {
+                showToast((json.error || 'Yükleme hatası') + ' (' + files[i].name + ')', 'danger');
+            }
+        } catch (e) {
+            showToast('Yükleme başarısız: ' + files[i].name, 'danger');
+        }
+    }
+
+    input.value = '';
+    progressEl.textContent = done + ' görsel yüklendi';
+    setTimeout(function() { document.getElementById('uploadProgress').textContent = ''; }, 3000);
+    renderGallery();
+    if (done > 0) showToast(done + ' görsel başarıyla yüklendi', 'success');
+}
+
+function editGalleryImage(id) {
+    var img = galleryImages.find(function(i) { return parseInt(i.id) === id; });
+    if (!img) return;
+
+    var newAlt = prompt('Alt metin (SEO için):', img.alt_text || '');
+    if (newAlt === null) return;
+
+    var newCat = prompt('Kategori (hero / gallery / general):', img.category || 'gallery');
+    if (newCat === null) return;
+    if (!['hero', 'gallery', 'general'].includes(newCat)) { showToast('Geçersiz kategori', 'warning'); return; }
+
+    fetch('/api/gallery.php', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin',
+        body: JSON.stringify({ id: id, alt_text: newAlt, category: newCat })
+    }).then(function(res) {
+        if (res.ok) {
+            img.alt_text = newAlt;
+            img.category = newCat;
+            renderGallery();
+            showToast('Görsel güncellendi', 'success');
+        }
+    }).catch(function() { showToast('Güncelleme başarısız', 'danger'); });
+}
+
+async function deleteGalleryImage(id) {
+    deleteCallback = async function() {
+        try {
+            var res = await fetch('/api/gallery.php?id=' + id, {
+                method: 'DELETE',
+                credentials: 'same-origin'
+            });
+            if (res.ok) {
+                galleryImages = galleryImages.filter(function(i) { return parseInt(i.id) !== id; });
+                renderGallery();
+                showToast('Görsel silindi', 'success');
+            }
+        } catch (e) {
+            showToast('Silme başarısız', 'danger');
+        }
+    };
+    document.getElementById('deleteModalText').textContent = 'Bu görsel kalıcı olarak silinecek.';
+    document.getElementById('deleteModal').classList.remove('hidden');
+}
+
+// Drag & drop support for gallery upload area
+document.addEventListener('DOMContentLoaded', function() {
+    var area = document.getElementById('galleryUploadArea');
+    if (!area) return;
+    ['dragenter','dragover'].forEach(function(e) {
+        area.addEventListener(e, function(ev) { ev.preventDefault(); area.classList.add('border-accent'); });
+    });
+    ['dragleave','drop'].forEach(function(e) {
+        area.addEventListener(e, function(ev) { ev.preventDefault(); area.classList.remove('border-accent'); });
+    });
+    area.addEventListener('drop', function(ev) {
+        var dt = ev.dataTransfer;
+        if (dt.files.length > 0) {
+            document.getElementById('galleryFileInput').files = dt.files;
+            uploadGalleryImage(document.getElementById('galleryFileInput'));
+        }
+    });
+});
+
+// ═══════════════════════════════════════════════════════
+// MESSAGE MANAGEMENT
+// ═══════════════════════════════════════════════════════
+function updateUnreadBadge() {
+    var unread = messages.filter(function(m) { return !parseInt(m.is_read); }).length;
+    var badge = document.getElementById('unreadBadge');
+    if (unread > 0) {
+        badge.textContent = unread > 99 ? '99+' : unread;
+        badge.classList.remove('hidden');
+    } else {
+        badge.classList.add('hidden');
+    }
+}
+
+function renderMessages() {
+    var filter = document.getElementById('messageFilter').value;
+    var filtered = messages.filter(function(m) {
+        if (filter === 'unread') return !parseInt(m.is_read);
+        if (filter === 'read') return parseInt(m.is_read) === 1;
+        return true;
+    });
+
+    var container = document.getElementById('messagesList');
+    if (filtered.length === 0) {
+        container.innerHTML = '<div class="bg-panel-surface rounded-2xl border border-panel-border px-6 py-12 text-center text-panel-muted">' +
+            '<span class="material-symbols-outlined text-4xl block mb-2">mail</span>' +
+            (messages.length === 0 ? 'Henüz mesaj yok.' : 'Bu filtreyle eşleşen mesaj yok.') + '</div>';
+        return;
+    }
+
+    var html = '';
+    filtered.forEach(function(msg) {
+        var isRead = parseInt(msg.is_read);
+        var date = msg.created_at ? new Date(msg.created_at).toLocaleString('tr-TR') : '';
+        var borderClass = isRead ? 'border-panel-border' : 'border-l-4 border-l-accent border-panel-border';
+        var bgClass = isRead ? 'bg-panel-surface' : 'bg-accent/5';
+
+        html += '<div class="' + bgClass + ' rounded-2xl border ' + borderClass + ' p-5">' +
+            '<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">' +
+            '<div class="flex-1 min-w-0">' +
+            '<div class="flex items-center gap-2 mb-1">' +
+            '<span class="font-bold text-sm">' + escapeHtml(msg.name) + '</span>' +
+            (!isRead ? '<span class="bg-accent text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">YENİ</span>' : '') +
+            '</div>' +
+            (msg.phone ? '<div class="text-sm text-panel-muted flex items-center gap-1"><span class="material-symbols-outlined text-sm">phone</span> ' + escapeHtml(msg.phone) + '</div>' : '') +
+            (msg.service ? '<div class="text-sm text-panel-muted flex items-center gap-1 mt-0.5"><span class="material-symbols-outlined text-sm">home_repair_service</span> ' + escapeHtml(msg.service) + '</div>' : '') +
+            (msg.preferred_date || msg.preferred_time ? '<div class="text-sm text-panel-muted flex items-center gap-1 mt-0.5"><span class="material-symbols-outlined text-sm">calendar_today</span> ' + escapeHtml((msg.preferred_date || '') + (msg.preferred_time ? ' ' + msg.preferred_time : '')) + '</div>' : '') +
+            (msg.notes ? '<div class="mt-2 text-sm text-panel-text bg-panel-bg rounded-xl p-3">' + escapeHtml(msg.notes) + '</div>' : '') +
+            '</div>' +
+            '<div class="flex items-center gap-2 sm:flex-col sm:items-end">' +
+            '<span class="text-xs text-panel-muted">' + date + '</span>' +
+            '<div class="flex gap-1">' +
+            '<button onclick="toggleMessageRead(' + msg.id + ',' + (isRead ? '0' : '1') + ')" class="p-1.5 rounded-lg hover:bg-panel-bg transition-colors" title="' + (isRead ? 'Okunmadı işaretle' : 'Okundu işaretle') + '">' +
+            '<span class="material-symbols-outlined text-lg text-panel-muted">' + (isRead ? 'mark_email_unread' : 'mark_email_read') + '</span>' +
+            '</button>' +
+            '<button onclick="deleteMessage(' + msg.id + ')" class="p-1.5 rounded-lg hover:bg-danger/10 transition-colors" title="Sil">' +
+            '<span class="material-symbols-outlined text-lg text-danger">delete</span>' +
+            '</button>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
+    });
+    container.innerHTML = html;
+}
+
+function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
+}
+
+async function toggleMessageRead(id, newState) {
+    try {
+        var res = await fetch('/api/messages.php', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin',
+            body: JSON.stringify({ id: id, is_read: newState })
+        });
+        if (res.ok) {
+            var msg = messages.find(function(m) { return parseInt(m.id) === id; });
+            if (msg) msg.is_read = newState;
+            renderMessages();
+            updateUnreadBadge();
+            renderDashboard();
+        }
+    } catch (e) {
+        showToast('İşlem başarısız', 'danger');
+    }
+}
+
+async function deleteMessage(id) {
+    deleteCallback = async function() {
+        try {
+            var res = await fetch('/api/messages.php?id=' + id, {
+                method: 'DELETE',
+                credentials: 'same-origin'
+            });
+            if (res.ok) {
+                messages = messages.filter(function(m) { return parseInt(m.id) !== id; });
+                renderMessages();
+                updateUnreadBadge();
+                renderDashboard();
+                showToast('Mesaj silindi', 'success');
+            }
+        } catch (e) {
+            showToast('Silme başarısız', 'danger');
+        }
+    };
+    document.getElementById('deleteModalText').textContent = 'Bu mesaj kalıcı olarak silinecek.';
+    document.getElementById('deleteModal').classList.remove('hidden');
+}
+
+// ═══════════════════════════════════════════════════════
+// TOAST NOTIFICATIONS
+// ═══════════════════════════════════════════════════════
+function showToast(message, type) {
+    const colors = { success: 'bg-success', danger: 'bg-danger', warning: 'bg-warning' };
+    const icons = { success: 'check_circle', danger: 'error', warning: 'warning' };
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = 'toast flex items-center gap-3 ' + (colors[type] || 'bg-panel-surface') + ' text-white px-4 py-3 rounded-xl shadow-lg text-sm';
+    toast.innerHTML = '<span class="material-symbols-outlined text-lg" style="font-variation-settings:\'FILL\' 1">' + (icons[type] || 'info') + '</span> ' + message;
+    container.appendChild(toast);
+    setTimeout(function() { toast.remove(); }, 3000);
+}
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+checkSession();
+</script>
+</body>
+</html>

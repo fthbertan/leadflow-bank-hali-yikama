@@ -1,0 +1,51 @@
+<?php $rootPath = __DIR__; ?>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<?php include $rootPath . '/includes/head-common.php'; ?>
+<title>Sayfa Bulunamadi | Bank Halı Yıkama</title>
+<meta name="robots" content="noindex"/>
+<style>
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.btn-blog-outline{border:2px solid rgba(var(--lf-primary-rgb),0.2);color:var(--lf-primary);transition:all .3s ease}
+.btn-blog-outline:hover{background:var(--lf-primary);color:#fff}
+.link-primary{color:var(--lf-primary);transition:color .2s ease}
+.link-primary:hover{color:var(--lf-accent)}
+</style>
+</head>
+<body class="bg-[#FAF9F6] font-body min-h-screen flex flex-col">
+
+<?php $pageType = 'sub'; include $rootPath . '/includes/navbar.php'; ?>
+
+<!-- 404 Content -->
+<main class="flex-1 flex items-center justify-center px-4 py-20">
+    <div class="text-center max-w-lg">
+        <div class="mb-8" style="animation:float 6s ease-in-out infinite">
+            <svg style="width:120px;height:120px;vertical-align:middle;flex-shrink:0;color:var(--lf-accent);opacity:0.3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">M15.5 14h-.79l-.28-.27c.98-1.14 1.57-2.62 1.57-4.23 0-3.59-2.91-6.5-6.5-6.5-.89 0-1.73.18-2.5.5l2.13 2.13c.12-.01.24-.03.37-.03 2.49 0 4.5 2.01 4.5 4.5 0 .13-.02.25-.03.37l2.13 2.13c.32-.77.5-1.61.5-2.5h-.01l4.99 5L20.49 19l-4.99-5zM6.47 5.05L3.87 2.45 2.46 3.87l2.62 2.62C4.39 7.6 4 8.99 4 10.5c0 3.59 2.91 6.5 6.5 6.5 1.51 0 2.9-.39 4.01-1.08l2.62 2.62 1.41-1.41L6.47 5.05zM10.5 15C8.01 15 6 12.99 6 10.5c0-1.11.41-2.13 1.08-2.92l6.34 6.34c-.79.67-1.81 1.08-2.92 1.08z</svg>
+        </div>
+        <h1 class="font-headline text-7xl font-bold mb-4" style="color:var(--lf-primary);opacity:0.2">404</h1>
+        <h2 class="font-headline text-2xl sm:text-3xl text-[#1A1A2E] mb-4">Sayfa Bulunamadı</h2>
+        <p class="text-[#5A6674] text-lg mb-10 leading-relaxed">
+            Aradığınız sayfa taşınmış veya kaldırılmış olabilir. Ana sayfamızdan devam edebilirsiniz.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="/" class="btn-shimmer text-white px-8 py-3.5 rounded-full font-semibold text-sm shadow-lg hover:scale-105 transition-transform">Ana Sayfaya Dön</a>
+            <a href="/blog/" class="btn-blog-outline px-8 py-3.5 rounded-full font-semibold text-sm">Blog Yazıları</a>
+        </div>
+        <div class="mt-16 pt-8 border-t border-[#D8DDE3]">
+            <p class="text-[#5A6674] text-sm mb-4">Popüler sayfalarımız:</p>
+            <div class="flex flex-wrap justify-center gap-3">
+                <a href="/#hizmetlerimiz" class="link-primary text-sm font-medium">Hizmetler</a>
+                <span class="text-[#D8DDE3]">|</span>
+                <a href="/#hakkimizda" class="link-primary text-sm font-medium">Hakkımızda</a>
+                <span class="text-[#D8DDE3]">|</span>
+                <a href="/#iletisim" class="link-primary text-sm font-medium">İletişim</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<?php include $rootPath . '/includes/footer.php'; ?>
+<?php include $rootPath . '/includes/floating-buttons.php'; ?>
+</body>
+</html>
