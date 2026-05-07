@@ -5,34 +5,23 @@
 // ══════════════════════════════════════
 // AYARLAR — Her müşteri sitesi için değiştir
 // ══════════════════════════════════════
-define('DB_HOST', '{{DB_HOST}}');         // Genelde: localhost
-define('DB_NAME', '{{DB_NAME}}');         // cPanel'de oluşturduğun DB adı
-define('DB_USER', '{{DB_USER}}');         // cPanel'de oluşturduğun DB kullanıcısı
-define('DB_PASS', '{{DB_PASS}}');         // DB kullanıcı şifresi
+define('DB_HOST', 'localhost');         // Genelde: localhost
+define('DB_NAME', 'anka7332_bank_db');         // cPanel'de oluşturduğun DB adı
+define('DB_USER', 'anka7332_bank_user');         // cPanel'de oluşturduğun DB kullanıcısı
+define('DB_PASS', 'hb.3155197');         // DB kullanıcı şifresi
+
+// Cloudflare Turnstile anahtarları (CAPTCHA)
+define('TURNSTILE_SITE_KEY',   '0x4AAAAAADD0xuy_yCwNaJvi');   // Görünür — HTML'e gömülür
+define('TURNSTILE_SECRET_KEY', '0x4AAAAAADD0xkeLC4QqN5fllzV4mcBAASs'); // Gizli — sadece sunucu tarafı
 
 // Admin API güvenlik token'ı — sadece sunucu tarafında kullanılır (JS'e gönderilmez)
-define('ADMIN_API_TOKEN', '7075e9c1ece1ddab5bf2803d4955cd3b0bb906417c833af4d7bd0e21f791ea83');
+define('ADMIN_API_TOKEN', 'e88f6e0d181c98f844fc8b58ca9024cba5566528d42e531d971d6ddd57da8a7a');
 
 // Default credential hash'leri — ilk kurulumda kullanılır, panelden değiştirilebilir
 // Python site_generator.py tarafından önceden hesaplanıp gömülür
 define('ADMIN_DEFAULT_PASS_HASH', 'lf$ee5c44c6863e1656c347cfa429172b393b6c3d7e2db75e1ca8bf1b65ad5365ea');
 define('ADMIN_DEFAULT_USER_HASH', 'us$10887d68b711789164025ca747b708a5a2198ed7c89bfa069b18d25e6f25cf39');
-define('ADMIN_DEFAULT_EMAIL_HASHES', '[]');
-
-// ══════════════════════════════════════
-// SMTP AYARLARI (Bildirim E-postaları)
-// ══════════════════════════════════════
-define('SMTP_HOST', '___SMTP_HOST___');         // mail.domain.com.tr
-define('SMTP_PORT', 465);                        // SSL
-define('SMTP_USER', '___SMTP_USER___');          // noreply@domain.com.tr
-define('SMTP_PASS', '___SMTP_PASS___');          // SMTP şifresi
-define('SMTP_FROM_NAME', '{{BUSINESS_NAME}}');
-
-// ══════════════════════════════════════
-// CLOUDFLARE TURNSTILE (Spam Koruması)
-// ══════════════════════════════════════
-define('TURNSTILE_SITE_KEY', '___TURNSTILE_SITE_KEY___');       // Frontend widget için (public)
-define('TURNSTILE_SECRET_KEY', '___TURNSTILE_SECRET_BURAYA___'); // Backend doğrulama için (gizli)
+define('ADMIN_DEFAULT_EMAIL_HASHES', '["em$129891864d6a556a622990208db33130429fa6dd8a2a2839380795c3e652f668"]');
 
 // ══════════════════════════════════════
 // PDO BAĞLANTISI
@@ -145,63 +134,28 @@ function getJsonBody() {
     return $data;
 }
 
-// ══════════════════════════════════════
-// E-POSTA GÖNDERİMİ (SMTP)
-// ══════════════════════════════════════
-function sendNotificationEmail($to, $subject, $htmlBody) {
-    if (!$to || !defined('SMTP_HOST') || SMTP_PASS === '___SMTP_PASS___') return false;
+// İletişim formu e-posta bildirimi
+function sendNotificationEmail($db, $name, $phone, $service, $date, $time, $notes) {
+    $emailStmt = $db->prepare("SELECT setting_value FROM settings WHERE setting_key = 'email'");
+    $emailStmt->execute();
+    $toEmail = $emailStmt->fetchColumn();
 
-    $toList = is_array($to) ? $to : array_map('trim', explode(',', $to));
-    $toList = array_filter($toList, function($e) { return filter_var($e, FILTER_VALIDATE_EMAIL); });
-    if (empty($toList)) return false;
+    if (!$toEmail || !filter_var($toEmail, FILTER_VALIDATE_EMAIL)) return;
 
-    // Tüm header'ları tek string olarak oluştur (Date + Message-ID zorunlu, yoksa Gmail düşürür)
-    $messageId = '<' . bin2hex(random_bytes(16)) . '@' . SMTP_HOST . '>';
-    $msg  = "Date: " . gmdate('D, d M Y H:i:s +0000') . "\r\n";
-    $msg .= "Message-ID: " . $messageId . "\r\n";
-    $msg .= "From: " . SMTP_FROM_NAME . " <" . SMTP_USER . ">\r\n";
-    $msg .= "To: " . implode(', ', $toList) . "\r\n";
-    $msg .= "Subject: =?UTF-8?B?" . base64_encode($subject) . "?=\r\n";
-    $msg .= "Reply-To: " . SMTP_USER . "\r\n";
-    $msg .= "MIME-Version: 1.0\r\n";
-    $msg .= "Content-Type: text/html; charset=UTF-8\r\n";
-    $msg .= "\r\n"; // header/body ayırıcı
-    $msg .= $htmlBody . "\r\n.\r\n";
+    $subject = '=?UTF-8?B?' . base64_encode('Yeni İletişim Talebi - ' . $name) . '?=';
+    $body  = "<h2>Yeni İletişim Talebi</h2>";
+    $body .= "<p><strong>Ad Soyad:</strong> " . htmlspecialchars($name) . "</p>";
+    $body .= "<p><strong>Telefon:</strong> " . htmlspecialchars($phone ?: '-') . "</p>";
+    $body .= "<p><strong>Hizmet:</strong> " . htmlspecialchars($service ?: '-') . "</p>";
+    $body .= "<p><strong>Tarih:</strong> " . htmlspecialchars($date ?: '-') . "</p>";
+    $body .= "<p><strong>Saat:</strong> " . htmlspecialchars($time ?: '-') . "</p>";
+    $body .= "<p><strong>Not:</strong> " . htmlspecialchars($notes ?: '-') . "</p>";
+    $body .= "<hr><p><em>Bu mesaj web sitesi iletişim formundan gönderildi.</em></p>";
 
-    // SMTP socket ile gönder
-    $smtp = @fsockopen('ssl://' . SMTP_HOST, SMTP_PORT, $errno, $errstr, 10);
-    if (!$smtp) return false;
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $headers  = "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+    $headers .= "From: noreply@" . $host . "\r\n";
 
-    // Çok satırlı SMTP yanıtlarını tam oku (220-, 250- gibi devam satırları)
-    $readResp = function() use ($smtp) {
-        $full = '';
-        while ($line = fgets($smtp, 515)) {
-            $full .= $line;
-            if (isset($line[3]) && $line[3] !== '-') break;
-            if (strlen($line) < 4) break;
-        }
-        return $full;
-    };
-    $send = function($cmd) use ($smtp, $readResp) {
-        fwrite($smtp, $cmd . "\r\n");
-        return $readResp();
-    };
-
-    $readResp(); // banner (çok satırlı olabilir)
-    $send('EHLO ' . SMTP_HOST); // EHLO yanıtı (çok satırlı)
-
-    $send('AUTH LOGIN');
-    $send(base64_encode(SMTP_USER));
-    $authResp = $send(base64_encode(SMTP_PASS));
-    if (strpos($authResp, '235') === false) { fclose($smtp); return false; }
-
-    $send('MAIL FROM:<' . SMTP_USER . '>');
-    foreach ($toList as $rcpt) { $send('RCPT TO:<' . $rcpt . '>'); }
-    $send('DATA');
-    fwrite($smtp, $msg); // Tüm header + body tek fwrite
-    $result = $readResp();
-    $send('QUIT');
-    fclose($smtp);
-
-    return strpos($result, '250') !== false;
+    @mail($toEmail, $subject, $body, $headers);
 }

@@ -1,8 +1,10 @@
-<?php $rootPath = dirname(__DIR__); ?>
 <!DOCTYPE html>
-<html class="scroll-smooth" lang="tr">
+<html class="scroll-smooth overflow-x-hidden" lang="tr">
 <head>
-<?php include $rootPath . '/includes/head-common.php'; ?>
+<meta charset="utf-8"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","")</script>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <title>{{BLOG_TITLE}} | Bank Halı Yıkama</title>
 <meta name="description" content="{{BLOG_META_DESCRIPTION}}"/>
 <meta property="og:title" content="{{BLOG_TITLE}} | Bank Halı Yıkama"/>
@@ -22,28 +24,70 @@
 <link rel="alternate" hreflang="tr" href="{{BLOG_OG_URL}}"/>
 <link rel="alternate" hreflang="x-default" href="{{BLOG_OG_URL}}"/>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"/>
+<link rel="stylesheet" href="../css/style.css"/>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"/>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <style>
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+</style>
+<style>
+::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #F5F0FF; }
+    ::-webkit-scrollbar-thumb { background: #8E5CC0; border-radius: 10px; }
     .text-gradient-gold {
-        background: linear-gradient(135deg, var(--lf-primary), var(--lf-primary-light), var(--lf-primary-light));
+        background: linear-gradient(135deg, #5B2C87, #8E5CC0, #8E5CC0);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
-    .card-glow { transition: transform 0.5s ease, box-shadow 0.5s ease; }
-    .card-glow:hover { box-shadow: 0 0 40px rgba(var(--lf-primary-rgb),0.08), 0 8px 32px rgba(var(--lf-primary-light-rgb),0.12); transform: translateY(-2px); }
+    @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+    .btn-shimmer {
+        background: linear-gradient(110deg, #B33562 0%, #E0457B 25%, #E0457B 50%, #E0457B 75%, #B33562 100%);
+        background-size: 200% 100%;
+        animation: shimmer 4s linear infinite;
+    }
+    .btn-cta {
+        background: linear-gradient(110deg, #047857 0%, #E0457B 25%, #B33562 50%, #E0457B 75%, #047857 100%);
+        background-size: 200% 100%;
+        animation: shimmer 4s linear infinite;
+    }
+    .btn-cta:hover { filter: brightness(1.1); transform: scale(1.05); }
+
+.card-glow { transition: transform 0.5s ease, box-shadow 0.5s ease; }
+    .card-glow:hover { box-shadow: 0 0 40px rgba(26,82,118,0.08), 0 8px 32px rgba(46,134,193,0.12); transform: translateY(-2px); }
+    #scrollTopBtn { opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+    #scrollTopBtn.visible { opacity: 1; pointer-events: auto; }
+
+    @keyframes waBounce { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-6px); } }
+    .wa-bounce { animation: waBounce 2s ease-in-out infinite; }
+    .wa-bounce:hover { animation: none; }
+    #callButton{bottom:calc(8.5rem + env(safe-area-inset-bottom, 0px))!important}
+    #waButton{bottom:calc(5rem + env(safe-area-inset-bottom, 0px))!important}
+    #instagramButton{bottom:calc(1.5rem + env(safe-area-inset-bottom, 0px))!important}
+    #scrollTopBtn{bottom:calc(1.5rem + env(safe-area-inset-bottom, 0px))!important}
+    @media(min-width:768px){#callButton{bottom:calc(8rem + env(safe-area-inset-bottom, 0px))!important}#waButton{bottom:calc(5rem + env(safe-area-inset-bottom, 0px))!important}#instagramButton{bottom:calc(2rem + env(safe-area-inset-bottom, 0px))!important}#scrollTopBtn{bottom:calc(2rem + env(safe-area-inset-bottom, 0px))!important}}
     .blog-content h2 { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 600; color: #1A1A2E; margin-top: 2.5rem; margin-bottom: 1rem; }
     .blog-content h3 { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 600; color: #2D3748; margin-top: 2rem; margin-bottom: 0.75rem; }
     .blog-content p { color: #5A6674; font-size: 1.05rem; line-height: 1.85; margin-bottom: 1.25rem; }
     .blog-content ul { list-style: none; padding: 0; margin-bottom: 1.25rem; }
     .blog-content ul li { position: relative; padding-left: 1.5rem; color: #5A6674; font-size: 1.05rem; line-height: 1.85; margin-bottom: 0.5rem; }
-    .blog-content ul li::before { content: '◆'; position: absolute; left: 0; color: var(--lf-accent); font-size: 0.6rem; top: 0.55rem; }
-    .blog-content blockquote { border-left: 3px solid var(--lf-accent); padding: 1rem 1.5rem; margin: 2rem 0; background: rgba(var(--lf-accent-rgb),0.05); border-radius: 0 0.5rem 0.5rem 0; }
+    .blog-content ul li::before { content: '◆'; position: absolute; left: 0; color: #E0457B; font-size: 0.6rem; top: 0.55rem; }
+    .blog-content blockquote { border-left: 3px solid #E0457B; padding: 1rem 1.5rem; margin: 2rem 0; background: rgba(224,69,123,0.05); border-radius: 0 0.5rem 0.5rem 0; }
     .blog-content blockquote p { color: #2D3748; font-style: italic; font-family: 'Playfair Display', serif; margin-bottom: 0; }
     .blog-content figure { margin: 2rem 0; }
     .blog-content figure img { border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
     .blog-content figure figcaption { text-align: center; font-size: 0.875rem; color: #5A6674; margin-top: 0.5rem; font-style: italic; }
     #blogToc ol { counter-reset: toc; list-style: none; padding: 0; }
     #blogToc ol li { counter-increment: toc; }
-    #blogToc ol li a::before { content: counter(toc) ". "; color: var(--lf-primary); font-weight: 600; }
+    #blogToc ol li a::before { content: counter(toc) ". "; color: #5B2C87; font-weight: 600; }
+
+    #mobileMenu { max-height: 0; opacity: 0; overflow: hidden; transition: max-height .4s ease, opacity .3s ease, padding .3s ease; padding-top: 0; padding-bottom: 0; }
+    #mobileMenu.open { max-height: calc(100vh - 120px); opacity: 1; padding-top: .5rem; padding-bottom: 1.5rem; overflow-y: auto; }
 </style>
 
 <!-- Article Schema.org -->
@@ -59,15 +103,15 @@
   "author": {
     "@type": "Organization",
     "name": "Bank Halı Yıkama",
-    "url": "https://bank-hali-yikama.com"
+    "url": "https://bankhaliyikama.com.tr"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Bank Halı Yıkama",
-    "url": "https://bank-hali-yikama.com",
+    "url": "https://bankhaliyikama.com.tr",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://bank-hali-yikama.com/favicon.svg"
+      "url": "https://bankhaliyikama.com.tr/favicon.svg"
     }
   },
   "mainEntityOfPage": {
@@ -83,21 +127,116 @@
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://bank-hali-yikama.com/"},
-    {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://bank-hali-yikama.com/blog/"},
+    {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://bankhaliyikama.com.tr/"},
+    {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://bankhaliyikama.com.tr/blog/"},
     {"@type": "ListItem", "position": 3, "name": "{{BLOG_TITLE_SHORT}}"}
   ]
 }
 </script>
 </head>
-<body class="bg-surface font-body text-on-surface selection:bg-primary/30 selection:text-on-primary" style="overflow-x:clip">
+<body class="bg-surface font-body text-on-surface selection:bg-primary/30 selection:text-on-primary overflow-x-hidden">
 
-<?php $pageType = 'sub'; include $rootPath . '/includes/navbar.php'; ?>
+<style>
+    /* Nav states */
+    .nav-glass-pill { background: rgba(255,255,255,0.14) !important; border: 1px solid rgba(255,255,255,0.32); border-radius: 999px; padding: 6px !important; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); gap: 2px !important; box-shadow: 0 4px 24px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.2); }
+    .nav-link { position: relative; transition: all 0.3s ease; color: #FFFFFF; font-weight: 700; padding: 9px 18px !important; border-radius: 999px; }
+    .nav-link:hover { background: rgba(232,115,74,0.15); color: #E0457B !important; }
+    .nav-link.active { background: #E0457B !important; color: #FFFFFF !important; box-shadow: 0 2px 14px rgba(232,115,74,0.3); font-weight: 800; }
+
+    .nav-hero { background: transparent; }
+    .nav-hero .nav-link { color: #FFFFFF !important; font-weight: 700 !important; text-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+    .nav-hero .nav-link:hover { background: rgba(224,69,123,0.15); color: #E0457B !important; }
+    .nav-hero .nav-link.active { background: #E0457B !important; color: #FFFFFF !important; text-shadow: none; }
+    .nav-hero .logo-text { color: white; }
+    .nav-hero #mobileMenuBtn { color: white !important; }
+
+    .nav-scrolled { background: #2E1548; box-shadow: 0 4px 30px rgba(0,0,0,0.3); backdrop-filter: blur(12px); }
+    .nav-scrolled .nav-link { color: #FFFFFF !important; font-weight: 700 !important; }
+    .nav-scrolled .nav-link:hover { background: rgba(232,115,74,0.15); color: #E0457B !important; }
+    .nav-scrolled .nav-link.active { background: #E0457B !important; color: #FFFFFF !important; }
+    .nav-scrolled .logo-text { color: white; }
+    .nav-scrolled #mobileMenuBtn { color: white !important; }
+
+    #mobileMenu .nav-link { color: white !important; padding: 8px 0 !important; border-radius: 0; }
+    #mobileMenu .nav-link:hover { color: #E0457B !important; background: none; }
+    #mobileMenu .nav-link.active { color: #E0457B !important; background: none !important; }
+    #mobileMenu { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease; padding-top: 0; padding-bottom: 0; }
+    #mobileMenu.open { max-height: calc(100vh - 120px); opacity: 1; padding-top: 0.5rem; padding-bottom: 1.5rem; overflow-y: auto; }
+
+    #mobileMenuBtn .menu-icon { display: block; } #mobileMenuBtn .close-icon { display: none; }
+    #mobileMenuBtn.active .menu-icon { display: none; }
+    #mobileMenuBtn.active .close-icon { display: block; animation: spinIn 0.3s ease; }
+    @keyframes spinIn { from { transform: rotate(-90deg) scale(0.5); opacity: 0; } to { transform: rotate(0) scale(1); opacity: 1; } }
+
+    #scrollTopBtn { opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+    #scrollTopBtn.visible { opacity: 1; pointer-events: auto; }
+</style>
+<div id="topBar" class="bg-[#2E1548] border-b border-white/10 py-2 text-xs z-[60] relative">
+    <div class="flex justify-between items-center px-4 sm:px-6 lg:px-10 max-w-full">
+        <div class="flex items-center gap-5 text-white/70">
+            <a href="tel:05456876161" data-kv-href="phone_raw" data-kv-href-prefix="tel:" class="flex items-center gap-1.5 hover:text-white transition-colors">
+                <svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0;color:#5B2C87" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                <span data-kv="phone">0 545 687 61 61</span>
+            </a>
+            <span class="hidden lg:flex items-center gap-1.5">
+                <svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0;color:#8E5CC0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                <span data-kv="working_hours_short">7/24 Hizmetinizdeyiz</span>
+            </span>
+        </div>
+        <div class="flex items-center justify-center gap-3 text-white/70 sm:w-[160px]" id="kvTopBarSocial">
+            <a href="https://www.instagram.com/hayati_bank" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity" title="Instagram"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+            <a href="https://www." target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity" title="Facebook"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+            <a href="https://www.tiktok.com/@hayati_bank1" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity" title="TikTok"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.43v-7.15a8.16 8.16 0 005.58 2.09V11.1a4.84 4.84 0 01-3.58-1.58V6.69h3.58z"/></svg></a>
+        </div>
+    </div>
+</div>
+
+<!-- Navbar -->
+<nav id="mainNav" class="sticky w-full z-50 transition-all duration-500 nav-scrolled" style="top:36px" role="navigation" aria-label="Ana navigasyon">
+    <div class="flex justify-between items-center px-4 sm:px-6 lg:px-10 py-4 max-w-full">
+        <a href="/" class="group flex items-center gap-3 sm:gap-3">
+            <div class="w-11 h-11 sm:w-10 sm:h-10 rounded-xl bg-[#E0457B] flex items-center justify-center shadow-lg shadow-[#E0457B]/30 group-hover:scale-110 transition-transform duration-300">
+                <span class="font-bold text-white text-xl">Ö</span>
+            </div>
+            <span class="logo-text text-2xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] whitespace-nowrap" data-kv="business_name">Bank Halı Yıkama</span>
+        </a>
+        <div class="flex items-center gap-4">
+            <div class="hidden lg:flex items-center nav-glass-pill">
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/#hizmetlerimiz">Hizmetlerimiz</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/fiyatlar">Fiyatlarımız</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/#surecimiz">Sürecimiz</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/#hakkimizda">Hakkımızda</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/#galeri">Galeri</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/#yorumlar">Yorumlar</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/#blog">Blog</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/#iletisim">İletişim</a>
+            </div>
+            <a class="hidden sm:inline-flex btn-cta text-white px-6 py-2.5 rounded-full font-semibold text-sm tracking-wide shadow-lg shadow-[#E0457B]/30 hover:scale-105 transition-transform duration-300" href="/#iletisim">Ücretsiz Keşif</a>
+            <button id="mobileMenuBtn" class="lg:hidden p-2">
+                <svg class="text-3xl menu-icon" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                <svg class="text-3xl close-icon" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+        </div>
+    </div>
+    <div id="mobileMenu" class="lg:hidden w-full px-6 space-y-4 bg-[#2E1548]/95 backdrop-blur-xl border-t border-white/10">
+        <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/#hizmetlerimiz">Hizmetlerimiz</a>
+        <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/fiyatlar">Fiyatlarımız</a>
+        <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/#surecimiz">Sürecimiz</a>
+        <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/#hakkimizda">Hakkımızda</a>
+        <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/#galeri">Galeri</a>
+        <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/#yorumlar">Yorumlar</a>
+        <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/#blog">Blog</a>
+        <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/#iletisim">İletişim</a>
+        <a class="block btn-cta text-white px-6 py-3 rounded-full font-semibold text-sm tracking-wide text-center sm:hidden" href="/#iletisim">Ücretsiz Keşif</a>
+    </div>
+</nav>
+
+<!-- ==================== HERO — CINEMATIC SPLIT ==================== -->
 
 <!-- Blog Header -->
 <header class="pt-16 sm:pt-20 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 bg-surface relative">
     <div class="absolute inset-0 opacity-[0.03] pointer-events-none">
-        <div class="absolute inset-0" style="background: radial-gradient(ellipse at 30% 30%, rgba(var(--lf-primary-rgb),0.03) 0%, transparent 50%), radial-gradient(ellipse at 70% 70%, rgba(var(--lf-primary-light-rgb),0.03) 0%, transparent 50%);"></div>
+        <div class="absolute inset-0" style="background: radial-gradient(ellipse at 30% 30%, rgba(26,82,118,0.03) 0%, transparent 50%), radial-gradient(ellipse at 70% 70%, rgba(46,134,193,0.03) 0%, transparent 50%);"></div>
     </div>
     <div class="max-w-3xl mx-auto relative z-10">
         <!-- Breadcrumb -->
@@ -160,27 +299,27 @@
         <!-- Yazar Kutusu (E-E-A-T) -->
         <div class="mt-10 p-6 bg-surface-container-low rounded-2xl border border-outline-variant/10">
             <div class="flex items-start gap-4">
-                <div class="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0" style="background:linear-gradient(to bottom right, var(--lf-primary), var(--lf-primary-light))"
+                <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#5B2C87] to-[#8E5CC0] flex items-center justify-center flex-shrink-0">
                     <svg class="text-white text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                 </div>
                 <div>
                     <p class="text-xs uppercase tracking-widest text-on-surface-variant/60 mb-1">Yazar</p>
                     <p class="font-headline font-bold text-on-background text-lg">Bank Halı Yıkama Uzman Ekibi</p>
-                    <p class="text-on-surface-variant text-sm mt-2 leading-relaxed">Profesyonel ekibimiz, halı yıkama v4 sektöründeki bilgi birikimini sizlerle paylaşmayı amaçlamaktadır.</p>
+                    <p class="text-on-surface-variant text-sm mt-2 leading-relaxed">Profesyonel ekibimiz, halı yıkama v3 sektöründeki bilgi birikimini sizlerle paylaşmayı amaçlamaktadır.</p>
                     <div class="flex flex-wrap gap-3 mt-3">
                         <span class="inline-flex items-center gap-1 text-xs text-primary font-medium"><svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.69 3.1 5.5l.34 3.7L1 12l2.44 2.79-.34 3.7 3.61.82L8.6 22.5l3.4-1.47 3.4 1.46 1.89-3.19 3.61-.82-.34-3.69L23 12zm-12.91 4.72l-3.8-3.8 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.34z"/></svg>Uzman Ekip</span>
-                        <span class="inline-flex items-center gap-1 text-xs text-primary font-medium"><svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.68 13.69L12 11.93l2.32 1.76-.88-2.85L15.76 9h-2.93L12 6.19 11.17 9H8.24l2.32 1.84-.88 2.85zM20 10c0-4.42-3.58-8-8-8s-8 3.58-8 8c0 2.03.76 3.87 2 5.28V23l6-2 6 2v-7.72c1.24-1.41 2-3.25 2-5.28zm-8-6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6 2.69-6 6-6z"/></svg>16+ Yıl Deneyim</span>
+                        <span class="inline-flex items-center gap-1 text-xs text-primary font-medium"><svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">M9.68 13.69L12 11.93l2.32 1.76-.88-2.85L15.76 9h-2.93L12 6.19 11.17 9H8.24l2.32 1.84-.88 2.85zM20 10c0-4.42-3.58-8-8-8s-8 3.58-8 8c0 2.03.76 3.87 2 5.28V23l6-2 6 2v-7.72c1.24-1.41 2-3.25 2-5.28zm-8-6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6 2.69-6 6-6z</svg>16+ Yil Deneyim</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Makale İçi CTA -->
-        <div class="mt-10 p-6 sm:p-8 rounded-2xl text-white text-center" style="background:linear-gradient(to right, var(--lf-primary), var(--lf-primary-light))"
+        <div class="mt-10 p-6 sm:p-8 bg-gradient-to-r from-[#5B2C87] to-[#8E5CC0] rounded-2xl text-white text-center">
             <h3 class="font-headline text-xl sm:text-2xl mb-3">Halılarınız Bizimle Güvende</h3>
-            <p class="text-white/80 text-sm mb-5 max-w-lg mx-auto">Hijyenik ve derinlemesine temizlik garantisiyle halılarınıza özenle yaklaşıyoruz.</p>
+            <p class="text-white/80 text-sm mb-5 max-w-lg mx-auto">Profesyonel ekibimiz ve son teknoloji ekipmanlarımızla halılarınızı ilk günkü temizliğine kavuşturuyoruz.</p>
             <div class="flex flex-wrap justify-center gap-3">
-                <a href="/#iletisim" class="btn-cta text-white px-6 py-2.5 rounded-full font-semibold text-sm shadow-lg shadow-lg hover:scale-105 transition-transform duration-300">Ücretsiz Keşif Al</a>
+                <a href="/#iletisim" class="bg-[#E0457B] text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-[#B33562] transition-colors">Ücretsiz Keşif Al</a>
                 <a href="tel:05456876161" class="border border-white/30 text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-white/10 transition-colors flex items-center gap-1.5">
                     <svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> Hemen Ara
                 </a>
@@ -192,15 +331,15 @@
             <h3 class="font-headline text-lg text-on-background mb-4 flex items-center gap-2"><svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Hizmet Bölgelerimiz</h3>
 <div class="space-y-4">
 <div>
-    <span class="text-xs font-semibold uppercase tracking-wider text-primary/60 block mb-2">Makine Halısı Yıkama</span>
+    <span class="text-xs font-semibold uppercase tracking-wider text-primary/60 block mb-2">Halı Yıkama</span>
     <div class="flex flex-wrap items-center gap-x-1.5 gap-y-1.5 text-sm">
-        <a href="/sincan-makine-halisi-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Sincan Halı Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/plevne-makine-halisi-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Plevne Halı Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/eryaman-makine-halisi-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Eryaman Halı Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/etimesgut-makine-halisi-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Etimesgut Halı Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/elvankent-makine-halisi-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Elvankent Halı Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/yenikent-makine-halisi-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Yenikent Halı Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/fatih-makine-halisi-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Fatih Halı Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/temelli-makine-halisi-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Temelli Halı Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/baglica-makine-halisi-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Bağlıca Halı Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/goksu-makine-halisi-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Göksu Halı Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/tunahan-makine-halisi-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Tunahan Halı Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/baglum-makine-halisi-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Bağlum Halı Yıkama</a>
+        <a href="/eryaman-hali-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Eryaman</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/sincan-hali-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Sincan</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/baglica-hali-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Bağlıca</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/batikent-hali-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Batıkent</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/etimesgut-hali-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Etimesgut</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/yasamkent-hali-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Yaşamkent</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/beytepe-hali-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Beytepe</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/yenikent-hali-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Yenikent</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/yapracik-hali-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Yapracık</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/cayyolu-hali-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Çayyolu</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/umitkoy-hali-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Ümitköy</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/konutkent-hali-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Konutkent</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/incek-hali-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">İncek</a>
     </div>
 </div>
 <div>
     <span class="text-xs font-semibold uppercase tracking-wider text-primary/60 block mb-2">Tüm Hizmetlerimiz</span>
     <div class="flex flex-wrap items-center gap-x-1.5 gap-y-1.5 text-sm">
-        <a href="/makine-halisi-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Makine Halısı Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/el-dokuma-yun-hali-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">El Dokuma & Yün Halı Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/koltuk-takimi-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Koltuk Takımı Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/yorgan-battaniye-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Yorgan & Battaniye Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/ozel-leke-cikarma" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Özel Leke Çıkarma</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/ucretsiz-servis" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Ücretsiz Servis</a>
+        <a href="/hali-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Halı Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/koltuk-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Koltuk Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/yorgan-battaniye-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Yorgan & Battaniye Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/yatak-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Yatak Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/perde-yikama" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Perde Yıkama</a> <span class="text-outline-variant/30 select-none">·</span> <a href="/ucretsiz-servis" class="text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/30 hover:decoration-primary transition-colors">Ücretsiz Servis</a>
     </div>
 </div>
 </div>
@@ -221,18 +360,140 @@
 </section>
 
 <!-- CTA Banner -->
-<section class="relative overflow-hidden" style="background:linear-gradient(to right, var(--lf-primary), var(--lf-primary-light), var(--lf-primary))">
-    <div class="absolute inset-0" style="background: radial-gradient(circle at 30% 50%, rgba(var(--lf-accent-rgb),0.15), transparent 50%), radial-gradient(circle at 80% 50%, rgba(5,191,219,0.12), transparent 50%);"></div>
+<section class="bg-gradient-to-r from-[#5B2C87] via-[#8E5CC0] to-[#5B2C87] relative overflow-hidden">
+    <div class="absolute inset-0" style="background: radial-gradient(circle at 30% 50%, rgba(224,69,123,0.15), transparent 50%), radial-gradient(circle at 80% 50%, rgba(5,191,219,0.12), transparent 50%);"></div>
     <div class="relative z-10 max-w-4xl mx-auto text-center py-16 sm:py-20 px-4">
         <h2 class="font-headline text-3xl sm:text-4xl text-white mb-6 tracking-wide">Halılarınız Bizimle Güvende</h2>
-        <p class="text-white/70 text-lg mb-10 max-w-2xl mx-auto">Hijyenik ve derinlemesine temizlik garantisiyle halılarınıza özenle yaklaşıyoruz.</p>
-        <a class="text-white px-10 sm:px-12 py-4 rounded-full font-bold text-sm sm:text-base tracking-wide hover:scale-105 transition-transform duration-300 shadow-xl inline-block" style="background:var(--lf-accent)" href="/#iletisim">Hemen Teklif Alın</a>
+        <p class="text-white/70 text-lg mb-10 max-w-2xl mx-auto">Profesyonel ekibimiz ve son teknoloji ekipmanlarımızla halılarınızı ilk günkü temizliğine kavuşturuyoruz.</p>
+        <a class="bg-[#E0457B] text-white px-10 sm:px-12 py-4 rounded-full font-bold text-sm sm:text-base tracking-wide hover:scale-105 transition-transform duration-300 shadow-xl inline-block" href="/#iletisim">Hemen Teklif Alın</a>
     </div>
 </section>
 
-<?php include $rootPath . '/includes/footer.php'; ?>
+<footer class="bg-[#2E1548] pt-16 sm:pt-24 pb-12 px-4 sm:px-6 lg:px-8 border-t border-white/10" role="contentinfo">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
+        <div>
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-11 h-11 sm:w-10 sm:h-10 rounded-xl bg-[#E0457B] flex items-center justify-center shadow-lg shadow-[#E0457B]/30">
+                    <span class="font-bold text-white text-xl">Ö</span>
+                </div>
+                <span class="text-lg sm:text-xl font-extrabold tracking-tight text-white whitespace-nowrap" data-kv="business_name">Bank Halı Yıkama</span>
+            </div>
+            <p class="text-sm text-white/70 mb-8 leading-relaxed">Bank Halı Yıkama, Ankara'da halı, koltuk ve yorgan temizliğinde güvenilir adresiniz.</p>
+            <div class="flex gap-4" id="kvSocialLinks">
+                
+                <a href="https://www.instagram.com/hayati_bank" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:opacity-80 transition-all" title="Instagram"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                <a href="https://www." target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:opacity-80 transition-all" title="Facebook"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                <a href="https://www.tiktok.com/@hayati_bank1" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:opacity-80 transition-all" title="TikTok"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.43v-7.15a8.16 8.16 0 005.58 2.09V11.1a4.84 4.84 0 01-3.58-1.58V6.69h3.58z"/></svg></a>
+            
+            </div>
+        </div>
+        <div class="lg:pl-6">
+            <h3 class="text-xs font-label uppercase tracking-widest text-[#E0457B] mb-6">Hızlı Menü</h3>
+            <ul class="space-y-4">
+                <li><a class="text-white/70 hover:text-[#E0457B] transition-colors text-sm" href="/#hizmetlerimiz">Hizmetlerimiz</a></li>
+                <li><a class="text-white/70 hover:text-[#E0457B] transition-colors text-sm" href="/fiyatlar">Fiyatlarımız</a></li>
+                <li><a class="text-white/70 hover:text-[#E0457B] transition-colors text-sm" href="/#surecimiz">Sürecimiz</a></li>
+                <li><a class="text-white/70 hover:text-[#E0457B] transition-colors text-sm" href="/#hakkimizda">Hakkımızda</a></li>
+                <li><a class="text-white/70 hover:text-[#E0457B] transition-colors text-sm" href="/galeri">Galeri</a></li>
+                <li><a class="text-white/70 hover:text-[#E0457B] transition-colors text-sm" href="/blog/">Blog</a></li>
+                <li><a class="text-white/70 hover:text-[#E0457B] transition-colors text-sm" href="/#iletisim">İletişim</a></li>
+            </ul>
+        </div>
+        <div>
+            <h3 class="text-xs font-label uppercase tracking-widest text-[#E0457B] mb-6">İletişim</h3>
+            <ul class="space-y-4">
+                <li><span class="text-white/70 text-sm" data-kv="phone">0 545 687 61 61</span></li>
+                <li><span class="text-white/70 text-sm" data-kv="email"></span></li>
+                <li><span class="text-white/70 text-sm">info@hayati_bank1.com.tr</span></li>
+                <li><span class="text-white/70 text-sm">Plevne Mahallesi Plevne Sokak No:5/a Sincan/Ankara</span></li>
+            </ul>
+        </div>
+        <div>
+            <h3 class="text-xs font-label uppercase tracking-widest text-[#E0457B] mb-6">Bülten</h3>
+            <p class="text-sm text-white/70 mb-4">Bakım ipuçları ve kampanyalar için abone olun.</p>
+            <div class="relative">
+                <input id="newsletterEmail" class="w-full bg-white/10 border border-white/20 rounded-xl py-3 px-5 text-sm text-white placeholder-white/30 focus:ring-1 focus:ring-[#E0457B] transition-all" placeholder="E-posta adresiniz" type="email"/>
+                <button type="button" onclick="var e=document.getElementById('newsletterEmail'),m=document.getElementById('newsletterMsg');if(e.value&&e.value.includes('@')){e.value='';m.textContent='✓ Aboneliğiniz alındı!';m.className='text-xs text-green-400 mt-2';setTimeout(function(){m.textContent=''},4000)}else{m.textContent='Geçerli bir e-posta girin.';m.className='text-xs text-red-400 mt-2'}" class="absolute right-2 top-1.5 btn-cta text-white p-1.5 rounded-lg"><svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+            </div>
+            <div id="newsletterMsg" class="text-xs mt-2"></div>
+            <div class="mt-8">
+                <span class="block text-[10px] text-white/25 uppercase tracking-widest">&copy; 2026 Bank Halı Yıkama. Tüm Hakları Saklıdır.</span>
+                <a href="https://ankarayazilim.tr" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 mt-6 text-[12px] text-white/70 hover:text-[#E0457B] transition-colors duration-300">Tasarım: ankarayazilim.tr</a>
+            </div>
+        </div>
+    </div>
+    <!-- Hizmet Bölgeleri — SEO Internal Links -->
+    <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/10 space-y-6">
+        <div>
+            <h3 class="text-xs font-label uppercase tracking-widest text-[#E0457B] mb-3">Halı Yıkama Hizmet Bölgeleri</h3>
+            <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-white/60">
+                <a href="/eryaman-hali-yikama" class="hover:text-[#E0457B] transition-colors">Eryaman Halı Yıkama</a>
+                <a href="/sincan-hali-yikama" class="hover:text-[#E0457B] transition-colors">Sincan Halı Yıkama</a>
+                <a href="/baglica-hali-yikama" class="hover:text-[#E0457B] transition-colors">Bağlıca Halı Yıkama</a>
+                <a href="/batikent-hali-yikama" class="hover:text-[#E0457B] transition-colors">Batıkent Halı Yıkama</a>
+                <a href="/etimesgut-hali-yikama" class="hover:text-[#E0457B] transition-colors">Etimesgut Halı Yıkama</a>
+                <a href="/yasamkent-hali-yikama" class="hover:text-[#E0457B] transition-colors">Yaşamkent Halı Yıkama</a>
+                <a href="/beytepe-hali-yikama" class="hover:text-[#E0457B] transition-colors">Beytepe Halı Yıkama</a>
+                <a href="/yenikent-hali-yikama" class="hover:text-[#E0457B] transition-colors">Yenikent Halı Yıkama</a>
+                <a href="/yapracik-hali-yikama" class="hover:text-[#E0457B] transition-colors">Yapracık Halı Yıkama</a>
+                <a href="/cayyolu-hali-yikama" class="hover:text-[#E0457B] transition-colors">Çayyolu Halı Yıkama</a>
+                <a href="/umitkoy-hali-yikama" class="hover:text-[#E0457B] transition-colors">Ümitköy Halı Yıkama</a>
+                <a href="/konutkent-hali-yikama" class="hover:text-[#E0457B] transition-colors">Konutkent Halı Yıkama</a>
+                <a href="/incek-hali-yikama" class="hover:text-[#E0457B] transition-colors">İncek Halı Yıkama</a>
+            </div>
+        </div>
+        <div>
+            <h3 class="text-xs font-label uppercase tracking-widest text-[#E0457B] mb-3">Tüm Hizmetlerimiz</h3>
+            <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-white/60">
+                <a href="/hali-yikama" class="hover:text-[#E0457B] transition-colors">Halı Yıkama</a>
+                <a href="/koltuk-yikama" class="hover:text-[#E0457B] transition-colors">Koltuk Yıkama</a>
+                <a href="/yorgan-battaniye-yikama" class="hover:text-[#E0457B] transition-colors">Yorgan & Battaniye Yıkama</a>
+                <a href="/yatak-yikama" class="hover:text-[#E0457B] transition-colors">Yatak Yıkama</a>
+                <a href="/perde-yikama" class="hover:text-[#E0457B] transition-colors">Perde Yıkama</a>
+                <a href="/ucretsiz-servis" class="hover:text-[#E0457B] transition-colors">Ücretsiz Servis</a>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-8 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-white/25 uppercase tracking-widest">
+        <span>Designed with Precision</span>
+        <div class="flex gap-6">
+            <a class="hover:text-[#E0457B] transition-colors" href="/gizlilik-politikasi">Gizlilik Politikası</a>
+            <a class="hover:text-[#E0457B] transition-colors" href="/kvkk">KVKK Aydınlatma</a>
+            <a class="hover:text-[#E0457B] transition-colors" href="/kullanim-sartlari">Kullanım Şartları</a>
+        </div>
+    </div>
+</footer>
 
 <script>
+
+// Scroll to Top
+var scrollTopBtn = document.getElementById('scrollTopBtn');
+if (scrollTopBtn) {
+    function updateScrollTop() {
+        if (window.scrollY > 600) { scrollTopBtn.classList.add('visible'); }
+        else { scrollTopBtn.classList.remove('visible'); }
+    }
+    window.addEventListener('scroll', updateScrollTop);
+    updateScrollTop();
+}
+
+// Mobile Menu
+var mobileMenuBtn = document.getElementById('mobileMenuBtn');
+var mobileMenu = document.getElementById('mobileMenu');
+if (mobileMenuBtn && mobileMenu) {
+    mobileMenuBtn.addEventListener('click', function() {
+        mobileMenu.classList.toggle('hidden');
+        var icon = mobileMenuBtn.querySelector('svg path');
+        icon.setAttribute('d', mobileMenu.classList.contains('hidden') ? 'M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z' : 'M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z');
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            mobileMenu.classList.add('hidden');
+            mobileMenuBtn.querySelector('svg path').setAttribute('d', 'M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z');
+        });
+    });
+}
+
 // Auto-generate TOC from blog-content h2/h3
 (function() {
     var content = document.querySelector('.blog-content');
@@ -282,6 +543,41 @@
 })();
 </script>
 
-<?php include $rootPath . '/includes/floating-buttons.php'; ?>
+<!-- WhatsApp Template Popup -->
+<div id="waPopup" class="fixed inset-0 z-[200] hidden">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="document.getElementById('waPopup').classList.add('hidden')"></div>
+    <div class="absolute bottom-24 right-4 left-4 sm:left-auto sm:right-6 md:right-8 sm:w-72 bg-white rounded-2xl shadow-2xl overflow-hidden" style="animation: slideIn 0.3s ease">
+        <div class="bg-gradient-to-r from-[#25D366] to-[#128C7E] px-4 py-3 flex items-center justify-between">
+            <span class="text-white font-bold text-sm">WhatsApp ile Yazın</span>
+            <button onclick="document.getElementById('waPopup').classList.add('hidden')" class="text-white/80 hover:text-white">
+                <svg class="text-lg" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+        </div>
+        <div id="waPopupList" class="p-3 space-y-2 max-h-60 overflow-y-auto"></div>
+    </div>
+</div>
+
+<!-- Instagram Button -->
+<a href="https://www.instagram.com/hayati_bank" target="_blank" rel="noopener noreferrer" data-kv-href="instagram_url" id="instagramButton" title="Instagram" class="fixed right-6 md:right-8 w-12 h-12 rounded-full text-white hover:scale-110 transition-all duration-500 ease-out z-[100] flex items-center justify-center cursor-pointer group" style="bottom:8.5rem;background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);box-shadow:0 0 24px rgba(214,36,159,0.45);">
+    <svg class="text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    <div class="absolute right-14 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold text-sm" style="background:linear-gradient(135deg,#d6249f,#285AEB)">Instagram</div>
+</a>
+<!-- Call Button -->
+<a href="tel:05456876161" data-kv-href="phone_raw" data-kv-href-prefix="tel:" style="background:linear-gradient(135deg,#5B2C87,#2E1548);box-shadow:0 0 24px rgba(91,44,135,0.45);" class="fixed bottom-20 right-6 md:bottom-22 md:right-8 text-white w-12 h-12 rounded-full hover:scale-110 transition-all duration-500 ease-out z-[100] flex items-center justify-center cursor-pointer group" id="callButton">
+    <svg class="text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+    <div class="absolute right-14 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold text-sm" style="background:#2E1548">Hemen Ara</div>
+</a>
+<!-- WhatsApp Button -->
+<a href="#" target="_blank" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 bg-gradient-to-br from-[#25D366] to-[#128C7E] text-white w-12 h-12 rounded-full shadow-[0_0_24px_rgba(37,211,102,0.4)] hover:scale-110 hover:shadow-[0_0_32px_rgba(37,211,102,0.5)] transition-all duration-500 ease-out z-[100] flex items-center justify-center cursor-pointer group wa-bounce" id="waButton" data-kv-wa="whatsapp_number" onclick="toggleWaPopup(); return false;">
+    <svg class="text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.654-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <div class="absolute right-14 bg-[#128C7E] text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold text-sm">WhatsApp</div>
+</a>
+
+<!-- Scroll to Top -->
+<button id="scrollTopBtn" class="fixed bottom-6 left-6 md:bottom-8 md:left-8 bg-[#5B2C87] text-white w-12 h-12 rounded-full shadow-lg shadow-[#5B2C87]/20 hover:scale-105 hover:shadow-[#5B2C87]/40 transition-all duration-500 ease-out z-[100] flex items-center justify-center" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Yukarı çık">
+    <svg class="text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8z"/></svg>
+</button>
+
+<script src="../js/main.js" defer></script>
 </body>
 </html>

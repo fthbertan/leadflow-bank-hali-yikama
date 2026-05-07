@@ -115,15 +115,15 @@ AddDefaultCharset UTF-8
     # Bu kurallar site üretimi sırasında otomatik eklenir
     # Sektöre özel hizmet ve lokasyon slug'ları site_generator.py tarafından yazılır
     # LEADFLOW_SEO_RULES_START
-    # ── SEO Hizmet Sayfaları ──
+    # ── SEO Hizmet Sayfaları (5 adet) ──
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(hali-yikama|perde-yikama|koltuk-yikama|yatak-yikama)$ /seo-service.php?svc=$1 [L,QSA]
+    RewriteRule ^(hali-yikama|perde-yikama|koltuk-yikama|yatak-yikama|ucretsiz-servis)$ /seo-service.php?svc=$1 [L,QSA]
 
-    # ── SEO Lokasyon×Hizmet Sayfaları ──
+    # ── SEO Lokasyon Sayfaları — sadece halı yıkama (10 bölge) ──
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(cayyolu|umitkoy|yasamkent|eryaman|etimesgut|sincan|baglica|batikent|cukurambar|yapracik)-(hali-yikama|perde-yikama|koltuk-yikama|yatak-yikama)$ /seo-location.php?loc=$1&svc=$2 [L,QSA]
+    RewriteRule ^(cayyolu|umitkoy|yasamkent|eryaman|etimesgut|sincan|baglica|batikent|cukurambar|yapracik)-hali-yikama$ /seo-location.php?loc=$1&svc=hali-yikama [L,QSA]
 
     # ── Fiyatlar sayfası (PHP) ──
     RewriteRule ^fiyatlar$ /fiyatlar.php [L]

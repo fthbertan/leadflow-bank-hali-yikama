@@ -9,4 +9,4 @@ Disallow: /panel-*/
 Disallow: /data/
 
 # Sitemap
-Sitemap: https://bank-hali-yikama.com/sitemap.xml
+Sitemap: https://hayati_bankyikama.com.tr/sitemap.xml

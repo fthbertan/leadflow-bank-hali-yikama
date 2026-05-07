@@ -226,7 +226,31 @@ header('Content-Type: text/html; charset=utf-8');
 </head>
 <body class="bg-[#FAF9F6] font-body text-gray-800">
 
-{{TOPBAR_NAV_HTML}}
+<nav aria-label="Ana navigasyon">
+  <a href="/" class="logo">Bank Halı Yıkama</a>
+  <ul class="nav-links">
+    <li><a href="/#hizmetler">Hizmetler</a></li>
+    <li><a href="/fiyatlar">Fiyatlar</a></li>
+    <li><a href="/#hakkimizda">Hakkimizda</a></li>
+    <li><a href="/#galeri">Galeri</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/#iletisim">Iletisim</a></li>
+  </ul>
+  <a href="/#iletisim" class="nav-cta">Ucretsiz Kesif</a>
+  <button class="nav-hamburger" aria-label="Menuyu ac" onclick="document.getElementById('mobileMenu').classList.add('open')">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div id="mobileMenu" class="mobile-menu" role="dialog" aria-label="Navigasyon menusu">
+  <button class="mobile-close" onclick="document.getElementById('mobileMenu').classList.remove('open')" aria-label="Menuyu kapat">X</button>
+  <a href="/#hizmetler" onclick="document.getElementById('mobileMenu').classList.remove('open')">Hizmetler</a>
+  <a href="/fiyatlar" onclick="document.getElementById('mobileMenu').classList.remove('open')">Fiyatlar</a>
+  <a href="/#hakkimizda" onclick="document.getElementById('mobileMenu').classList.remove('open')">Hakkimizda</a>
+  <a href="/#galeri" onclick="document.getElementById('mobileMenu').classList.remove('open')">Galeri</a>
+  <a href="/blog" onclick="document.getElementById('mobileMenu').classList.remove('open')">Blog</a>
+  <a href="/#iletisim" onclick="document.getElementById('mobileMenu').classList.remove('open')">Iletisim</a>
+</div>
+
 
 <!-- Hero -->
 <header class="relative bg-gradient-to-br from-[#2E1548] via-[#5B2C87] to-[#8E5CC0] overflow-hidden">
@@ -483,7 +507,7 @@ header('Content-Type: text/html; charset=utf-8');
     <div class="footer-grid">
       <div>
         <div class="footer-logo">Bank Halı Yıkama</div>
-        <p class="footer-desc">{{CITY}} genelinde profesyonel hali yikama, koltuk yikama ve perde yikama hizmetleri.</p>
+        <p class="footer-desc">Ankara genelinde profesyonel hali yikama, koltuk yikama ve perde yikama hizmetleri.</p>
       </div>
       <div>
         <div class="footer-col-title">Hizli Menu</div>
@@ -506,12 +530,12 @@ header('Content-Type: text/html; charset=utf-8');
       <div>
         <div class="footer-col-title">Calisma Saatleri</div>
         <div class="footer-links">
-          <span data-kv="working_hours_short">Pzt-Cmt: 08:00 - 19:00, Pazar: Kapalı</span>
+          <span data-kv="working_hours_short">7/24</span>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">&copy; {{YEAR}} Bank Halı Yıkama. Tum Haklari Saklidir.</span>
+      <span class="footer-copy">&copy; 2026 Bank Halı Yıkama. Tum Haklari Saklidir.</span>
       <div class="footer-legal">
         <a href="/kvkk">KVKK</a>
         <a href="/gizlilik">Gizlilik</a>
@@ -542,9 +566,9 @@ header('Content-Type: text/html; charset=utf-8');
 </a>
 
 <!-- Call Button -->
-<a href="tel:<?= htmlspecialchars($phoneRaw) ?>" style="background:linear-gradient(135deg,#4CAF50,#2E7D32);box-shadow:0 0 24px rgba(76,175,80,0.45);" class="fixed bottom-20 right-6 md:bottom-22 md:right-8 text-white w-12 h-12 rounded-full hover:scale-110 transition-all duration-500 ease-out z-[100] flex items-center justify-center cursor-pointer group" id="callButton">
+<a href="tel:<?= htmlspecialchars($phoneRaw) ?>" style="background:linear-gradient(135deg,#5B2C87,#2E1548);box-shadow:0 0 24px rgba(91,44,135,0.45);" class="fixed bottom-20 right-6 md:bottom-22 md:right-8 text-white w-12 h-12 rounded-full hover:scale-110 transition-all duration-500 ease-out z-[100] flex items-center justify-center cursor-pointer group" id="callButton">
     <svg class="text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-    <div class="absolute right-14 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold text-sm" style="background:#2E7D32">Hemen Ara</div>
+    <div class="absolute right-14 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold text-sm" style="background:#2E1548">Hemen Ara</div>
 </a>
 
 <!-- WhatsApp Button -->

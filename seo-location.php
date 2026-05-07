@@ -204,7 +204,31 @@ header('Content-Type: text/html; charset=utf-8');
 </head>
 <body class="bg-[#FAF9F6] font-body text-gray-800">
 
-{{TOPBAR_NAV_HTML}}
+<nav aria-label="Ana navigasyon">
+  <a href="/" class="logo">Bank Halı Yıkama</a>
+  <ul class="nav-links">
+    <li><a href="/#hizmetler">Hizmetler</a></li>
+    <li><a href="/fiyatlar">Fiyatlar</a></li>
+    <li><a href="/#hakkimizda">Hakkimizda</a></li>
+    <li><a href="/#galeri">Galeri</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/#iletisim">Iletisim</a></li>
+  </ul>
+  <a href="/#iletisim" class="nav-cta">Ucretsiz Kesif</a>
+  <button class="nav-hamburger" aria-label="Menuyu ac" onclick="document.getElementById('mobileMenu').classList.add('open')">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div id="mobileMenu" class="mobile-menu" role="dialog" aria-label="Navigasyon menusu">
+  <button class="mobile-close" onclick="document.getElementById('mobileMenu').classList.remove('open')" aria-label="Menuyu kapat">X</button>
+  <a href="/#hizmetler" onclick="document.getElementById('mobileMenu').classList.remove('open')">Hizmetler</a>
+  <a href="/fiyatlar" onclick="document.getElementById('mobileMenu').classList.remove('open')">Fiyatlar</a>
+  <a href="/#hakkimizda" onclick="document.getElementById('mobileMenu').classList.remove('open')">Hakkimizda</a>
+  <a href="/#galeri" onclick="document.getElementById('mobileMenu').classList.remove('open')">Galeri</a>
+  <a href="/blog" onclick="document.getElementById('mobileMenu').classList.remove('open')">Blog</a>
+  <a href="/#iletisim" onclick="document.getElementById('mobileMenu').classList.remove('open')">Iletisim</a>
+</div>
+
 
 <!-- Hero -->
 <header class="relative bg-gradient-to-br from-[#2E1548] via-[#5B2C87] to-[#8E5CC0] overflow-hidden">
@@ -388,7 +412,7 @@ header('Content-Type: text/html; charset=utf-8');
                 </div>
                 <div class="p-4">
                     <div class="text-2xl font-bold text-gray-900">100+</div>
-                    <div class="text-gray-500 text-sm mt-1">{{STAT_REVIEWS_LABEL}}</div>
+                    <div class="text-gray-500 text-sm mt-1">Mutlu Müşteri</div>
                 </div>
                 <div class="p-4">
                     <div class="text-2xl font-bold text-gray-900">4.9</div>
@@ -469,7 +493,7 @@ header('Content-Type: text/html; charset=utf-8');
     <div class="footer-grid">
       <div>
         <div class="footer-logo">Bank Halı Yıkama</div>
-        <p class="footer-desc">{{CITY}} genelinde profesyonel hali yikama, koltuk yikama ve perde yikama hizmetleri.</p>
+        <p class="footer-desc">Ankara genelinde profesyonel hali yikama, koltuk yikama ve perde yikama hizmetleri.</p>
       </div>
       <div>
         <div class="footer-col-title">Hizli Menu</div>
@@ -492,12 +516,12 @@ header('Content-Type: text/html; charset=utf-8');
       <div>
         <div class="footer-col-title">Calisma Saatleri</div>
         <div class="footer-links">
-          <span data-kv="working_hours_short">Pzt-Cmt: 08:00 - 19:00, Pazar: Kapalı</span>
+          <span data-kv="working_hours_short">7/24</span>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">&copy; {{YEAR}} Bank Halı Yıkama. Tum Haklari Saklidir.</span>
+      <span class="footer-copy">&copy; 2026 Bank Halı Yıkama. Tum Haklari Saklidir.</span>
       <div class="footer-legal">
         <a href="/kvkk">KVKK</a>
         <a href="/gizlilik">Gizlilik</a>

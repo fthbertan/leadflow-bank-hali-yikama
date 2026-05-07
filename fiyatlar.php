@@ -18,7 +18,7 @@ try {
 } catch (Exception $e) {}
 
 $businessName = $settings['business_name'] ?? 'Bank Halı Yıkama';
-$phone = $settings['phone'] ?? '05456876161';
+$phone = $settings['phone'] ?? '0 545 687 61 61';
 $phoneRaw = $settings['phone_raw'] ?? '05456876161';
 $whatsapp = $settings['whatsapp_number'] ?? '905456876161';
 
@@ -52,7 +52,7 @@ try {
     }
 } catch (Exception $e) {}
 
-$siteUrl = 'https://{{SITE_URL_BARE}}';
+$siteUrl = 'https://bankhaliyikama.com.tr';
 $pageTitle = 'Fiyatlarımız | ' . $businessName;
 $metaDesc = $businessName . ' hizmet fiyatları. Halı yıkama, koltuk yıkama, perde yıkama, yorgan yıkama ve tüm temizlik hizmetlerinde şeffaf fiyatlandırma.';
 
@@ -82,7 +82,7 @@ function svcIcon($name) {
 <link rel="canonical" href="<?= $siteUrl ?>/fiyatlar"/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="stylesheet" href="/css/style.css"/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 .pricing-card {
     background: #fff;
@@ -94,7 +94,7 @@ function svcIcon($name) {
     overflow: hidden;
 }
 .pricing-card:hover {
-    box-shadow: 0 12px 40px rgba(11,37,64,0.08);
+    box-shadow: 0 12px 40px rgba(46,21,72,0.08);
     border-color: #E0457B;
     transform: translateY(-4px);
 }
@@ -109,7 +109,7 @@ function svcIcon($name) {
     width: 44px;
     height: 44px;
     border-radius: 10px;
-    background: rgba(16,185,129,0.2);
+    background: rgba(224,69,123,0.2);
     color: #E0457B;
     display: flex;
     align-items: center;
@@ -170,7 +170,7 @@ function svcIcon($name) {
 .pricing-card-footer a {
     display: block;
     text-align: center;
-    background: linear-gradient(135deg, #C93A6A, #E0457B);
+    background: linear-gradient(135deg, #B33562, #E0457B);
     color: #fff;
     padding: 12px 24px;
     border-radius: 10px;
@@ -181,7 +181,7 @@ function svcIcon($name) {
 }
 .pricing-card-footer a:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(16,185,129,0.3);
+    box-shadow: 0 6px 20px rgba(224,69,123,0.3);
 }
 .no-items-msg {
     padding: 20px 28px;
@@ -227,12 +227,11 @@ function svcIcon($name) {
 #mobileMenuBtn.active .menu-icon { display: none; }
 #mobileMenuBtn.active .close-icon { display: block; animation: spinIn 0.3s ease; }
 @keyframes spinIn { from { transform: rotate(-90deg) scale(0.5); opacity: 0; } to { transform: rotate(0) scale(1); opacity: 1; } }
-.btn-cta { background: linear-gradient(110deg, #C93A6A 0%, #E0457B 25%, #C93A6A 50%, #E0457B 75%, #C93A6A 100%); background-size: 200% 100%; animation: shimmer 4s linear infinite; }
+.btn-cta { background: linear-gradient(110deg, #B33562 0%, #E0457B 25%, #B33562 50%, #E0457B 75%, #B33562 100%); background-size: 200% 100%; animation: shimmer 4s linear infinite; }
 .btn-cta:hover { filter: brightness(1.1); transform: scale(1.05); }
 @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
-#scrollTopBtn { opacity: 0; pointer-events: none; transition: opacity 0.4s ease; position: fixed; left: 1.5rem; right: auto; bottom: 1.5rem; }
+#scrollTopBtn { opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
 #scrollTopBtn.visible { opacity: 1; pointer-events: auto; }
-@media(min-width:768px){ #scrollTopBtn { left: 2rem; bottom: 2rem; } }
 </style>
 </head>
 <body class="bg-[#f8fafc] font-body text-gray-800">
@@ -242,18 +241,18 @@ function svcIcon($name) {
     <div class="flex justify-between items-center px-4 sm:px-6 lg:px-10 max-w-full">
         <div class="flex items-center gap-5 text-white/70">
             <a href="tel:<?= htmlspecialchars($phoneRaw) ?>" class="flex items-center gap-1.5 hover:text-[#E0457B] transition-colors">
-                <svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0;color:#4CAF50" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                <svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0;color:#5B2C87" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
                 <span data-kv="phone"><?= htmlspecialchars($phone) ?></span>
             </a>
             <span class="hidden lg:flex items-center gap-1.5">
-                <svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0;color:#FF9800" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-                <span data-kv="working_hours_short"><?= htmlspecialchars($settings['working_hours_short'] ?? 'Pzt-Cmt: 08:30 - 19:00') ?></span>
+                <svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0;color:#8E5CC0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                <span data-kv="working_hours_short"><?= htmlspecialchars($settings['working_hours_short'] ?? '7/24 Hizmetinizdeyiz') ?></span>
             </span>
         </div>
         <div class="flex items-center justify-center gap-3 text-white/70 sm:w-[160px]" id="kvTopBarSocial">
-            <a href="https://www.instagram.com/hayati_bank?utm_source=qr&igsh=MXBkZHppeDhydGZzNg==" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity" title="Instagram"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-            <a href="{{FACEBOOK_URL}}" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity" title="Facebook"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
-            <a href="{{TIKTOK_URL}}" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity" title="TikTok"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.43v-7.15a8.16 8.16 0 005.58 2.09V11.1a4.84 4.84 0 01-3.58-1.58V6.69h3.58z"/></svg></a>
+            <a href="https://www.instagram.com/hayati_bank" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity" title="Instagram"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+            <a href="https://www." target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity" title="Facebook"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+            <a href="https://www.tiktok.com/@hayati_bank1" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity" title="TikTok"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.43v-7.15a8.16 8.16 0 005.58 2.09V11.1a4.84 4.84 0 01-3.58-1.58V6.69h3.58z"/></svg></a>
         </div>
     </div>
 </div>
@@ -300,7 +299,8 @@ function svcIcon($name) {
 
 <!-- Page Header -->
 <header class="bg-gradient-to-br from-[#2E1548] via-[#5B2C87] to-[#2E1548] py-16 sm:py-24 text-center relative overflow-hidden">
-    <div class="absolute inset-0" style="background:radial-gradient(ellipse 35% 35% at 85% 15%,#E0457B0D,transparent),radial-gradient(ellipse 30% 30% at 15% 90%,#5B2C8733,transparent)"></div>
+    <div class="absolute top-10 right-10 w-64 h-64 bg-[#E0457B]/5 rounded-full blur-[80px]"></div>
+    <div class="absolute bottom-0 left-10 w-48 h-48 bg-[#5B2C87]/20 rounded-full blur-[60px]"></div>
     <div class="relative z-10 max-w-4xl mx-auto px-4">
         <nav class="flex justify-center items-center gap-2 text-white/50 text-xs mb-8">
             <a href="/" class="hover:text-[#E0457B] transition-colors">Ana Sayfa</a>
@@ -398,9 +398,9 @@ function svcIcon($name) {
             </div>
             <p class="text-sm text-white/70 mb-8 leading-relaxed"><?= htmlspecialchars($businessName) ?> olarak, halılarınızı profesyonel ekip ve ekipmanlarla en hijyenik şekilde yıkıyoruz.</p>
             <div class="flex gap-4" id="kvSocialLinks">
-                <a href="https://www.instagram.com/hayati_bank?utm_source=qr&igsh=MXBkZHppeDhydGZzNg==" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:opacity-80 transition-all" title="Instagram"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-                <a href="{{FACEBOOK_URL}}" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:opacity-80 transition-all" title="Facebook"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
-                <a href="{{TIKTOK_URL}}" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:opacity-80 transition-all" title="TikTok"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.43v-7.15a8.16 8.16 0 005.58 2.09V11.1a4.84 4.84 0 01-3.58-1.58V6.69h3.58z"/></svg></a>
+                <a href="https://www.instagram.com/hayati_bank" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:opacity-80 transition-all" title="Instagram"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                <a href="https://www." target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:opacity-80 transition-all" title="Facebook"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                <a href="https://www.tiktok.com/@hayati_bank1" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:opacity-80 transition-all" title="TikTok"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.43v-7.15a8.16 8.16 0 005.58 2.09V11.1a4.84 4.84 0 01-3.58-1.58V6.69h3.58z"/></svg></a>
             </div>
         </div>
         <div class="lg:pl-6">
@@ -420,6 +420,7 @@ function svcIcon($name) {
             <ul class="space-y-4">
                 <li><span class="text-white/70 text-sm" data-kv="phone"><?= htmlspecialchars($phone) ?></span></li>
                 <li><span class="text-white/70 text-sm" data-kv="email"><?= htmlspecialchars($settings['email'] ?? '') ?></span></li>
+                <li><span class="text-white/70 text-sm">info@hayati_bank1.com.tr</span></li>
                 <li><span class="text-white/70 text-sm"><?= htmlspecialchars($settings['address'] ?? 'Plevne Mahallesi Plevne Sokak No:5/a Sincan/Ankara') ?></span></li>
             </ul>
         </div>
@@ -438,8 +439,35 @@ function svcIcon($name) {
     </div>
     <!-- Hizmet Bölgeleri — SEO Internal Links -->
     <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/10 space-y-6">
-        {{__SEO_LINKS_GROUPED_DEFERRED__}}
-    </div>
+        <div>
+            <h3 class="text-xs font-label uppercase tracking-widest text-[#E0457B] mb-3">Halı Yıkama Hizmet Bölgeleri</h3>
+            <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-white/60">
+                <a href="/eryaman-hali-yikama" class="hover:text-[#E0457B] transition-colors">Eryaman Halı Yıkama</a>
+                <a href="/sincan-hali-yikama" class="hover:text-[#E0457B] transition-colors">Sincan Halı Yıkama</a>
+                <a href="/baglica-hali-yikama" class="hover:text-[#E0457B] transition-colors">Bağlıca Halı Yıkama</a>
+                <a href="/batikent-hali-yikama" class="hover:text-[#E0457B] transition-colors">Batıkent Halı Yıkama</a>
+                <a href="/etimesgut-hali-yikama" class="hover:text-[#E0457B] transition-colors">Etimesgut Halı Yıkama</a>
+                <a href="/yasamkent-hali-yikama" class="hover:text-[#E0457B] transition-colors">Yaşamkent Halı Yıkama</a>
+                <a href="/beytepe-hali-yikama" class="hover:text-[#E0457B] transition-colors">Beytepe Halı Yıkama</a>
+                <a href="/yenikent-hali-yikama" class="hover:text-[#E0457B] transition-colors">Yenikent Halı Yıkama</a>
+                <a href="/yapracik-hali-yikama" class="hover:text-[#E0457B] transition-colors">Yapracık Halı Yıkama</a>
+                <a href="/cayyolu-hali-yikama" class="hover:text-[#E0457B] transition-colors">Çayyolu Halı Yıkama</a>
+                <a href="/umitkoy-hali-yikama" class="hover:text-[#E0457B] transition-colors">Ümitköy Halı Yıkama</a>
+                <a href="/konutkent-hali-yikama" class="hover:text-[#E0457B] transition-colors">Konutkent Halı Yıkama</a>
+                <a href="/incek-hali-yikama" class="hover:text-[#E0457B] transition-colors">İncek Halı Yıkama</a>
+            </div>
+        </div>
+        <div>
+            <h3 class="text-xs font-label uppercase tracking-widest text-[#E0457B] mb-3">Tüm Hizmetlerimiz</h3>
+            <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-white/60">
+                <a href="/hali-yikama" class="hover:text-[#E0457B] transition-colors">Halı Yıkama</a>
+                <a href="/koltuk-yikama" class="hover:text-[#E0457B] transition-colors">Koltuk Yıkama</a>
+                <a href="/yorgan-battaniye-yikama" class="hover:text-[#E0457B] transition-colors">Yorgan & Battaniye Yıkama</a>
+                <a href="/yatak-yikama" class="hover:text-[#E0457B] transition-colors">Yatak Yıkama</a>
+                <a href="/perde-yikama" class="hover:text-[#E0457B] transition-colors">Perde Yıkama</a>
+                <a href="/ucretsiz-servis" class="hover:text-[#E0457B] transition-colors">Ücretsiz Servis</a>
+            </div>
+        </div>
     </div>
     <div class="max-w-7xl mx-auto mt-8 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-white/25 uppercase tracking-widest">
         <span>Designed with Precision</span>
@@ -450,20 +478,20 @@ function svcIcon($name) {
         </div>
     </div>
     <div class="max-w-7xl mx-auto mt-6 text-center">
-        <a href="https://ankarayazilim.tr" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 mt-6 text-[12px] text-white/70 hover:text-[#E0457B] transition-colors duration-300"><span class="font-mono font-bold text-[13px]">&lt;/&gt;</span> ankarayazilim.tr</a>
+        <a href="https://ankarayazilim.tr" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 mt-6 text-[12px] text-white/70 hover:text-[#E0457B] transition-colors duration-300">Tasarım: ankarayazilim.tr</a>
     </div>
 </footer>
 
 <!-- Instagram Button -->
-<a href="https://www.instagram.com/hayati_bank?utm_source=qr&igsh=MXBkZHppeDhydGZzNg==" target="_blank" rel="noopener noreferrer" id="instagramButton" title="Instagram" class="fixed right-6 md:right-8 w-12 h-12 rounded-full text-white hover:scale-110 transition-all duration-500 ease-out z-[100] flex items-center justify-center cursor-pointer group" style="background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);box-shadow:0 0 24px rgba(214,36,159,0.45);">
+<a href="https://www.instagram.com/hayati_bank" target="_blank" rel="noopener noreferrer" id="instagramButton" title="Instagram" class="fixed right-6 md:right-8 w-12 h-12 rounded-full text-white hover:scale-110 transition-all duration-500 ease-out z-[100] flex items-center justify-center cursor-pointer group" style="background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);box-shadow:0 0 24px rgba(214,36,159,0.45);">
     <svg class="text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
     <div class="absolute right-14 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold text-sm" style="background:linear-gradient(135deg,#d6249f,#285AEB)">Instagram</div>
 </a>
 <!-- Call Button -->
 <?php if ($phoneRaw): ?>
-<a href="tel:<?= htmlspecialchars($phoneRaw) ?>" style="background:linear-gradient(135deg,#4CAF50,#2E7D32);box-shadow:0 0 24px rgba(76,175,80,0.45);" class="fixed right-6 md:right-8 text-white w-12 h-12 rounded-full hover:scale-110 transition-all duration-500 ease-out z-[100] flex items-center justify-center cursor-pointer group" id="callButton">
+<a href="tel:<?= htmlspecialchars($phoneRaw) ?>" style="background:linear-gradient(135deg,#5B2C87,#2E1548);box-shadow:0 0 24px rgba(91,44,135,0.45);" class="fixed right-6 md:right-8 text-white w-12 h-12 rounded-full hover:scale-110 transition-all duration-500 ease-out z-[100] flex items-center justify-center cursor-pointer group" id="callButton">
     <svg class="text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-    <div class="absolute right-14 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold text-sm" style="background:#2E7D32">Hemen Ara</div>
+    <div class="absolute right-14 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold text-sm" style="background:#2E1548">Hemen Ara</div>
 </a>
 <?php endif; ?>
 <!-- WhatsApp Button -->

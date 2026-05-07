@@ -3,29 +3,12 @@
 // Tüm site JavaScript'i
 // ═══════════════════════════════════════
 
-// RAF throttle — scroll handler'ları frame başına 1 kez çalıştırır
-var _rafTicking = false;
-var _rafCallbacks = [];
-function _onRafScroll() {
-    _rafCallbacks.forEach(function(fn) { fn(); });
-    _rafTicking = false;
-}
-function addScrollHandler(fn) {
-    _rafCallbacks.push(fn);
-}
-window.addEventListener('scroll', function() {
-    if (!_rafTicking) {
-        _rafTicking = true;
-        requestAnimationFrame(_onRafScroll);
-    }
-}, { passive: true });
-
 // Galeri buton CSS fix — JS'den enjekte (SW cache'den bağımsız çalışır)
 (function(){
   var s = document.createElement('style');
   s.textContent =
     '#galleryDesktopGrid > a[href="/galeri"]{transition:transform .5s,box-shadow .5s,background .5s}' +
-    '#galleryDesktopGrid > a[href="/galeri"]:hover{transform:scale(1.03);box-shadow:0 25px 50px -12px rgba(var(--lf-primary-rgb),.4);background:linear-gradient(to top left,var(--lf-primary),var(--lf-primary-light))!important}' +
+    '#galleryDesktopGrid > a[href="/galeri"]:hover{transform:scale(1.03);box-shadow:0 25px 50px -12px rgba(26,82,118,.4);background:linear-gradient(to top left,#5B2C87,#8E5CC0)!important}' +
     '#galleryDesktopGrid > a[href="/galeri"]:hover svg:first-child{transform:scale(1.15)}' +
     '#galleryDesktopGrid > a[href="/galeri"]:hover svg:last-child{transform:translateX(6px);color:#fff}' +
     '#galleryDesktopGrid > a[href="/galeri"] svg{transition:transform .5s,color .5s}' +
@@ -100,19 +83,18 @@ var nav = document.getElementById('mainNav');
 var topBar = document.getElementById('topBar');
 if (nav && topBar) {
     var hasHero = !!document.getElementById('hero');
-    var _cachedTopBarH = 0;
-    requestAnimationFrame(function(){ _cachedTopBarH = topBar.offsetHeight; });
     function updateNav() {
-        var topBarH = _cachedTopBarH || 40;
+        var topBarH = topBar.offsetHeight;
         if (window.scrollY > topBarH) {
             nav.style.top = '0';
-            nav.style.background = 'linear-gradient(135deg, rgba(var(--lf-dark-rgb),0.97), rgba(var(--lf-primary-rgb),0.95))';
+            nav.style.background = 'linear-gradient(135deg, rgba(46,21,72,0.97), rgba(26,82,118,0.95))';
             nav.style.backdropFilter = 'blur(20px)';
-            nav.style.borderBottom = '1px solid rgba(var(--lf-accent-rgb),0.15)';
+            nav.style.borderBottom = '1px solid rgba(224,69,123,0.15)';
             nav.style.boxShadow = '0 4px 30px rgba(0,0,0,0.2)';
             nav.classList.remove('nav-hero');
             nav.classList.add('nav-scrolled');
         } else if (hasHero) {
+            // Sadece hero olan sayfalarda (anasayfa) transparent yap
             nav.style.top = topBarH + 'px';
             nav.style.background = 'transparent';
             nav.style.backdropFilter = 'none';
@@ -121,13 +103,14 @@ if (nav && topBar) {
             nav.classList.remove('nav-scrolled');
             nav.classList.add('nav-hero');
         } else {
+            // Hero olmayan sayfalarda (SEO sayfaları) topbar altında kal
             nav.style.top = topBarH + 'px';
             nav.classList.remove('nav-hero');
             nav.classList.add('nav-scrolled');
         }
     }
-    addScrollHandler(updateNav);
-    window.addEventListener('resize', function(){ _cachedTopBarH = topBar.offsetHeight; updateNav(); }, { passive: true });
+    window.addEventListener('scroll', updateNav);
+    window.addEventListener('resize', updateNav);
     updateNav();
 }
 
@@ -214,27 +197,11 @@ if (scrollTopBtn) {
         if (window.scrollY > 600) { scrollTopBtn.classList.add('visible'); }
         else { scrollTopBtn.classList.remove('visible'); }
     }
-    addScrollHandler(updateScrollTop);
+    window.addEventListener('scroll', updateScrollTop);
     updateScrollTop();
 }
 
-// Sticky Rezervasyon Butonu (mobil — scroll down'da göster, tepede gizle)
-var stickyRes = document.getElementById('stickyReservation');
-if (stickyRes) {
-    var _lastScrollY = 0;
-    function updateStickyRes() {
-        var sy = window.scrollY;
-        if (sy > 400 && sy > _lastScrollY) {
-            stickyRes.style.transform = 'translateX(-50%) translateY(0)';
-        } else if (sy < 200) {
-            stickyRes.style.transform = 'translateX(-50%) translateY(120px)';
-        }
-        _lastScrollY = sy;
-    }
-    addScrollHandler(updateStickyRes);
-}
-
-// Toast bildirim sistemi
+// Toast bildirim fonksiyonu
 function _showToast(message, type) {
     var existing = document.getElementById('lfToast');
     if (existing) existing.remove();
@@ -245,18 +212,9 @@ function _showToast(message, type) {
     toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);z-index:9999;background:' + bg + ';color:#fff;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:500;box-shadow:0 10px 40px rgba(0,0,0,.2);display:flex;align-items:center;gap:10px;opacity:0;transition:opacity .3s,transform .3s;max-width:90vw;';
     toast.innerHTML = '<span style="font-size:18px;">' + icon + '</span><span>' + message + '</span>';
     document.body.appendChild(toast);
-    requestAnimationFrame(function() {
-        toast.style.opacity = '1';
-        toast.style.transform = 'translateX(-50%) translateY(0)';
-    });
-    setTimeout(function() {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(-50%) translateY(20px)';
-        setTimeout(function() { toast.remove(); }, 300);
-    }, 4000);
+    requestAnimationFrame(function() { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(function() { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; setTimeout(function() { toast.remove(); }, 300); }, 4000);
 }
-
-// TR telefon validasyonu (client-side)
 function _isValidTRPhone(phone) {
     var digits = phone.replace(/\D/g, '');
     return /^(0?5\d{9}|905\d{9})$/.test(digits);
@@ -267,69 +225,75 @@ var appointmentForm = document.getElementById('appointmentForm');
 if (appointmentForm) {
     appointmentForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        var fd = new FormData(this);
-        var name = fd.get('name') || '';
-        var phone = fd.get('phone') || '';
+        var form = this;
+        var fd = new FormData(form);
+        var name = (fd.get('name') || '').trim();
+        var phone = (fd.get('phone') || '').trim();
         var service = fd.get('service') || '';
         var date = fd.get('date') || '';
         var time = fd.get('time') || '';
-        var notes = fd.get('notes') || '';
+        var notes = (fd.get('notes') || '').trim();
 
-        // Client-side telefon validasyonu
-        if (phone && !_isValidTRPhone(phone)) {
-            _showToast('Geçerli bir cep telefonu numarası giriniz (05XX XXX XX XX).', 'error');
-            return;
-        }
+        // Honeypot kontrolü
+        if (fd.get('website')) return;
+
+        // Validasyon
+        if (!name) { _showToast('Lütfen adınızı girin.', 'error'); return; }
+        if (!phone) { _showToast('Lütfen telefon numaranızı girin.', 'error'); return; }
+        if (!_isValidTRPhone(phone)) { _showToast('Geçerli bir telefon numarası girin (05XX XXX XX XX).', 'error'); return; }
 
         // Turnstile token
         var turnstileToken = '';
-        var tsInput = appointmentForm.querySelector('[name="cf-turnstile-response"]');
-        if (tsInput) turnstileToken = tsInput.value || '';
-
-        // Honeypot (bot'lar dolduracak, biz boş gönderiyoruz)
-        var honeypot = fd.get('website') || '';
-
-        // Submit butonunu disable et
-        var btn = appointmentForm.querySelector('button[type="submit"]');
-        var btnOrigHTML = btn ? btn.innerHTML : '';
-        if (btn) {
-            btn.disabled = true;
-            btn.innerHTML = '<svg class="animate-spin" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" opacity=".25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg> Gönderiliyor...';
+        var turnstileInput = form.querySelector('[name="cf-turnstile-response"]');
+        if (turnstileInput) turnstileToken = turnstileInput.value;
+        if (typeof turnstile !== 'undefined' && !turnstileToken) {
+            _showToast('Lütfen güvenlik doğrulamasını bekleyin.', 'error');
+            return;
         }
+
+        // Loading state
+        var submitBtn = form.querySelector('[type="submit"]');
+        var originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Gönderiliyor...';
 
         // Sunucuya kaydet
         fetch('/api/messages.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({name:name, phone:phone, service:service, date:date, time:time, notes:notes, website:honeypot, 'cf-turnstile-response':turnstileToken})
-        })
-        .then(function(res) { return res.json().then(function(d) { return {ok: res.ok, status: res.status, data: d}; }); })
-        .then(function(result) {
-            if (btn) { btn.disabled = false; btn.innerHTML = btnOrigHTML; }
-
-            if (!result.ok) {
-                _showToast(result.data.error || 'Bir hata oluştu. Lütfen tekrar deneyin.', 'error');
+            body: JSON.stringify({
+                name: name, phone: phone, service: service,
+                date: date, time: time, notes: notes,
+                'cf-turnstile-response': turnstileToken
+            })
+        }).then(function(r) { return r.json().then(function(d) { return {ok: r.ok, data: d}; }); })
+        .then(function(res) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+            if (!res.ok) {
+                _showToast(res.data.error || 'Bir hata oluştu. Lütfen tekrar deneyin.', 'error');
+                if (typeof turnstile !== 'undefined') turnstile.reset();
                 return;
             }
+            _showToast('Talebiniz başarıyla gönderildi!', 'success');
+            form.reset();
+            if (typeof turnstile !== 'undefined') turnstile.reset();
 
-            _showToast('Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.', 'success');
-            appointmentForm.reset();
-            // Turnstile widget'ı resetle (varsa)
-            if (window.turnstile) { var tsEl = appointmentForm.querySelector('.cf-turnstile'); if (tsEl) turnstile.reset(tsEl); }
-
-            // WhatsApp'i ac
-            var msg = 'Merhaba! Ücretsiz keşif talebi göndermek istiyorum.\nAd: ' + name + '\nTelefon: ' + phone + '\nHizmet: ' + service;
-            if (date) msg += '\nTarih: ' + date;
-            if (time) msg += '\nSaat: ' + time;
-            if (notes) msg += '\nNot: ' + notes;
-            var waNum = window._waNumber || '905456876161';
+            // WhatsApp'i ac (1.5sn sonra)
             setTimeout(function() {
-                window.location.href = 'https://wa.me/' + waNum + '?text=' + encodeURIComponent(msg);
+                var msg = 'Merhaba! Ücretsiz keşif talebi göndermek istiyorum.\nAd: ' + name + '\nTelefon: ' + phone + '\nHizmet: ' + service;
+                if (date) msg += '\nTarih: ' + date;
+                if (time) msg += '\nSaat: ' + time;
+                if (notes) msg += '\nNot: ' + notes;
+                var waNum = window._waNumber || '905456876161';
+                window.open('https://wa.me/' + waNum + '?text=' + encodeURIComponent(msg), '_blank');
             }, 1500);
         })
         .catch(function() {
-            if (btn) { btn.disabled = false; btn.innerHTML = btnOrigHTML; }
-            _showToast('Bağlantı hatası. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.', 'error');
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+            _showToast('Bağlantı hatası. Lütfen tekrar deneyin.', 'error');
+            if (typeof turnstile !== 'undefined') turnstile.reset();
         });
     });
 }
@@ -355,107 +319,29 @@ function updateActiveNav() {
     navLinks.forEach(function(link) { link.classList.remove('active'); });
     if (active) { active.links.forEach(function(l) { l.classList.add('active'); }); }
 }
-addScrollHandler(updateActiveNav);
+window.addEventListener('scroll', updateActiveNav);
 updateActiveNav();
 
-// Mobile Menu — dinamik oluşturma (tek kaynak: desktop linklerinden)
-(function() {
-    var nav = document.getElementById('mainNav');
-    if (!nav) return;
-    // Zaten statik mobileMenu varsa kaldır (eski template uyumu)
-    var existingMenu = document.getElementById('mobileMenu');
-    if (existingMenu) existingMenu.remove();
-    var existingBtn = document.getElementById('mobileMenuBtn');
-    if (existingBtn) existingBtn.remove();
-
-    // Desktop nav linklerini oku
-    var desktopNav = nav.querySelector('.hidden.lg\\:flex');
-    if (!desktopNav) desktopNav = nav.querySelector('[class*="hidden"][class*="lg:flex"]');
-    if (!desktopNav) return;
-    var desktopLinks = desktopNav.querySelectorAll('.nav-link');
-    if (!desktopLinks.length) return;
-
-    // CTA butonunu bul (varsa)
-    var ctaBtn = nav.querySelector('.btn-shimmer, .btn-cta');
-    var ctaHref = ctaBtn ? ctaBtn.getAttribute('href') : null;
-    var ctaText = ctaBtn ? ctaBtn.textContent.trim() : null;
-
-    // Renk bilgisi (nav arka planından veya CSS variable'dan)
-    var darkColor = getComputedStyle(document.documentElement).getPropertyValue('--lf-dark') || '#2E1548';
-
-    // Hamburger buton oluştur
-    var btn = document.createElement('button');
-    btn.id = 'mobileMenuBtn';
-    btn.className = 'lg:hidden p-2';
-    btn.setAttribute('aria-label', 'Menü');
-    btn.innerHTML = '<svg class="text-3xl menu-icon" style="width:1em;height:1em;vertical-align:middle" viewBox="0 0 24 24" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>' +
-        '<svg class="text-3xl close-icon" style="width:1em;height:1em;vertical-align:middle" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
-
-    // Buton konteynırına ekle (CTA butonunun yanına)
-    var btnContainer = desktopNav.parentElement;
-    btnContainer.appendChild(btn);
-
-    // Mobil menü oluştur
-    var menu = document.createElement('div');
-    menu.id = 'mobileMenu';
-    menu.className = 'lg:hidden';
-    menu.style.cssText = 'width:100%;background:rgba(10,20,30,0.97);border-top:1px solid rgba(255,255,255,0.1)';
-
-    var html = '';
-    desktopLinks.forEach(function(link) {
-        var href = link.getAttribute('href') || '#';
-        var text = link.textContent.trim();
-        html += '<a class="nav-link" style="display:block;padding:12px 24px;font-size:14px;font-weight:500;text-transform:uppercase;letter-spacing:0.15em;color:rgba(255,255,255,0.85);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s" href="' + href + '">' + text + '</a>';
-    });
-    // CTA buton (sadece mobilde)
-    if (ctaHref && ctaText) {
-        html += '<div style="padding:16px 24px 20px"><a class="btn-shimmer" style="display:block;text-align:center;color:#fff;padding:12px 24px;border-radius:9999px;font-size:14px;font-weight:600;letter-spacing:0.05em;text-decoration:none" href="' + ctaHref + '">' + ctaText + '</a></div>';
-    }
-    menu.innerHTML = html;
-
-    // Nav'a ekle (mainNav'ın içi, flex container'dan sonra)
-    var navInner = nav.querySelector(':scope > div');
-    if (navInner) {
-        nav.insertBefore(menu, navInner.nextSibling);
-    } else {
-        nav.appendChild(menu);
-    }
-
-    // Toggle
-    btn.addEventListener('click', function() {
-        menu.classList.toggle('open');
-        btn.classList.toggle('active');
-    });
-
-    // Link tıklandığında kapat
-    menu.querySelectorAll('a').forEach(function(link) {
-        link.addEventListener('click', function(e) {
-            menu.classList.remove('open');
-            btn.classList.remove('active');
-            // Hash link smooth scroll
-            var href = link.getAttribute('href') || '';
-            var hashIdx = href.indexOf('#');
-            if (hashIdx !== -1) {
-                var hash = href.substring(hashIdx + 1);
-                var target = hash ? document.getElementById(hash) : null;
-                if (target) {
-                    e.preventDefault();
-                    setTimeout(function() {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 300);
-                }
-            }
-        });
-    });
-
-    // Dışarı tıklandığında kapat
-    document.addEventListener('click', function(e) {
-        if (menu.classList.contains('open') && !nav.contains(e.target)) {
-            menu.classList.remove('open');
-            btn.classList.remove('active');
+// Mobile Menu
+var mobileMenuBtn = document.getElementById('mobileMenuBtn');
+var mobileMenu = document.getElementById('mobileMenu');
+if (mobileMenuBtn && mobileMenu) {
+    mobileMenuBtn.addEventListener('click', function() {
+        mobileMenu.classList.remove('hidden');
+        mobileMenu.classList.toggle('open');
+        mobileMenuBtn.classList.toggle('active');
+        if (!mobileMenu.classList.contains('open')) {
+            setTimeout(function(){ mobileMenu.classList.add('hidden'); }, 350);
         }
     });
-})();
+    mobileMenu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            mobileMenu.classList.remove('open');
+            mobileMenuBtn.classList.remove('active');
+            setTimeout(function(){ mobileMenu.classList.add('hidden'); }, 350);
+        });
+    });
+}
 
 // ═══════════════════════════════════════
 // Dynamic Loader — API'den güncel veriyi yükleyip DOM'u günceller
@@ -531,23 +417,6 @@ updateActiveNav();
       }
       if(tbHtml) topBarSocial.innerHTML = tbHtml;
     }
-    // CSS Custom Properties güncelle (admin panelden renk değiştirilmişse)
-    var _colorMap = {
-      'color_primary':'--lf-primary','color_primary_light':'--lf-primary-light',
-      'color_accent':'--lf-accent','color_accent_dim':'--lf-accent-dim',
-      'color_accent_dark':'--lf-accent-dark','color_dark':'--lf-dark','color_surface':'--lf-surface'
-    };
-    var _root = document.documentElement;
-    Object.keys(_colorMap).forEach(function(k){
-      if(s[k]){
-        _root.style.setProperty(_colorMap[k], s[k]);
-        var hex = s[k].replace('#','');
-        if(hex.length === 6){
-          _root.style.setProperty(_colorMap[k]+'-rgb',
-            parseInt(hex.substring(0,2),16)+', '+parseInt(hex.substring(2,4),16)+', '+parseInt(hex.substring(4,6),16));
-        }
-      }
-    });
   }).catch(function(){});
 
   // Hizmetler — API'den dinamik yükleme
@@ -566,55 +435,22 @@ updateActiveNav();
         visualHtml = '<div class="w-14 h-14 bg-surface-container-low rounded-full flex items-center justify-center text-primary mb-8 group-hover:bg-primary group-hover:text-on-primary transition-colors duration-500">'
           + svgIcon(svc.icon || 'cleaning_services', 'text-3xl') + '</div>';
       }
-      // Fiyat kalemleri HTML (accordion)
-      var itemsHtml = '';
-      if (svc.items && svc.items.length) {
-        var accId = 'svcItems_' + svc.id;
-        itemsHtml = '<div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid rgba(var(--lf-primary-rgb),0.08)">'
-          + '<button onclick="var el=document.getElementById(\'' + accId + '\');var arr=this.querySelector(\'.acc-arrow\');if(el.style.maxHeight && el.style.maxHeight!==\'0px\'){el.style.maxHeight=\'0px\';el.style.opacity=\'0\';arr.style.transform=\'rotate(0deg)\';}else{el.style.maxHeight=el.scrollHeight+\'px\';el.style.opacity=\'1\';arr.style.transform=\'rotate(180deg)\';}" style="display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;padding:0.35rem 0">'
-          + '<div style="display:flex;align-items:center;gap:0.5rem">'
-          + '<span style="display:inline-block;width:3px;height:14px;border-radius:2px;background:linear-gradient(180deg,var(--lf-primary),var(--lf-primary-light))"></span>'
-          + '<span style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--lf-primary)">Fiyat Detayları</span>'
-          + '</div>'
-          + '<svg class="acc-arrow" style="width:16px;height:16px;color:var(--lf-primary);opacity:0.5;transition:transform 0.3s ease;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>'
-          + '</button>'
-          + '<div id="' + accId + '" style="max-height:0;opacity:0;overflow:hidden;transition:max-height 0.35s ease,opacity 0.3s ease">';
-        svc.items.forEach(function(item, idx) {
-          var itemPrice = item.price || '';
-          var itemUnit = item.unit || '';
-          var isLast = idx === svc.items.length - 1;
-          var priceDisplay = itemPrice ? (itemPrice.indexOf('\u20ba') === -1 ? '\u20ba' + itemPrice : itemPrice) : '';
-          itemsHtml += '<div style="display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0;' + (isLast ? '' : 'border-bottom:1px solid rgba(var(--lf-primary-rgb),0.04);') + '">'
-            + '<div style="flex:1;min-width:0">'
-            + '<span style="font-size:0.8rem;font-weight:500;color:rgba(var(--lf-primary-rgb),0.85)">' + item.name + '</span>'
-            + (item.description ? '<span style="display:block;font-size:0.7rem;color:var(--lf-primary-light);opacity:0.55;margin-top:1px">' + item.description + '</span>' : '')
-            + '</div>'
-            + '<div style="display:flex;flex-direction:column;align-items:flex-end;margin-left:1rem;white-space:nowrap">'
-            + '<span style="font-size:0.85rem;font-weight:700;color:var(--lf-primary);line-height:1.2">' + priceDisplay + '</span>'
-            + (itemUnit ? '<span style="font-size:0.65rem;color:var(--lf-primary-light);opacity:0.7;margin-top:1px">' + itemUnit + '</span>' : '')
-            + '</div>'
-            + '</div>';
-        });
-        itemsHtml += '</div></div>';
-      }
-
       // Hizmet slug'ı oluştur
       var svcSlug = (svc.name || '').toLowerCase()
         .replace(/ı/g,'i').replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ş/g,'s').replace(/ö/g,'o').replace(/ç/g,'c')
         .replace(/&/g,'').replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'').replace(/-+/g,'-').replace(/^-|-$/g,'');
       var svcLink = '/' + svcSlug;
 
-      html += '<div class="group bg-surface-container-lowest rounded-xl border border-transparent hover:border-outline-variant/20 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/5 flex flex-col" style="overflow:hidden">'
+      html += '<a href="' + svcLink + '" class="group bg-surface-container-lowest rounded-xl border border-transparent transition-all duration-500 hover:-translate-y-2 hover:shadow-xl flex flex-col" style="overflow:hidden;text-decoration:none;color:inherit;cursor:pointer" onmouseenter="this.style.borderColor=\'#E0457B\';this.style.boxShadow=\'0 20px 40px rgba(224,69,123,0.15)\'" onmouseleave="this.style.borderColor=\'transparent\';this.style.boxShadow=\'none\'">'
         + '<div class="p-6 sm:p-10 flex flex-col flex-1">'
         + visualHtml
         + '<h3 class="font-headline text-2xl mb-4">' + svc.name + '</h3>'
         + '<p class="text-on-surface-variant mb-6 text-sm leading-relaxed">' + (svc.desc || '') + '</p>'
-        + itemsHtml
         + '</div>'
-        + '<a href="' + svcLink + '" style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;background:linear-gradient(135deg,rgba(var(--lf-primary-rgb),0.03),rgba(var(--lf-primary-light-rgb),0.06));border-top:1px solid rgba(var(--lf-primary-rgb),0.08);text-decoration:none;transition:background 0.3s ease" onmouseenter="this.style.background=\'linear-gradient(135deg,rgba(var(--lf-primary-rgb),0.07),rgba(var(--lf-primary-light-rgb),0.12))\'" onmouseleave="this.style.background=\'linear-gradient(135deg,rgba(var(--lf-primary-rgb),0.03),rgba(var(--lf-primary-light-rgb),0.06))\'">'
+        + '<div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;background:linear-gradient(135deg,rgba(26,82,118,0.03),rgba(46,134,193,0.06));border-top:1px solid rgba(26,82,118,0.08);transition:background 0.3s ease">'
         + (priceHtml || '<span></span>')
-        + '<span style="font-size:0.8rem;font-weight:600;color:var(--lf-primary);display:flex;align-items:center;gap:0.35rem;letter-spacing:0.02em">Detaylar <svg style="width:1.1em;height:1.1em;transition:transform 0.3s ease" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>'
-        + '</a></div>';
+        + '<span style="font-size:0.8rem;font-weight:600;color:#5B2C87;display:flex;align-items:center;gap:0.35rem;letter-spacing:0.02em">Detaylar <svg style="width:1.1em;height:1.1em;transition:transform 0.3s ease" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>'
+        + '</div></a>';
     });
     container.innerHTML = html;
   }).catch(function(){});
@@ -663,7 +499,7 @@ updateActiveNav();
       var initial = (t.name || '?')[0].toUpperCase();
       html += '<div class="bg-surface-container-lowest p-8 sm:p-10 rounded-xl border border-outline-variant/10 hover:border-outline-variant/30 transition-colors duration-500">'
         + '<div class="flex items-center gap-1 mb-6">'
-        + '<svg style="width:1em;height:1em;vertical-align:middle;flex-shrink:0;color:var(--lf-accent);font-size:1.125rem" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg style="width:1em;height:1em;vertical-align:middle;flex-shrink:0;color:var(--lf-accent);font-size:1.125rem" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg style="width:1em;height:1em;vertical-align:middle;flex-shrink:0;color:var(--lf-accent);font-size:1.125rem" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg style="width:1em;height:1em;vertical-align:middle;flex-shrink:0;color:var(--lf-accent);font-size:1.125rem" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg style="width:1em;height:1em;vertical-align:middle;flex-shrink:0;color:var(--lf-accent);font-size:1.125rem" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>'
+        + '<svg class="text-[#E0457B] text-lg" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="text-[#E0457B] text-lg" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="text-[#E0457B] text-lg" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="text-[#E0457B] text-lg" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="text-[#E0457B] text-lg" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>'
         + '</div>'
         + '<p class="text-on-surface-variant text-sm leading-relaxed mb-8 italic">"' + t.text + '"</p>'
         + '<div class="flex items-center gap-4 pt-6 border-t border-outline-variant/10">'
@@ -697,7 +533,7 @@ updateActiveNav();
           '</div>';
       });
       // 9. hücre: buton
-      html += '<a href="/galeri" class="aspect-[4/3] rounded-2xl flex flex-col items-center justify-center gap-3 shadow-lg cursor-pointer reveal" style="background:linear-gradient(to bottom right,var(--lf-primary),var(--lf-primary-light))">' +
+      html += '<a href="/galeri" class="aspect-[4/3] rounded-2xl flex flex-col items-center justify-center gap-3 shadow-lg cursor-pointer reveal" style="background:linear-gradient(to bottom right,#5B2C87,#8E5CC0)">' +
         '<svg class="text-white/90 text-3xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>' +
         '<span class="text-white font-semibold text-sm tracking-wide">Tümünü Gör</span>' +
         '<svg class="text-white/60 text-lg" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>' +
@@ -759,47 +595,20 @@ function sendWaMessage(encodedMsg){
 }
 
 // ═══════════════════════════════════════
-// Çerez Banner (dinamik — tüm sayfalar otomatik)
+// Çerez Banner
 // ═══════════════════════════════════════
 (function(){
-    // Eski statik banner varsa kaldır
-    var old = document.getElementById('cookieBanner');
-    if(old) old.remove();
-
-    var banner = document.createElement('div');
-    banner.id = 'cookieBanner';
-    banner.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:9999;transform:translateY(100%);transition:transform 0.5s ease;padding:1rem';
-
-    // Accent rengi meta tag'dan veya CSS variable'dan oku
-    var accentMeta = document.querySelector('meta[name="theme-color"]');
-    var accent = accentMeta ? accentMeta.content : '#D4AF37';
-
-    banner.innerHTML =
-        '<div style="max-width:56rem;margin:0 auto">' +
-        '<div style="background:rgba(26,26,26,0.97);border-radius:1rem;padding:1.25rem 1.5rem;display:flex;flex-wrap:wrap;align-items:center;gap:1rem;box-shadow:0 -4px 30px rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08)">' +
-            '<div style="flex:1;min-width:200px;font-size:0.8125rem;color:rgba(255,255,255,0.8);line-height:1.5">' +
-                'Bu web sitesi deneyiminizi iyile\u015ftirmek i\u00e7in \u00e7erezler kullanmaktad\u0131r. ' +
-                '<a href="/gizlilik-politikasi" style="color:' + accent + ';text-decoration:underline">Gizlilik Politikas\u0131</a> ve ' +
-                '<a href="/kvkk" style="color:' + accent + ';text-decoration:underline">KVKK Ayd\u0131nlatma Metni</a>\'ni inceleyebilirsiniz.' +
-            '</div>' +
-            '<div style="display:flex;gap:0.5rem;flex-shrink:0">' +
-                '<button id="cookieReject" style="padding:0.5rem 1rem;font-size:0.8125rem;font-weight:500;color:rgba(255,255,255,0.6);border:1px solid rgba(255,255,255,0.2);border-radius:0.5rem;background:transparent;cursor:pointer;transition:all 0.2s">Reddet</button>' +
-                '<button id="cookieAccept" style="padding:0.5rem 1rem;font-size:0.8125rem;font-weight:600;color:#fff;background:linear-gradient(135deg,' + accent + ',' + accent + 'cc);border:none;border-radius:0.5rem;cursor:pointer;transition:all 0.2s">Kabul Et</button>' +
-            '</div>' +
-        '</div></div>';
-
-    document.body.appendChild(banner);
-
-    function showBanner(){ banner.style.transform = 'translateY(0)'; }
-    function hideBanner(){ banner.style.transform = 'translateY(100%)'; }
-
+    var banner = document.getElementById('cookieBanner');
+    if(!banner) return;
+    var consent = localStorage.getItem('cookie_consent');
+    if(consent) return;
+    setTimeout(function(){ banner.style.transform='translateY(0)'; }, 1500);
     document.getElementById('cookieAccept').addEventListener('click', function(){
         localStorage.setItem('cookie_consent', 'accepted');
-        hideBanner();
-        // Analytics'i yükle (GA ID'yi meta tag'dan oku)
-        var gaTag = document.querySelector('meta[name="ga-id"]');
-        var GA_ID = gaTag ? gaTag.content : '';
-        if(GA_ID && GA_ID.indexOf('{{') === -1){
+        banner.style.transform='translateY(100%)';
+        // Analytics'i yükle
+        var GA_ID = '';
+        if(GA_ID && GA_ID !== '' && GA_ID.indexOf('{{') === -1){
             var s = document.createElement('script');
             s.async = true;
             s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
@@ -813,27 +622,8 @@ function sendWaMessage(encodedMsg){
     });
     document.getElementById('cookieReject').addEventListener('click', function(){
         localStorage.setItem('cookie_consent', 'rejected');
-        hideBanner();
+        banner.style.transform='translateY(100%)';
     });
-
-    // İlk ziyaret — banner'ı göster
-    if(!localStorage.getItem('cookie_consent')){
-        setTimeout(showBanner, 1500);
-    }
-
-    // Footer'a "Çerez Tercihleri" linki ekle
-    var footerBorderT = document.querySelector('footer .border-t');
-    if(footerBorderT){
-        var legalDiv = footerBorderT.querySelector('.flex.gap-6') || footerBorderT.querySelector('.flex.gap-4');
-        if(legalDiv){
-            var sep = document.createElement('a');
-            sep.href = '#';
-            sep.textContent = '\u00c7erez Tercihleri';
-            sep.style.cssText = 'cursor:pointer;transition:color 0.2s';
-            sep.addEventListener('click', function(e){ e.preventDefault(); localStorage.removeItem('cookie_consent'); showBanner(); });
-            legalDiv.appendChild(sep);
-        }
-    }
 })();
 
 // ═══════════════════════════════════════

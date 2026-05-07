@@ -1,6 +1,6 @@
 <?php
 // LeadFlow — Dinamik Blog Detay Sayfası
-// .htaccess ile slug.html → /blog/xxx yönlendirmesi yapılır
+// .htaccess ile slug.html → post.php?slug=xxx yönlendirmesi yapılır
 // DB'den blog ve ayarları okuyarak HTML template'i doldurur
 
 ini_set('display_errors', 0);
@@ -99,15 +99,6 @@ if (!empty($settings['facebook'])) {
     $socialFooterHTML .= '<a href="' . htmlspecialchars($settings['facebook']) . '" target="_blank" class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:opacity-80 hover:bg-white/20 transition-all" title="Facebook"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>';
 }
 
-// Tarih formatlama
-$dateFormatted = '';
-$rawDate = $blog['date'] ?? '';
-if ($rawDate && $rawDate !== '0000-00-00') {
-    $months = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
-    $dt = DateTime::createFromFormat('Y-m-d', $rawDate);
-    $dateFormatted = $dt ? (int)$dt->format('d') . ' ' . $months[(int)$dt->format('m') - 1] . ' ' . $dt->format('Y') : htmlspecialchars($rawDate);
-}
-
 // Template dosyasını oku
 $templatePath = __DIR__ . '/blog-detail-template.html';
 if (!file_exists($templatePath)) {
@@ -125,7 +116,13 @@ $replacements = [
     '{{BLOG_SUMMARY}}'          => htmlspecialchars($blog['summary'] ?? ''),
     '{{BLOG_CONTENT}}'          => $blog['content'] ?? '',
     '{{BLOG_CATEGORY}}'         => htmlspecialchars($blog['category'] ?? 'Blog'),
-    '{{BLOG_DATE}}'             => $dateFormatted,
+    '{{BLOG_DATE}}'             => (function() use ($blog) {
+        $raw = $blog['date'] ?? '';
+        if (!$raw || $raw === '0000-00-00') return '';
+        $months = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+        $dt = DateTime::createFromFormat('Y-m-d', $raw);
+        return $dt ? (int)$dt->format('d') . ' ' . $months[(int)$dt->format('m') - 1] . ' ' . $dt->format('Y') : htmlspecialchars($raw);
+    })(),
     '{{BLOG_READ_TIME}}'        => (int)($blog['read_time'] ?? 5),
     '{{BLOG_META_DESCRIPTION}}' => htmlspecialchars($blog['summary'] ?? ''),
     '{{BLOG_TAGS_HTML}}'        => $tagsHTML,

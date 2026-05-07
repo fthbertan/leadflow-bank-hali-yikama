@@ -1,34 +1,64 @@
-<?php $rootPath = dirname(__DIR__); ?>
 <!DOCTYPE html>
-<html class="scroll-smooth" lang="tr">
+<html class="scroll-smooth overflow-x-hidden" lang="tr">
 <head>
-<?php include $rootPath . '/includes/head-common.php'; ?>
+<meta charset="utf-8"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","")</script>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <title>Blog | Bank Halı Yıkama</title>
-<meta name="description" content="Bank Halı Yıkama blog yazıları - Ankara'da Profesyonel Halı Yıkama hakkında bilgilendirici içerikler"/>
+<meta name="description" content="Bank Halı Yıkama blog yazıları - Premium Halı Yıkama & Bakım hakkında bilgilendirici içerikler"/>
 <meta property="og:title" content="Blog | Bank Halı Yıkama"/>
-<meta property="og:description" content="Bank Halı Yıkama blog yazıları - Ankara'da Profesyonel Halı Yıkama hakkında bilgilendirici içerikler"/>
+<meta property="og:description" content="Bank Halı Yıkama blog yazıları - Premium Halı Yıkama & Bakım hakkında bilgilendirici içerikler"/>
 <meta property="og:type" content="website"/>
-<meta property="og:url" content="https://bank-hali-yikama.com/blog/"/>
-<meta property="og:image" content="https://bank-hali-yikama.com/images/heroweb-1.webp"/>
+<meta property="og:url" content="https://bankhaliyikama.com.tr/blog/"/>
+<meta property="og:image" content="https://bankhaliyikama.com.tr/images/heroweb-1.webp"/>
 <meta property="og:locale" content="tr_TR"/>
 <meta property="og:site_name" content="Bank Halı Yıkama"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Blog | Bank Halı Yıkama"/>
-<meta name="twitter:description" content="Bank Halı Yıkama blog yazıları - halı yıkama v4 hakkında faydalı bilgiler ve güncel içerikler."/>
-<meta name="twitter:image" content="https://bank-hali-yikama.com/images/heroweb-1.webp"/>
-<meta name="keywords" content="halı yıkama v4, halı yıkama v4 blog, halı yıkama v4 bilgi, bank halı yıkama, bank halı yıkama blog"/>
-<link rel="canonical" href="https://bank-hali-yikama.com/blog/"/>
-<link rel="alternate" hreflang="tr" href="https://bank-hali-yikama.com/blog/"/>
-<link rel="alternate" hreflang="x-default" href="https://bank-hali-yikama.com/blog/"/>
+<meta name="twitter:description" content="Bank Halı Yıkama blog yazıları - halı yıkama v3 hakkında faydalı bilgiler ve güncel içerikler."/>
+<meta name="twitter:image" content="https://bankhaliyikama.com.tr/images/heroweb-1.webp"/>
+<meta name="keywords" content="halı yıkama v3, halı yıkama v3 blog, halı yıkama v3 bilgi, özbulut halı yıkama, özbulut halı yıkama blog"/>
+<link rel="canonical" href="https://bankhaliyikama.com.tr/blog/"/>
+<link rel="alternate" hreflang="tr" href="https://bankhaliyikama.com.tr/blog/"/>
+<link rel="alternate" hreflang="x-default" href="https://bankhaliyikama.com.tr/blog/"/>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"/>
+<link rel="stylesheet" href="../css/style.css"/>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"/>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <style>
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+</style>
+<style>
+::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #F5F0FF; }
+    ::-webkit-scrollbar-thumb { background: #8E5CC0; border-radius: 10px; }
     .text-gradient-gold {
-        background: linear-gradient(135deg, var(--lf-primary), var(--lf-primary-light), var(--lf-primary-light));
+        background: linear-gradient(135deg, #5B2C87, #8E5CC0, #8E5CC0);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
-    .card-glow { transition: transform 0.5s ease, box-shadow 0.5s ease; }
-    .card-glow:hover { box-shadow: 0 0 40px rgba(var(--lf-primary-rgb),0.08), 0 8px 32px rgba(var(--lf-primary-light-rgb),0.12); transform: translateY(-2px); }
+    @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+    .btn-shimmer {
+        background: linear-gradient(110deg, #B33562 0%, #E0457B 25%, #E0457B 50%, #E0457B 75%, #B33562 100%);
+        background-size: 200% 100%;
+        animation: shimmer 4s linear infinite;
+    }
+    .btn-cta {
+        background: linear-gradient(110deg, #047857 0%, #E0457B 25%, #B33562 50%, #E0457B 75%, #047857 100%);
+        background-size: 200% 100%;
+        animation: shimmer 4s linear infinite;
+    }
+    .btn-cta:hover { filter: brightness(1.1); transform: scale(1.05); }
+
+.card-glow { transition: transform 0.5s ease, box-shadow 0.5s ease; }
+    .card-glow:hover { box-shadow: 0 0 40px rgba(26,82,118,0.08), 0 8px 32px rgba(46,134,193,0.12); transform: translateY(-2px); }
     .reveal { opacity: 0; transform: translate3d(0, 50px, 0); transition: opacity 1.1s cubic-bezier(0.16,1,0.3,1), transform 1.1s cubic-bezier(0.16,1,0.3,1); }
     .reveal.visible { opacity: 1; transform: translate3d(0, 0, 0); }
     .stagger-1 { transition-delay: 0.1s; }
@@ -36,16 +66,125 @@
     .stagger-3 { transition-delay: 0.3s; }
     .stagger-4 { transition-delay: 0.4s; }
     .stagger-5 { transition-delay: 0.5s; }
+    #scrollTopBtn { opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+    #scrollTopBtn.visible { opacity: 1; pointer-events: auto; }
+
+    @keyframes waBounce { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-6px); } }
+    .wa-bounce { animation: waBounce 2s ease-in-out infinite; }
+    .wa-bounce:hover { animation: none; }
+    #callButton{bottom:calc(8.5rem + env(safe-area-inset-bottom, 0px))!important}
+    #waButton{bottom:calc(5rem + env(safe-area-inset-bottom, 0px))!important}
+    #instagramButton{bottom:calc(1.5rem + env(safe-area-inset-bottom, 0px))!important}
+    #scrollTopBtn{bottom:calc(1.5rem + env(safe-area-inset-bottom, 0px))!important}
+    @media(min-width:768px){#callButton{bottom:calc(8rem + env(safe-area-inset-bottom, 0px))!important}#waButton{bottom:calc(5rem + env(safe-area-inset-bottom, 0px))!important}#instagramButton{bottom:calc(2rem + env(safe-area-inset-bottom, 0px))!important}#scrollTopBtn{bottom:calc(2rem + env(safe-area-inset-bottom, 0px))!important}}
+
+    #mobileMenu { max-height: 0; opacity: 0; overflow: hidden; transition: max-height .4s ease, opacity .3s ease, padding .3s ease; padding-top: 0; padding-bottom: 0; }
+    #mobileMenu.open { max-height: calc(100vh - 120px); opacity: 1; padding-top: .5rem; padding-bottom: 1.5rem; overflow-y: auto; }
 </style>
 </head>
-<body class="bg-surface font-body text-on-surface selection:bg-primary/30 selection:text-on-primary" style="overflow-x:clip">
+<body class="bg-surface font-body text-on-surface selection:bg-primary/30 selection:text-on-primary overflow-x-hidden">
 
-<?php $pageType = 'sub'; include $rootPath . '/includes/navbar.php'; ?>
+<style>
+    /* Nav states */
+    .nav-glass-pill { background: rgba(255,255,255,0.14) !important; border: 1px solid rgba(255,255,255,0.32); border-radius: 999px; padding: 6px !important; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); gap: 2px !important; box-shadow: 0 4px 24px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.2); }
+    .nav-link { position: relative; transition: all 0.3s ease; color: #FFFFFF; font-weight: 700; padding: 9px 18px !important; border-radius: 999px; }
+    .nav-link:hover { background: rgba(232,115,74,0.15); color: #E0457B !important; }
+    .nav-link.active { background: #E0457B !important; color: #FFFFFF !important; box-shadow: 0 2px 14px rgba(232,115,74,0.3); font-weight: 800; }
+
+    .nav-hero { background: transparent; }
+    .nav-hero .nav-link { color: #FFFFFF !important; font-weight: 700 !important; text-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+    .nav-hero .nav-link:hover { background: rgba(224,69,123,0.15); color: #E0457B !important; }
+    .nav-hero .nav-link.active { background: #E0457B !important; color: #FFFFFF !important; text-shadow: none; }
+    .nav-hero .logo-text { color: white; }
+    .nav-hero #mobileMenuBtn { color: white !important; }
+
+    .nav-scrolled { background: #2E1548; box-shadow: 0 4px 30px rgba(0,0,0,0.3); backdrop-filter: blur(12px); }
+    .nav-scrolled .nav-link { color: #FFFFFF !important; font-weight: 700 !important; }
+    .nav-scrolled .nav-link:hover { background: rgba(232,115,74,0.15); color: #E0457B !important; }
+    .nav-scrolled .nav-link.active { background: #E0457B !important; color: #FFFFFF !important; }
+    .nav-scrolled .logo-text { color: white; }
+    .nav-scrolled #mobileMenuBtn { color: white !important; }
+
+    #mobileMenu .nav-link { color: white !important; padding: 8px 0 !important; border-radius: 0; }
+    #mobileMenu .nav-link:hover { color: #E0457B !important; background: none; }
+    #mobileMenu .nav-link.active { color: #E0457B !important; background: none !important; }
+    #mobileMenu { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease; padding-top: 0; padding-bottom: 0; }
+    #mobileMenu.open { max-height: calc(100vh - 120px); opacity: 1; padding-top: 0.5rem; padding-bottom: 1.5rem; overflow-y: auto; }
+
+    #mobileMenuBtn .menu-icon { display: block; } #mobileMenuBtn .close-icon { display: none; }
+    #mobileMenuBtn.active .menu-icon { display: none; }
+    #mobileMenuBtn.active .close-icon { display: block; animation: spinIn 0.3s ease; }
+    @keyframes spinIn { from { transform: rotate(-90deg) scale(0.5); opacity: 0; } to { transform: rotate(0) scale(1); opacity: 1; } }
+
+    #scrollTopBtn { opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+    #scrollTopBtn.visible { opacity: 1; pointer-events: auto; }
+</style>
+<div id="topBar" class="bg-[#2E1548] border-b border-white/10 py-2 text-xs z-[60] relative">
+    <div class="flex justify-between items-center px-4 sm:px-6 lg:px-10 max-w-full">
+        <div class="flex items-center gap-5 text-white/70">
+            <a href="tel:05456876161" data-kv-href="phone_raw" data-kv-href-prefix="tel:" class="flex items-center gap-1.5 hover:text-white transition-colors">
+                <svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0;color:#5B2C87" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                <span data-kv="phone">0 545 687 61 61</span>
+            </a>
+            <span class="hidden lg:flex items-center gap-1.5">
+                <svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0;color:#8E5CC0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                <span data-kv="working_hours_short">7/24 Hizmetinizdeyiz</span>
+            </span>
+        </div>
+        <div class="flex items-center justify-center gap-3 text-white/70 sm:w-[160px]" id="kvTopBarSocial">
+            <a href="https://www.instagram.com/hayati_bank" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity" title="Instagram"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+            <a href="https://www." target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity" title="Facebook"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+            <a href="https://www.tiktok.com/@hayati_bank1" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity" title="TikTok"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.43v-7.15a8.16 8.16 0 005.58 2.09V11.1a4.84 4.84 0 01-3.58-1.58V6.69h3.58z"/></svg></a>
+        </div>
+    </div>
+</div>
+
+<!-- Navbar -->
+<nav id="mainNav" class="sticky w-full z-50 transition-all duration-500 nav-scrolled" style="top:36px" role="navigation" aria-label="Ana navigasyon">
+    <div class="flex justify-between items-center px-4 sm:px-6 lg:px-10 py-4 max-w-full">
+        <a href="/" class="group flex items-center gap-3 sm:gap-3">
+            <div class="w-11 h-11 sm:w-10 sm:h-10 rounded-xl bg-[#E0457B] flex items-center justify-center shadow-lg shadow-[#E0457B]/30 group-hover:scale-110 transition-transform duration-300">
+                <span class="font-bold text-white text-xl">Ö</span>
+            </div>
+            <span class="logo-text text-2xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] whitespace-nowrap" data-kv="business_name">Bank Halı Yıkama</span>
+        </a>
+        <div class="flex items-center gap-4">
+            <div class="hidden lg:flex items-center nav-glass-pill">
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/#hizmetlerimiz">Hizmetlerimiz</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/fiyatlar">Fiyatlarımız</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/#surecimiz">Sürecimiz</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/#hakkimizda">Hakkımızda</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/#galeri">Galeri</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/#yorumlar">Yorumlar</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/#blog">Blog</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/#iletisim">İletişim</a>
+            </div>
+            <a class="hidden sm:inline-flex btn-cta text-white px-6 py-2.5 rounded-full font-semibold text-sm tracking-wide shadow-lg shadow-[#E0457B]/30 hover:scale-105 transition-transform duration-300" href="/#iletisim">Ücretsiz Keşif</a>
+            <button id="mobileMenuBtn" class="lg:hidden p-2">
+                <svg class="text-3xl menu-icon" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                <svg class="text-3xl close-icon" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+        </div>
+    </div>
+    <div id="mobileMenu" class="lg:hidden w-full px-6 space-y-4 bg-[#2E1548]/95 backdrop-blur-xl border-t border-white/10">
+        <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/#hizmetlerimiz">Hizmetlerimiz</a>
+        <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/fiyatlar">Fiyatlarımız</a>
+        <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/#surecimiz">Sürecimiz</a>
+        <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/#hakkimizda">Hakkımızda</a>
+        <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/#galeri">Galeri</a>
+        <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/#yorumlar">Yorumlar</a>
+        <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/#blog">Blog</a>
+        <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/#iletisim">İletişim</a>
+        <a class="block btn-cta text-white px-6 py-3 rounded-full font-semibold text-sm tracking-wide text-center sm:hidden" href="/#iletisim">Ücretsiz Keşif</a>
+    </div>
+</nav>
+
+<!-- ==================== HERO — CINEMATIC SPLIT ==================== -->
 
 <!-- Page Header -->
 <header class="pt-16 sm:pt-20 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 bg-surface relative">
     <div class="absolute inset-0 opacity-[0.03] pointer-events-none">
-        <div class="absolute inset-0" style="background: radial-gradient(ellipse at 30% 30%, rgba(var(--lf-primary-rgb),0.03) 0%, transparent 50%), radial-gradient(ellipse at 70% 70%, rgba(var(--lf-primary-light-rgb),0.03) 0%, transparent 50%);"></div>
+        <div class="absolute inset-0" style="background: radial-gradient(ellipse at 30% 30%, rgba(26,82,118,0.03) 0%, transparent 50%), radial-gradient(ellipse at 70% 70%, rgba(46,134,193,0.03) 0%, transparent 50%);"></div>
     </div>
     <div class="max-w-7xl mx-auto relative z-10">
         <nav class="flex items-center gap-2 text-sm text-on-surface-variant mb-8">
@@ -71,8 +210,8 @@
         <!-- Blog Arama -->
         <div class="max-w-xl mx-auto mb-12">
             <div class="relative">
-                <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/70" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                <input id="blogSearch" type="search" placeholder="Blog yazılarında ara..." class="w-full pl-12 pr-4 py-3.5 rounded-full border border-outline-variant/20 bg-surface-container focus:border-primary focus:ring-2 focus:ring-primary/20 text-on-surface transition-all" aria-label="Blog yazılarında ara"/>
+                <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/70" style="width:1.25em;height:1.25em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <input id="blogSearch" type="search" placeholder="Blog yazılarında ara..." class="w-full pr-4 py-3.5 rounded-full border border-outline-variant/20 bg-surface-container focus:border-primary focus:ring-2 focus:ring-primary/20 text-on-surface transition-all" style="padding-left:3.25rem" aria-label="Blog yazılarında ara"/>
             </div>
             <p id="blogSearchInfo" class="text-center text-sm text-on-surface-variant mt-3 hidden"></p>
         </div>
@@ -102,7 +241,7 @@
 
     function buildCard(blog) {
         var el = document.createElement('a');
-        el.href = blog.slug + '.html';
+        el.href = '/blog/' + blog.slug;
         el.className = 'group bg-surface-container rounded-2xl border border-outline-variant/10 overflow-hidden card-glow block reveal visible';
         var coverSrc = blog.cover_image ? (blog.cover_image.startsWith('/') ? blog.cover_image : '/' + blog.cover_image) : '';
         var coverHtml = coverSrc
@@ -217,16 +356,109 @@
 </script>
 
 <!-- CTA Banner -->
-<section class="relative overflow-hidden" style="background:linear-gradient(to right, var(--lf-primary), var(--lf-primary-light), var(--lf-primary))">
-    <div class="absolute inset-0" style="background: radial-gradient(circle at 30% 50%, rgba(var(--lf-accent-rgb),0.15), transparent 50%), radial-gradient(circle at 80% 50%, rgba(5,191,219,0.12), transparent 50%);"></div>
+<section class="bg-gradient-to-r from-[#5B2C87] via-[#8E5CC0] to-[#5B2C87] relative overflow-hidden">
+    <div class="absolute inset-0" style="background: radial-gradient(circle at 30% 50%, rgba(224,69,123,0.15), transparent 50%), radial-gradient(circle at 80% 50%, rgba(5,191,219,0.12), transparent 50%);"></div>
     <div class="relative z-10 max-w-4xl mx-auto text-center py-16 sm:py-20 px-4">
         <h2 class="font-headline text-3xl sm:text-4xl text-white mb-6 tracking-wide">Halılarınız Bizimle Güvende</h2>
-        <p class="text-white/70 text-lg mb-10 max-w-2xl mx-auto">Hijyenik ve derinlemesine temizlik garantisiyle halılarınıza özenle yaklaşıyoruz.</p>
-        <a class="text-white px-10 sm:px-12 py-4 rounded-full font-bold text-sm sm:text-base tracking-wide hover:scale-105 transition-transform duration-300 shadow-xl inline-block" style="background:var(--lf-accent)" href="../index.html#iletisim">Hemen Teklif Alın</a>
+        <p class="text-white/70 text-lg mb-10 max-w-2xl mx-auto">Profesyonel ekibimiz ve son teknoloji ekipmanlarımızla halılarınızı ilk günkü temizliğine kavuşturuyoruz.</p>
+        <a class="bg-[#E0457B] text-white px-10 sm:px-12 py-4 rounded-full font-bold text-sm sm:text-base tracking-wide hover:scale-105 transition-transform duration-300 shadow-xl inline-block" href="../index.html#iletisim">Hemen Teklif Alın</a>
     </div>
 </section>
 
-<?php include $rootPath . '/includes/footer.php'; ?>
+<footer class="bg-[#2E1548] pt-16 sm:pt-24 pb-12 px-4 sm:px-6 lg:px-8 border-t border-white/10" role="contentinfo">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
+        <div>
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-11 h-11 sm:w-10 sm:h-10 rounded-xl bg-[#E0457B] flex items-center justify-center shadow-lg shadow-[#E0457B]/30">
+                    <span class="font-bold text-white text-xl">Ö</span>
+                </div>
+                <span class="text-lg sm:text-xl font-extrabold tracking-tight text-white whitespace-nowrap" data-kv="business_name">Bank Halı Yıkama</span>
+            </div>
+            <p class="text-sm text-white/70 mb-8 leading-relaxed">Bank Halı Yıkama, Ankara'da halı, koltuk ve yorgan temizliğinde güvenilir adresiniz.</p>
+            <div class="flex gap-4" id="kvSocialLinks">
+                
+                <a href="https://www.instagram.com/hayati_bank" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:opacity-80 transition-all" title="Instagram"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                <a href="https://www." target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:opacity-80 transition-all" title="Facebook"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                <a href="https://www.tiktok.com/@hayati_bank1" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:opacity-80 transition-all" title="TikTok"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.43v-7.15a8.16 8.16 0 005.58 2.09V11.1a4.84 4.84 0 01-3.58-1.58V6.69h3.58z"/></svg></a>
+            
+            </div>
+        </div>
+        <div class="lg:pl-6">
+            <h3 class="text-xs font-label uppercase tracking-widest text-[#E0457B] mb-6">Hızlı Menü</h3>
+            <ul class="space-y-4">
+                <li><a class="text-white/70 hover:text-[#E0457B] transition-colors text-sm" href="/#hizmetlerimiz">Hizmetlerimiz</a></li>
+                <li><a class="text-white/70 hover:text-[#E0457B] transition-colors text-sm" href="/fiyatlar">Fiyatlarımız</a></li>
+                <li><a class="text-white/70 hover:text-[#E0457B] transition-colors text-sm" href="/#surecimiz">Sürecimiz</a></li>
+                <li><a class="text-white/70 hover:text-[#E0457B] transition-colors text-sm" href="/#hakkimizda">Hakkımızda</a></li>
+                <li><a class="text-white/70 hover:text-[#E0457B] transition-colors text-sm" href="/galeri">Galeri</a></li>
+                <li><a class="text-white/70 hover:text-[#E0457B] transition-colors text-sm" href="/blog/">Blog</a></li>
+                <li><a class="text-white/70 hover:text-[#E0457B] transition-colors text-sm" href="/#iletisim">İletişim</a></li>
+            </ul>
+        </div>
+        <div>
+            <h3 class="text-xs font-label uppercase tracking-widest text-[#E0457B] mb-6">İletişim</h3>
+            <ul class="space-y-4">
+                <li><span class="text-white/70 text-sm" data-kv="phone">0 545 687 61 61</span></li>
+                <li><span class="text-white/70 text-sm" data-kv="email"></span></li>
+                <li><span class="text-white/70 text-sm">info@hayati_bank1.com.tr</span></li>
+                <li><span class="text-white/70 text-sm">Plevne Mahallesi Plevne Sokak No:5/a Sincan/Ankara</span></li>
+            </ul>
+        </div>
+        <div>
+            <h3 class="text-xs font-label uppercase tracking-widest text-[#E0457B] mb-6">Bülten</h3>
+            <p class="text-sm text-white/70 mb-4">Bakım ipuçları ve kampanyalar için abone olun.</p>
+            <div class="relative">
+                <input id="newsletterEmail" class="w-full bg-white/10 border border-white/20 rounded-xl py-3 px-5 text-sm text-white placeholder-white/30 focus:ring-1 focus:ring-[#E0457B] transition-all" placeholder="E-posta adresiniz" type="email"/>
+                <button type="button" onclick="var e=document.getElementById('newsletterEmail'),m=document.getElementById('newsletterMsg');if(e.value&&e.value.includes('@')){e.value='';m.textContent='✓ Aboneliğiniz alındı!';m.className='text-xs text-green-400 mt-2';setTimeout(function(){m.textContent=''},4000)}else{m.textContent='Geçerli bir e-posta girin.';m.className='text-xs text-red-400 mt-2'}" class="absolute right-2 top-1.5 btn-cta text-white p-1.5 rounded-lg"><svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+            </div>
+            <div id="newsletterMsg" class="text-xs mt-2"></div>
+            <div class="mt-8">
+                <span class="block text-[10px] text-white/25 uppercase tracking-widest">&copy; 2026 Bank Halı Yıkama. Tüm Hakları Saklıdır.</span>
+                <a href="https://ankarayazilim.tr" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 mt-6 text-[12px] text-white/70 hover:text-[#E0457B] transition-colors duration-300">Tasarım: ankarayazilim.tr</a>
+            </div>
+        </div>
+    </div>
+    <!-- Hizmet Bölgeleri — SEO Internal Links -->
+    <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/10 space-y-6">
+        <div>
+            <h3 class="text-xs font-label uppercase tracking-widest text-[#E0457B] mb-3">Halı Yıkama Hizmet Bölgeleri</h3>
+            <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-white/60">
+                <a href="/eryaman-hali-yikama" class="hover:text-[#E0457B] transition-colors">Eryaman Halı Yıkama</a>
+                <a href="/sincan-hali-yikama" class="hover:text-[#E0457B] transition-colors">Sincan Halı Yıkama</a>
+                <a href="/baglica-hali-yikama" class="hover:text-[#E0457B] transition-colors">Bağlıca Halı Yıkama</a>
+                <a href="/batikent-hali-yikama" class="hover:text-[#E0457B] transition-colors">Batıkent Halı Yıkama</a>
+                <a href="/etimesgut-hali-yikama" class="hover:text-[#E0457B] transition-colors">Etimesgut Halı Yıkama</a>
+                <a href="/yasamkent-hali-yikama" class="hover:text-[#E0457B] transition-colors">Yaşamkent Halı Yıkama</a>
+                <a href="/beytepe-hali-yikama" class="hover:text-[#E0457B] transition-colors">Beytepe Halı Yıkama</a>
+                <a href="/yenikent-hali-yikama" class="hover:text-[#E0457B] transition-colors">Yenikent Halı Yıkama</a>
+                <a href="/yapracik-hali-yikama" class="hover:text-[#E0457B] transition-colors">Yapracık Halı Yıkama</a>
+                <a href="/cayyolu-hali-yikama" class="hover:text-[#E0457B] transition-colors">Çayyolu Halı Yıkama</a>
+                <a href="/umitkoy-hali-yikama" class="hover:text-[#E0457B] transition-colors">Ümitköy Halı Yıkama</a>
+                <a href="/konutkent-hali-yikama" class="hover:text-[#E0457B] transition-colors">Konutkent Halı Yıkama</a>
+                <a href="/incek-hali-yikama" class="hover:text-[#E0457B] transition-colors">İncek Halı Yıkama</a>
+            </div>
+        </div>
+        <div>
+            <h3 class="text-xs font-label uppercase tracking-widest text-[#E0457B] mb-3">Tüm Hizmetlerimiz</h3>
+            <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-white/60">
+                <a href="/hali-yikama" class="hover:text-[#E0457B] transition-colors">Halı Yıkama</a>
+                <a href="/koltuk-yikama" class="hover:text-[#E0457B] transition-colors">Koltuk Yıkama</a>
+                <a href="/yorgan-battaniye-yikama" class="hover:text-[#E0457B] transition-colors">Yorgan & Battaniye Yıkama</a>
+                <a href="/yatak-yikama" class="hover:text-[#E0457B] transition-colors">Yatak Yıkama</a>
+                <a href="/perde-yikama" class="hover:text-[#E0457B] transition-colors">Perde Yıkama</a>
+                <a href="/ucretsiz-servis" class="hover:text-[#E0457B] transition-colors">Ücretsiz Servis</a>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-8 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-white/25 uppercase tracking-widest">
+        <span>Designed with Precision</span>
+        <div class="flex gap-6">
+            <a class="hover:text-[#E0457B] transition-colors" href="/gizlilik-politikasi">Gizlilik Politikası</a>
+            <a class="hover:text-[#E0457B] transition-colors" href="/kvkk">KVKK Aydınlatma</a>
+            <a class="hover:text-[#E0457B] transition-colors" href="/kullanim-sartlari">Kullanım Şartları</a>
+        </div>
+    </div>
+</footer>
 
 <script>
 // Reveal animations
@@ -236,9 +468,70 @@ var revealObserver = new IntersectionObserver(function(entries) {
     });
 }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
 document.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
+
+// Scroll to Top
+var scrollTopBtn = document.getElementById('scrollTopBtn');
+function updateScrollTop() {
+    if (window.scrollY > 600) { scrollTopBtn.classList.add('visible'); }
+    else { scrollTopBtn.classList.remove('visible'); }
+}
+window.addEventListener('scroll', updateScrollTop);
+updateScrollTop();
+
+// Mobile Menu
+var mobileMenuBtn = document.getElementById('mobileMenuBtn');
+var mobileMenu = document.getElementById('mobileMenu');
+if (mobileMenuBtn && mobileMenu) {
+    mobileMenuBtn.addEventListener('click', function() {
+        mobileMenu.classList.toggle('hidden');
+        var icon = mobileMenuBtn.querySelector('svg path');
+        icon.setAttribute('d', mobileMenu.classList.contains('hidden') ? 'M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z' : 'M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z');
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            mobileMenu.classList.add('hidden');
+            mobileMenuBtn.querySelector('svg path').setAttribute('d', 'M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z');
+        });
+    });
+}
 </script>
 <img src="/api/track.php?pixel&amp;page=/blog/" alt="" width="1" height="1" style="position:absolute;left:-9999px" loading="eager"/>
 
-<?php include $rootPath . '/includes/floating-buttons.php'; ?>
+<!-- WhatsApp Template Popup -->
+<div id="waPopup" class="fixed inset-0 z-[200] hidden">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="document.getElementById('waPopup').classList.add('hidden')"></div>
+    <div class="absolute bottom-24 right-4 left-4 sm:left-auto sm:right-6 md:right-8 sm:w-72 bg-white rounded-2xl shadow-2xl overflow-hidden" style="animation: slideIn 0.3s ease">
+        <div class="bg-gradient-to-r from-[#25D366] to-[#128C7E] px-4 py-3 flex items-center justify-between">
+            <span class="text-white font-bold text-sm">WhatsApp ile Yazın</span>
+            <button onclick="document.getElementById('waPopup').classList.add('hidden')" class="text-white/80 hover:text-white">
+                <svg class="text-lg" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+        </div>
+        <div id="waPopupList" class="p-3 space-y-2 max-h-60 overflow-y-auto"></div>
+    </div>
+</div>
+
+<!-- Instagram Button -->
+<a href="https://www.instagram.com/hayati_bank" target="_blank" rel="noopener noreferrer" data-kv-href="instagram_url" id="instagramButton" title="Instagram" class="fixed right-6 md:right-8 w-12 h-12 rounded-full text-white hover:scale-110 transition-all duration-500 ease-out z-[100] flex items-center justify-center cursor-pointer group" style="bottom:8.5rem;background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);box-shadow:0 0 24px rgba(214,36,159,0.45);">
+    <svg class="text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    <div class="absolute right-14 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold text-sm" style="background:linear-gradient(135deg,#d6249f,#285AEB)">Instagram</div>
+</a>
+<!-- Call Button -->
+<a href="tel:05456876161" data-kv-href="phone_raw" data-kv-href-prefix="tel:" style="background:linear-gradient(135deg,#5B2C87,#2E1548);box-shadow:0 0 24px rgba(91,44,135,0.45);" class="fixed bottom-20 right-6 md:bottom-22 md:right-8 text-white w-12 h-12 rounded-full hover:scale-110 transition-all duration-500 ease-out z-[100] flex items-center justify-center cursor-pointer group" id="callButton">
+    <svg class="text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+    <div class="absolute right-14 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold text-sm" style="background:#2E1548">Hemen Ara</div>
+</a>
+<!-- WhatsApp Button -->
+<a href="#" target="_blank" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 bg-gradient-to-br from-[#25D366] to-[#128C7E] text-white w-12 h-12 rounded-full shadow-[0_0_24px_rgba(37,211,102,0.4)] hover:scale-110 hover:shadow-[0_0_32px_rgba(37,211,102,0.5)] transition-all duration-500 ease-out z-[100] flex items-center justify-center cursor-pointer group wa-bounce" id="waButton" data-kv-wa="whatsapp_number" onclick="toggleWaPopup(); return false;">
+    <svg class="text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.654-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <div class="absolute right-14 bg-[#128C7E] text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold text-sm">WhatsApp</div>
+</a>
+
+<!-- Scroll to Top -->
+<button id="scrollTopBtn" class="fixed bottom-6 left-6 md:bottom-8 md:left-8 bg-[#5B2C87] text-white w-12 h-12 rounded-full shadow-lg shadow-[#5B2C87]/20 hover:scale-105 hover:shadow-[#5B2C87]/40 transition-all duration-500 ease-out z-[100] flex items-center justify-center" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Yukarı çık">
+    <svg class="text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8z"/></svg>
+</button>
+
+<script src="../js/main.js" defer></script>
 </body>
 </html>

@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 // LeadFlow — Kurulum Scripti (Genel / Sektör-Bağımsız)
 // İlk deploy'da bir kez çalıştırılır: tabloları oluşturur, varsayılan ayarları yükler
 // Sektöre özel seed data (hizmetler, galeri, yorumlar) sektör install.php'sinden gelir
@@ -54,9 +56,6 @@ $migrations = [
     "ALTER TABLE `services` ADD COLUMN `image` VARCHAR(500) AFTER `icon`",
     "ALTER TABLE `testimonials` ADD COLUMN `role` VARCHAR(255) DEFAULT '' AFTER `name`",
     "ALTER TABLE `blogs` ADD COLUMN `is_featured` TINYINT(1) DEFAULT 0 AFTER `status`",
-    "ALTER TABLE `testimonials` ADD COLUMN `image` VARCHAR(500) DEFAULT '' AFTER `role`",
-    "ALTER TABLE `blogs` ADD COLUMN `meta_description` TEXT AFTER `summary`",
-    "ALTER TABLE `services` ADD COLUMN `features` TEXT AFTER `description`",
 ];
 foreach ($migrations as $mig) {
     try {
@@ -81,21 +80,21 @@ try {
     if ((int)$count === 0) {
         $defaults = [
             'business_name'      => 'Bank Halı Yıkama',
-            'phone'              => '05456876161',
+            'phone'              => '0 545 687 61 61',
             'phone_raw'          => '05456876161',
             'email'              => '',
             'address'            => 'Plevne Mahallesi Plevne Sokak No:5/a Sincan/Ankara',
-            'working_hours'      => 'Pzt-Cmt: 08:00 - 19:00, Pazar: Kapalı',
-            'working_hours_short'=> 'Pzt-Cmt: 08:00 - 19:00, Pazar: Kapalı',
+            'working_hours'      => '7/24 Hizmetinizdeyiz',
+            'working_hours_short'=> '7/24 Hizmetinizdeyiz',
             'whatsapp_number'    => '905456876161',
             'phone2'             => '',
             'phone2_raw'         => '',
-            'hero_subtitle'      => 'Ankara\'da Profesyonel Halı Yıkama',
-            'footer_description' => 'Bank Halı Yıkama, Sincan ve Ankara\'da halılarınız için profesyonel, güvenilir ve hijyenik temizlik çözümleri sunar.',
+            'hero_subtitle'      => 'Premium Halı Yıkama & Bakım',
+            'footer_description' => 'Bank Halı Yıkama, Ankara\'da halı, koltuk ve yorgan temizliğinde güvenilir adresiniz.',
             'cta_title'          => 'Halılarınız Bizimle Güvende',
-            'cta_description'    => 'Hijyenik ve derinlemesine temizlik garantisiyle halılarınıza özenle yaklaşıyoruz.',
-            'map_embed_url'      => 'https://maps.google.com/maps?q=Plevne%20Mahallesi%20Plevne%20Sokak%20No%3A5%2Fa%20Sincan%2FAnkara&output=embed&hl=tr',
-            'map_link_url'       => 'https://www.google.com/maps/search/?api=1&query=Plevne%20Mahallesi%20Plevne%20Sokak%20No%3A5%2Fa%20Sincan%2FAnkara',
+            'cta_description'    => 'Profesyonel ekibimiz ve son teknoloji ekipmanlarımızla halılarınızı ilk günkü temizliğine kavuşturuyoruz.',
+            'map_embed_url'      => 'https://maps.google.com/maps?q=Andi%C3%A7en%20Mahallesi%20G%C3%BClsuyu%20Sokak%20No%3A11%2F4%20Sincan%2FANKARA&output=embed&hl=tr',
+            'map_link_url'       => 'https://www.google.com/maps/search/?api=1&query=Andi%C3%A7en%20Mahallesi%20G%C3%BClsuyu%20Sokak%20No%3A11%2F4%20Sincan%2FANKARA',
             'instagram'          => '',
             'facebook'           => '',
             'blog_author_name'   => 'Bank Halı Yıkama Uzman Ekibi',
@@ -285,7 +284,10 @@ try {
         $items = $jsonData['services'] ?? [];
         if (!empty($items)) {
             $db->exec('DELETE FROM services');
+            $db->exec('DELETE FROM service_items');
             $stmt = $db->prepare('INSERT INTO services (title, description, icon, image, price, sort_order) VALUES (:title, :desc, :icon, :image, :price, :sort)');
+            $stmtItem = $db->prepare('INSERT INTO service_items (service_id, name, description, price, unit, sort_order) VALUES (:sid, :name, :desc, :price, :unit, :sort)');
+            $totalItems = 0;
             foreach ($items as $i => $item) {
                 $stmt->execute([
                     ':title' => $item['name'] ?? $item['title'] ?? '',
@@ -295,8 +297,21 @@ try {
                     ':price' => $item['price'] ?? '',
                     ':sort'  => $i,
                 ]);
+                $serviceId = $db->lastInsertId();
+                $subItems = $item['items'] ?? [];
+                foreach ($subItems as $j => $sub) {
+                    $stmtItem->execute([
+                        ':sid'  => $serviceId,
+                        ':name' => $sub['name'] ?? '',
+                        ':desc' => $sub['description'] ?? '',
+                        ':price'=> $sub['price'] ?? '',
+                        ':unit' => $sub['unit'] ?? '',
+                        ':sort' => $j,
+                    ]);
+                    $totalItems++;
+                }
             }
-            $messages[] = 'Services JSON import: ' . count($items) . ' hizmet aktarıldı.';
+            $messages[] = 'Services JSON import: ' . count($items) . ' hizmet, ' . $totalItems . ' fiyat kalemi aktarıldı.';
         }
     }
 } catch (Exception $e) {
@@ -309,6 +324,7 @@ try {
     $galleryFiles = glob($imgDir . 'gallery-*.{webp,jpg,jpeg,png}', GLOB_BRACE);
     if (!empty($galleryFiles)) {
         $db->exec("DELETE FROM gallery WHERE category = 'gallery'");
+        // Doğal sıralama: gallery-1, gallery-2, ..., gallery-10
         natsort($galleryFiles);
         $stmt = $db->prepare('INSERT INTO gallery (filename, category, alt_text, sort_order) VALUES (:file, :cat, :alt, :sort)');
         $order = 0;
@@ -326,37 +342,6 @@ try {
     }
 } catch (Exception $e) {
     $errors[] = 'Gallery auto-scan hatası: ' . $e->getMessage();
-}
-
-// ── 4.5f Packages ──
-try {
-    $packagesFile = $dataDir . 'packages.json';
-    if (file_exists($packagesFile)) {
-        $jsonData = json_decode(file_get_contents($packagesFile), true);
-        $items = $jsonData['packages'] ?? $jsonData;
-        if (!empty($items) && is_array($items)) {
-            // packages tablosu varsa import et
-            try {
-                $db->query("SELECT 1 FROM packages LIMIT 1");
-                $db->exec('DELETE FROM packages');
-                $stmt = $db->prepare('INSERT INTO packages (name, description, price, features, sort_order) VALUES (:name, :desc, :price, :features, :sort)');
-                foreach ($items as $i => $item) {
-                    $stmt->execute([
-                        ':name'     => $item['name'] ?? $item['title'] ?? '',
-                        ':desc'     => $item['description'] ?? '',
-                        ':price'    => $item['price'] ?? '',
-                        ':features' => is_array($item['features'] ?? null) ? json_encode($item['features'], JSON_UNESCAPED_UNICODE) : ($item['features'] ?? ''),
-                        ':sort'     => $i,
-                    ]);
-                }
-                $messages[] = 'Packages JSON import: ' . count($items) . ' paket aktarıldı.';
-            } catch (Exception $e) {
-                // packages tablosu yoksa yoksay (sektöre özel)
-            }
-        }
-    }
-} catch (Exception $e) {
-    $errors[] = 'Packages JSON import hatası: ' . $e->getMessage();
 }
 
 // ══════════════════════════════════════

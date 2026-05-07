@@ -4,7 +4,7 @@
     <div class="footer-grid">
       <div>
         <div class="footer-logo">Bank Halı Yıkama</div>
-        <p class="footer-desc">{{CITY}} genelinde profesyonel hali yikama, koltuk yikama ve perde yikama hizmetleri.</p>
+        <p class="footer-desc">Ankara genelinde profesyonel hali yikama, koltuk yikama ve perde yikama hizmetleri.</p>
       </div>
       <div>
         <div class="footer-col-title">Hizli Menu</div>
@@ -27,12 +27,12 @@
       <div>
         <div class="footer-col-title">Calisma Saatleri</div>
         <div class="footer-links">
-          <span data-kv="working_hours_short">Pzt-Cmt: 08:00 - 19:00, Pazar: Kapalı</span>
+          <span data-kv="working_hours_short">7/24</span>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">&copy; {{YEAR}} Bank Halı Yıkama. Tum Haklari Saklidir.</span>
+      <span class="footer-copy">&copy; 2026 Bank Halı Yıkama. Tum Haklari Saklidir.</span>
       <div class="footer-legal">
         <a href="/kvkk">KVKK</a>
         <a href="/gizlilik">Gizlilik</a>

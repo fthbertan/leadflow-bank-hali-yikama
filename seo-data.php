@@ -256,6 +256,28 @@ $services = [
         ],
     ],
 
+    'ucretsiz-servis' => [
+        'name'     => 'Ücretsiz Servis',
+        'icon'     => 'local_shipping',
+        'intro'    => 'Sincan, Eryaman, Etimesgut, Batıkent, Çayyolu, Bağlıca, Ümitköy, Yaşamkent, Çukurambar ve Yapracık dahil tüm hizmet bölgelerimizde halı alım ve teslim tamamen ücretsizdir.',
+        'desc'     => 'Bank Halı Yıkama olarak müşterilerimizin halıları taşıma stresini tamamen ortadan kaldırıyoruz. Randevu verilen gün ve saatte adresinize geliyoruz, halılarınızı alıyoruz; yıkama tamamlandıktan sonra aynı özenle kapınıza teslim ediyoruz. Ek ücret, gizli maliyet yok.',
+        'features' => [
+            'Ankara genelinde ücretsiz alım ve teslim',
+            'Randevulu esnek servis saatleri',
+            '7/24 hizmet imkânı',
+            'Vakumlu hijyenik paketleme ile teslim',
+            'Gizli ücret yok',
+            'SMS/WhatsApp bildirim ile takip',
+        ],
+        'faq' => [
+            ['Soru' => 'Hangi bölgelere ücretsiz servis yapıyorsunuz?', 'Cevap' => 'Çayyolu, Ümitköy, Yaşamkent, Eryaman, Etimesgut, Sincan, Bağlıca, Batıkent, Çukurambar ve Yapracık dahil tüm hizmet bölgelerimizde alım ve teslimat ücretsizdir.'],
+            ['Soru' => 'Servis için ayrıca ücret ödeyecek miyim?', 'Cevap' => 'Hayır. Halı alım ve teslimat hizmetimiz tamamen ücretsizdir. Yalnızca yıkama ücreti tahsil edilir.'],
+            ['Soru' => 'Servis saatleri neler?', 'Cevap' => '7 gün 24 saat hizmetinizdeyiz. İstediğiniz saat randevu oluşturabilirsiniz.'],
+            ['Soru' => 'Kaç halıyı aynı anda alabiliyor musunuz?', 'Cevap' => 'Tek bir adresten birden fazla halı alımı yapabiliyoruz. Servis aracımız birden fazla halıyı güvenle taşıyacak kapasitededir.'],
+            ['Soru' => 'Teslim alım süresini nasıl takip edebilirim?', 'Cevap' => 'Halınız alındıktan sonra WhatsApp veya SMS ile bildirim gönderilir. Teslim öncesinde de haber verilir.'],
+        ],
+    ],
+
     'yatak-yikama' => [
         'name'     => 'Yatak Yıkama',
         'icon'     => 'bed',

@@ -41,65 +41,55 @@ if ($method === 'POST') {
 
     $data = getJsonBody();
 
-    // ── Katman 1: Honeypot — bot doldurursa sessizce reddet (200 OK ile yanılt) ──
+    // ── Honeypot kontrolü ──
     if (!empty($data['website'])) {
+        // Bot yakalandı — sessizce başarılı gibi döndür
         jsonResponse(['success' => true]);
     }
 
-    // ── Katman 2: Cloudflare Turnstile doğrulama ──
-    $turnstileToken = trim($data['cf-turnstile-response'] ?? '');
-    if (defined('TURNSTILE_SECRET_KEY') && TURNSTILE_SECRET_KEY !== '___TURNSTILE_SECRET_BURAYA___') {
-        if ($turnstileToken === '') {
-            jsonResponse(['error' => 'Güvenlik doğrulaması tamamlanamadı. Lütfen sayfayı yenileyip tekrar deneyin.'], 403);
+    // ── Turnstile CAPTCHA doğrulama ──
+    $turnstileResponse = trim($data['cf-turnstile-response'] ?? '');
+    if (defined('TURNSTILE_SECRET_KEY') && TURNSTILE_SECRET_KEY !== '' && TURNSTILE_SECRET_KEY !== '___TURNSTILE_SECRET_KEY___') {
+        if ($turnstileResponse === '') {
+            jsonResponse(['error' => 'Güvenlik doğrulaması gerekli. Lütfen sayfayı yenileyip tekrar deneyin.'], 422);
         }
-        $verifyUrl = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
-        $verifyData = http_build_query([
+        $verifyData = [
             'secret'   => TURNSTILE_SECRET_KEY,
-            'response' => $turnstileToken,
+            'response' => $turnstileResponse,
             'remoteip' => $clientIp,
-        ]);
-        $ctx = stream_context_create(['http' => [
-            'method'  => 'POST',
-            'header'  => "Content-Type: application/x-www-form-urlencoded\r\n",
-            'content' => $verifyData,
-            'timeout' => 5,
-        ]]);
-        $verifyResult = @file_get_contents($verifyUrl, false, $ctx);
-        if ($verifyResult) {
-            $verifyJson = json_decode($verifyResult, true);
-            if (empty($verifyJson['success'])) {
-                jsonResponse(['error' => 'Güvenlik doğrulaması başarısız. Lütfen tekrar deneyin.'], 403);
-            }
+        ];
+        $verifyOpts = [
+            'http' => [
+                'method'  => 'POST',
+                'header'  => 'Content-Type: application/x-www-form-urlencoded',
+                'content' => http_build_query($verifyData),
+                'timeout' => 5,
+            ]
+        ];
+        $verifyResult = @file_get_contents('https://challenges.cloudflare.com/turnstile/v0/siteverify', false, stream_context_create($verifyOpts));
+        $verifyJson = $verifyResult ? json_decode($verifyResult, true) : null;
+        if (!$verifyJson || empty($verifyJson['success'])) {
+            jsonResponse(['error' => 'Güvenlik doğrulaması başarısız. Lütfen tekrar deneyin.'], 422);
         }
-        // Cloudflare'a erişilemezse sessizce geç (best-effort)
     }
 
-    $name    = trim($data['name'] ?? '');
-    $phone   = trim($data['phone'] ?? '');
-    $service = trim($data['service'] ?? '');
-    $date    = trim($data['date'] ?? '');
-    $time    = trim($data['time'] ?? '');
-    $notes   = trim($data['notes'] ?? '');
+    // ── Sanitization ──
+    $name    = mb_substr(trim($data['name'] ?? ''), 0, 100);
+    $phone   = mb_substr(trim($data['phone'] ?? ''), 0, 20);
+    $service = mb_substr(trim($data['service'] ?? ''), 0, 200);
+    $date    = mb_substr(trim($data['date'] ?? ''), 0, 10);
+    $time    = mb_substr(trim($data['time'] ?? ''), 0, 5);
+    $notes   = mb_substr(trim($data['notes'] ?? ''), 0, 1000);
 
-    // Zorunlu alan kontrolleri
     if ($name === '') {
-        jsonResponse(['error' => 'Ad Soyad alanı zorunludur.'], 400);
-    }
-    if ($phone === '') {
-        jsonResponse(['error' => 'Telefon alanı zorunludur.'], 400);
+        jsonResponse(['error' => 'İsim alanı zorunlu'], 400);
     }
 
-    // TR telefon formatı: 05XX XXX XX XX (boşluk/tire/parantez opsiyonel, 10-11 hane)
+    // ── Telefon validasyonu (TR formatı) ──
     $phoneDigits = preg_replace('/\D/', '', $phone);
-    if (!preg_match('/^(0?5\d{9}|905\d{9})$/', $phoneDigits)) {
-        jsonResponse(['error' => 'Geçerli bir cep telefonu numarası giriniz (05XX XXX XX XX).'], 400);
+    if ($phone !== '' && !preg_match('/^(0?5\d{9}|905\d{9})$/', $phoneDigits)) {
+        jsonResponse(['error' => 'Geçerli bir telefon numarası girin (05XX XXX XX XX).'], 400);
     }
-
-    // XSS / header injection sanitization
-    $name    = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
-    $phone   = htmlspecialchars($phone, ENT_QUOTES, 'UTF-8');
-    $service = htmlspecialchars($service, ENT_QUOTES, 'UTF-8');
-    $notes   = htmlspecialchars($notes, ENT_QUOTES, 'UTF-8');
 
     $stmt = $db->prepare('
         INSERT INTO messages (name, phone, service, preferred_date, preferred_time, notes)
@@ -114,30 +104,11 @@ if ($method === 'POST') {
         ':notes'   => $notes,
     ]);
 
-    // E-posta bildirimi gonder (SMTP — best-effort)
+    // E-posta bildirimi gonder (best-effort)
     try {
-        $emailStmt = $db->prepare("SELECT setting_value FROM settings WHERE setting_key = 'email'");
-        $emailStmt->execute();
-        $toEmail = $emailStmt->fetchColumn();
-
-        if ($toEmail && filter_var($toEmail, FILTER_VALIDATE_EMAIL)) {
-            $subject = 'Yeni İletişim Talebi - ' . $name;
-            $body  = "<h2 style='color:#333;'>Yeni İletişim Talebi</h2>";
-            $body .= "<table style='border-collapse:collapse;width:100%;max-width:500px;'>";
-            $body .= "<tr><td style='padding:8px;font-weight:bold;border-bottom:1px solid #eee;'>Ad Soyad</td><td style='padding:8px;border-bottom:1px solid #eee;'>" . $name . "</td></tr>";
-            $body .= "<tr><td style='padding:8px;font-weight:bold;border-bottom:1px solid #eee;'>Telefon</td><td style='padding:8px;border-bottom:1px solid #eee;'>" . $phone . "</td></tr>";
-            $body .= "<tr><td style='padding:8px;font-weight:bold;border-bottom:1px solid #eee;'>Hizmet</td><td style='padding:8px;border-bottom:1px solid #eee;'>" . ($service ?: '-') . "</td></tr>";
-            if ($date) $body .= "<tr><td style='padding:8px;font-weight:bold;border-bottom:1px solid #eee;'>Tarih</td><td style='padding:8px;border-bottom:1px solid #eee;'>" . htmlspecialchars($date) . "</td></tr>";
-            if ($time) $body .= "<tr><td style='padding:8px;font-weight:bold;border-bottom:1px solid #eee;'>Saat</td><td style='padding:8px;border-bottom:1px solid #eee;'>" . htmlspecialchars($time) . "</td></tr>";
-            $body .= "<tr><td style='padding:8px;font-weight:bold;border-bottom:1px solid #eee;'>Mesaj</td><td style='padding:8px;border-bottom:1px solid #eee;'>" . ($notes ?: '-') . "</td></tr>";
-            $body .= "</table>";
-            $body .= "<hr style='margin:20px 0;border:none;border-top:1px solid #eee;'>";
-            $body .= "<p style='color:#999;font-size:12px;'>Bu mesaj web sitesi iletişim formundan gönderildi.</p>";
-
-            sendNotificationEmail($toEmail, $subject, $body);
-        }
+        sendNotificationEmail($db, $name, $phone, $service, $date, $time, $notes);
     } catch (Exception $e) {
-        // E-posta gönderilemese bile mesaj DB'ye kaydedildi, sessizce devam et
+        // E-posta gonderilemese bile mesaj kaydedildi, sessizce devam et
     }
 
     jsonResponse(['success' => true]);

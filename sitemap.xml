@@ -9,7 +9,7 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- Hizmet Sayfaları -->
+  <!-- Hizmet Sayfaları (5 adet) -->
   <url>
     <loc>https://bankhaliyikama.com.tr/hali-yikama</loc>
     <lastmod>2026-05-07</lastmod>
@@ -34,253 +34,89 @@
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://bankhaliyikama.com.tr/ucretsiz-servis</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
 
-  <!-- Lokasyon × Halı Yıkama -->
+  <!-- Fiyatlar -->
+  <url>
+    <loc>https://bankhaliyikama.com.tr/fiyatlar</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Lokasyon SEO Sayfaları — Halı Yıkama (10 bölge) -->
   <url>
     <loc>https://bankhaliyikama.com.tr/cayyolu-hali-yikama</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bankhaliyikama.com.tr/umitkoy-hali-yikama</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bankhaliyikama.com.tr/yasamkent-hali-yikama</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bankhaliyikama.com.tr/eryaman-hali-yikama</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bankhaliyikama.com.tr/etimesgut-hali-yikama</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bankhaliyikama.com.tr/sincan-hali-yikama</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bankhaliyikama.com.tr/baglica-hali-yikama</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bankhaliyikama.com.tr/batikent-hali-yikama</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bankhaliyikama.com.tr/cukurambar-hali-yikama</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bankhaliyikama.com.tr/yapracik-hali-yikama</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.8</priority>
   </url>
 
-  <!-- Lokasyon × Perde Yıkama -->
+  <!-- Galeri -->
   <url>
-    <loc>https://bankhaliyikama.com.tr/cayyolu-perde-yikama</loc>
+    <loc>https://bankhaliyikama.com.tr/galeri</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/umitkoy-perde-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/yasamkent-perde-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/eryaman-perde-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/etimesgut-perde-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/sincan-perde-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/baglica-perde-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/batikent-perde-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/cukurambar-perde-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/yapracik-perde-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-
-  <!-- Lokasyon × Koltuk Yıkama -->
-  <url>
-    <loc>https://bankhaliyikama.com.tr/cayyolu-koltuk-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/umitkoy-koltuk-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/yasamkent-koltuk-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/eryaman-koltuk-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/etimesgut-koltuk-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/sincan-koltuk-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/baglica-koltuk-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/batikent-koltuk-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/cukurambar-koltuk-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/yapracik-koltuk-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-
-  <!-- Lokasyon × Yatak Yıkama -->
-  <url>
-    <loc>https://bankhaliyikama.com.tr/cayyolu-yatak-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/umitkoy-yatak-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/yasamkent-yatak-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/eryaman-yatak-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/etimesgut-yatak-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/sincan-yatak-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/baglica-yatak-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/batikent-yatak-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/cukurambar-yatak-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/yapracik-yatak-yikama</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.6</priority>
   </url>
 
   <!-- Blog -->
@@ -327,19 +163,7 @@
     <priority>0.5</priority>
   </url>
 
-  <!-- Diğer Sayfalar -->
-  <url>
-    <loc>https://bankhaliyikama.com.tr/galeri</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://bankhaliyikama.com.tr/fiyatlar</loc>
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
+  <!-- Yasal Sayfalar -->
   <url>
     <loc>https://bankhaliyikama.com.tr/kvkk</loc>
     <lastmod>2026-05-07</lastmod>
