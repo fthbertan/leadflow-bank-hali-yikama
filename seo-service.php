@@ -566,9 +566,9 @@ header('Content-Type: text/html; charset=utf-8');
 </a>
 
 <!-- Call Button -->
-<a href="tel:<?= htmlspecialchars($phoneRaw) ?>" style="background:linear-gradient(135deg,#5B2C87,#2E1548);box-shadow:0 0 24px rgba(91,44,135,0.45);" class="fixed bottom-20 right-6 md:bottom-22 md:right-8 text-white w-12 h-12 rounded-full hover:scale-110 transition-all duration-500 ease-out z-[100] flex items-center justify-center cursor-pointer group" id="callButton">
+<a href="tel:<?= htmlspecialchars($phoneRaw) ?>" style="background:linear-gradient(135deg,#4CAF50,#2E7D32);box-shadow:0 0 24px rgba(76,175,80,0.45);" class="fixed bottom-20 right-6 md:bottom-22 md:right-8 text-white w-12 h-12 rounded-full hover:scale-110 transition-all duration-500 ease-out z-[100] flex items-center justify-center cursor-pointer group" id="callButton">
     <svg class="text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-    <div class="absolute right-14 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold text-sm" style="background:#2E1548">Hemen Ara</div>
+    <div class="absolute right-14 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold text-sm" style="background:#2E7D32">Hemen Ara</div>
 </a>
 
 <!-- WhatsApp Button -->
