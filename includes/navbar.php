@@ -1,8 +1,7 @@
 <?php
 // LeadFlow — Topbar + Navbar Include (Bank Halı Yıkama)
-// Kullanım:
-//   Ana sayfa:  <?php include __DIR__ . '/includes/navbar.php'; ?>
-//   Alt sayfa:  <?php $pageType = 'sub'; include __DIR__ . '/includes/navbar.php'; ?>
+// Kullanim: Ana sayfa: include DIR/includes/navbar.php
+//           Alt sayfa: $pageType = 'sub'; include DIR/includes/navbar.php
 $isSub = isset($pageType) && $pageType === 'sub';
 $navClass = $isSub ? 'sticky w-full z-50 transition-all duration-500 nav-scrolled' : 'fixed w-full z-50 transition-all duration-500 nav-hero';
 $navStyle = $isSub ? '' : 'style="top:36px"';
