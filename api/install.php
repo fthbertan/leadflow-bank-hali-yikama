@@ -390,10 +390,10 @@ if (empty($errors)) {
         <?php endif; ?>
 
         <?php if (!empty($messages)): ?>
-            <div class="bg-green-50 border border-green-200 rounded-xl p-4 mb-4">
-                <h3 class="font-bold text-green-700 mb-2">Basarili:</h3>
+            <div class="bg-[#F5F0FF] border border-[#8E5CC0] rounded-xl p-4 mb-4">
+                <h3 class="font-bold text-[#5B2C87] mb-2">Basarili:</h3>
                 <?php foreach ($messages as $msg): ?>
-                    <p class="text-green-600 text-sm"><?= htmlspecialchars($msg) ?></p>
+                    <p class="text-[#5B2C87] text-sm"><?= htmlspecialchars($msg) ?></p>
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>

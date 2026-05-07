@@ -207,7 +207,7 @@ function _showToast(message, type) {
     if (existing) existing.remove();
     var toast = document.createElement('div');
     toast.id = 'lfToast';
-    var bg = type === 'success' ? '#16a34a' : type === 'error' ? '#dc2626' : '#2563eb';
+    var bg = type === 'success' ? '#5B2C87' : type === 'error' ? '#dc2626' : '#2563eb';
     var icon = type === 'success' ? '&#10003;' : type === 'error' ? '&#10007;' : '&#8505;';
     toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);z-index:9999;background:' + bg + ';color:#fff;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:500;box-shadow:0 10px 40px rgba(0,0,0,.2);display:flex;align-items:center;gap:10px;opacity:0;transition:opacity .3s,transform .3s;max-width:90vw;';
     toast.innerHTML = '<span style="font-size:18px;">' + icon + '</span><span>' + message + '</span>';
@@ -349,6 +349,14 @@ if (mobileMenuBtn && mobileMenu) {
 (function(){
   fetch('/api/settings.php').then(function(r){ return r.ok ? r.json() : null; }).then(function(s){
     if(!s || !Object.keys(s).length) return;
+    // CSS custom property renkleri settings.json'dan uygula
+    var r = document.documentElement;
+    if(s.color_primary)       r.style.setProperty('--cp',  s.color_primary);
+    if(s.color_primary_light) r.style.setProperty('--cpl', s.color_primary_light);
+    if(s.color_accent)        r.style.setProperty('--ca',  s.color_accent);
+    if(s.color_accent_dim)    r.style.setProperty('--cad', s.color_accent_dim);
+    if(s.color_dark)          r.style.setProperty('--cd',  s.color_dark);
+    if(s.color_surface)       r.style.setProperty('--cs',  s.color_surface);
     // Text content güncelle
     document.querySelectorAll('[data-kv]').forEach(function(el){
       var k = el.getAttribute('data-kv');

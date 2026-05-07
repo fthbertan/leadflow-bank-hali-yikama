@@ -51,7 +51,7 @@
         animation: shimmer 4s linear infinite;
     }
     .btn-cta {
-        background: linear-gradient(110deg, #047857 0%, #E0457B 25%, #B33562 50%, #E0457B 75%, #047857 100%);
+        background: linear-gradient(110deg, #2E1548 0%, #E0457B 25%, #B33562 50%, #E0457B 75%, #2E1548 100%);
         background-size: 200% 100%;
         animation: shimmer 4s linear infinite;
     }
@@ -409,7 +409,7 @@
             <p class="text-sm text-white/70 mb-4">Bakım ipuçları ve kampanyalar için abone olun.</p>
             <div class="relative">
                 <input id="newsletterEmail" class="w-full bg-white/10 border border-white/20 rounded-xl py-3 px-5 text-sm text-white placeholder-white/30 focus:ring-1 focus:ring-[#E0457B] transition-all" placeholder="E-posta adresiniz" type="email"/>
-                <button type="button" onclick="var e=document.getElementById('newsletterEmail'),m=document.getElementById('newsletterMsg');if(e.value&&e.value.includes('@')){e.value='';m.textContent='✓ Aboneliğiniz alındı!';m.className='text-xs text-green-400 mt-2';setTimeout(function(){m.textContent=''},4000)}else{m.textContent='Geçerli bir e-posta girin.';m.className='text-xs text-red-400 mt-2'}" class="absolute right-2 top-1.5 btn-cta text-white p-1.5 rounded-lg"><svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+                <button type="button" onclick="var e=document.getElementById('newsletterEmail'),m=document.getElementById('newsletterMsg');if(e.value&&e.value.includes('@')){e.value='';m.textContent='✓ Aboneliğiniz alındı!';m.className='text-xs text-[#E0457B] mt-2';setTimeout(function(){m.textContent=''},4000)}else{m.textContent='Geçerli bir e-posta girin.';m.className='text-xs text-red-400 mt-2'}" class="absolute right-2 top-1.5 btn-cta text-white p-1.5 rounded-lg"><svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
             </div>
             <div id="newsletterMsg" class="text-xs mt-2"></div>
             <div class="mt-8">
