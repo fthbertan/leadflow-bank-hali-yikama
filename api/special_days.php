@@ -30,11 +30,10 @@ if ($method === 'GET') {
             ]);
         }
 
-        // Pazar kapali (varsayilan)
-        $isOpen = ($dayOfWeek !== 0);
+        // 7/24 acik (Bank Halı Yıkama pazar dahil her gun hizmet verir)
         jsonResponse([
-            'is_open' => $isOpen,
-            'reason' => $isOpen ? '' : 'Pazar günü kapalıyız',
+            'is_open' => true,
+            'reason' => '',
             'is_special_day' => false,
         ]);
     }

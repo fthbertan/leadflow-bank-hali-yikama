@@ -8,7 +8,7 @@
   var s = document.createElement('style');
   s.textContent =
     '#galleryDesktopGrid > a[href="/galeri"]{transition:transform .5s,box-shadow .5s,background .5s}' +
-    '#galleryDesktopGrid > a[href="/galeri"]:hover{transform:scale(1.03);box-shadow:0 25px 50px -12px rgba(26,82,118,.4);background:linear-gradient(to top left,#5B2C87,#8E5CC0)!important}' +
+    '#galleryDesktopGrid > a[href="/galeri"]:hover{transform:scale(1.03);box-shadow:0 25px 50px -12px rgba(91,44,135,.4);background:linear-gradient(to top left,#5B2C87,#8E5CC0)!important}' +
     '#galleryDesktopGrid > a[href="/galeri"]:hover svg:first-child{transform:scale(1.15)}' +
     '#galleryDesktopGrid > a[href="/galeri"]:hover svg:last-child{transform:translateX(6px);color:#fff}' +
     '#galleryDesktopGrid > a[href="/galeri"] svg{transition:transform .5s,color .5s}' +
@@ -87,7 +87,7 @@ if (nav && topBar) {
         var topBarH = topBar.offsetHeight;
         if (window.scrollY > topBarH) {
             nav.style.top = '0';
-            nav.style.background = 'linear-gradient(135deg, rgba(46,21,72,0.97), rgba(26,82,118,0.95))';
+            nav.style.background = 'linear-gradient(135deg, rgba(46,21,72,0.97), rgba(91,44,135,0.95))';
             nav.style.backdropFilter = 'blur(20px)';
             nav.style.borderBottom = '1px solid rgba(224,69,123,0.15)';
             nav.style.boxShadow = '0 4px 30px rgba(0,0,0,0.2)';
@@ -137,13 +137,23 @@ if (slides.length > 0) {
     var slideInterval;
 
     function goToSlide(index) {
+        // Eski slide'dan active kaldır, animasyonu resetle
         slides[currentSlide].classList.remove('active');
         if (bullets[currentSlide]) bullets[currentSlide].classList.remove('active');
+        slides[currentSlide].querySelectorAll('.hero-text-content > *').forEach(function(el){
+            el.style.animation = 'none';
+        });
         currentSlide = index;
         if (currentSlide >= slides.length) currentSlide = 0;
         if (currentSlide < 0) currentSlide = slides.length - 1;
         slides[currentSlide].classList.add('active');
         if (bullets[currentSlide]) bullets[currentSlide].classList.add('active');
+        // Yeni slide'ın text animasyonlarını yeniden tetikle
+        slides[currentSlide].querySelectorAll('.hero-text-content > *').forEach(function(el){
+            el.style.animation = 'none';
+            void el.offsetHeight; // reflow
+            el.style.animation = '';
+        });
     }
 
     function startSlider() {
@@ -455,7 +465,7 @@ if (mobileMenuBtn && mobileMenu) {
         + '<h3 class="font-headline text-2xl mb-4">' + svc.name + '</h3>'
         + '<p class="text-on-surface-variant mb-6 text-sm leading-relaxed">' + (svc.desc || '') + '</p>'
         + '</div>'
-        + '<div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;background:linear-gradient(135deg,rgba(26,82,118,0.03),rgba(46,134,193,0.06));border-top:1px solid rgba(26,82,118,0.08);transition:background 0.3s ease">'
+        + '<div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;background:linear-gradient(135deg,rgba(91,44,135,0.03),rgba(142,92,192,0.06));border-top:1px solid rgba(91,44,135,0.08);transition:background 0.3s ease">'
         + (priceHtml || '<span></span>')
         + '<span style="font-size:0.8rem;font-weight:600;color:#5B2C87;display:flex;align-items:center;gap:0.35rem;letter-spacing:0.02em">Detaylar <svg style="width:1.1em;height:1.1em;transition:transform 0.3s ease" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>'
         + '</div></a>';

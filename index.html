@@ -60,25 +60,133 @@
     .btn-cta:hover { filter: brightness(1.1); transform: scale(1.05); }
 
     /* Hero Slider */
-    .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease-in-out; }
+    .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s ease-in-out; }
     .hero-slide.active { opacity: 1; }
-    .hero-slide .slide-bg { position: absolute; inset: 0; background-size: cover; background-position: center; animation: kenBurns 18s ease-in-out infinite alternate; }
-    @keyframes kenBurns { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
-    .hero-slide .slide-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(46,21,72,0.65) 0%, rgba(46,21,72,0.35) 35%, rgba(46,21,72,0.40) 100%); }
-    .hero-text-content h1,
-    .hero-text-content h2 { text-shadow: 0 2px 16px rgba(0,0,0,0.7), 0 1px 4px rgba(0,0,0,0.5); }
-    .hero-text-content p { text-shadow: 0 1px 8px rgba(0,0,0,0.6); }
-    .hero-text-content .btn-cta,
-    .hero-text-content a { text-shadow: none; }
+    .hero-slide .slide-bg { position: absolute; inset: 0; background-size: cover; background-position: center; animation: kenBurns 20s ease-in-out infinite alternate; }
+    @keyframes kenBurns { 0% { transform: scale(1); } 100% { transform: scale(1.06); } }
+    /* Overlay: sol koyu (text), sağa doğru şeffaf (slide bg video arkasında görünür) */
+    .hero-slide .slide-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(46,21,72,0.80) 0%, rgba(46,21,72,0.70) 22%, rgba(46,21,72,0.45) 44%, rgba(46,21,72,0.12) 66%, transparent 84%); }
+    .hero-text-content h1, .hero-text-content h2 { text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+    .hero-text-content p { text-shadow: 0 1px 10px rgba(0,0,0,0.5); }
+    .hero-text-content .btn-cta, .hero-text-content a { text-shadow: none; }
 
-    /* Mobil hero iyileştirmeleri */
-    @media(max-width:639px){
-        .hero-slide .slide-overlay { background: linear-gradient(180deg, rgba(46,21,72,0.70) 0%, rgba(46,21,72,0.50) 100%); }
+    /* Floating video card — animasyonlu glow */
+    @keyframes videoGlow {
+        0%,100% {
+            box-shadow: 0 40px 100px rgba(0,0,0,0.70),
+                        0 0 0 1px rgba(255,255,255,0.09),
+                        0 0 80px rgba(91,44,135,0.20);
+        }
+        50% {
+            box-shadow: 0 40px 100px rgba(0,0,0,0.70),
+                        0 0 0 1px rgba(224,69,123,0.35),
+                        0 0 100px rgba(91,44,135,0.30),
+                        0 0 160px rgba(224,69,123,0.14);
+        }
+    }
+    .hero-video-card { border-radius: 1.75rem; overflow: hidden; animation: videoGlow 5s ease-in-out infinite; }
+
+    /* Hero ok butonları */
+    .hero-arrow {
+        display: none;
+        position: absolute; z-index: 20;
+        top: 50%; transform: translateY(-50%);
+        width: 3.25rem; height: 3.25rem; border-radius: 50%;
+        background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.55);
+        color: white; cursor: pointer;
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        align-items: center; justify-content: center;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+    }
+    @media (min-width: 768px) { .hero-arrow { display: flex; } }
+    .hero-arrow:hover { color: #E0457B; border-color: #E0457B; background: rgba(224,69,123,0.25); box-shadow: 0 4px 24px rgba(224,69,123,0.4); transform: translateY(-50%) scale(1.08); }
+    .hero-arrow-left { left: 1.25rem; }
+    .hero-arrow-right { right: 1.25rem; }
+
+    /* Desktop: hero text ortada & kısıtlı genişlik */
+    @media (min-width: 1024px) {
+        .hero-text-outer { align-items: center; padding-bottom: 2rem; }
+        .hero-text-inner { padding-left: 2.5rem; padding-right: 2.5rem; }
+        .hero-text-content { max-width: 48%; }
+        .hero-text-content h1, .hero-text-content h2 { font-size: 3.25rem !important; line-height: 1.1 !important; }
+    }
+    @media (min-width: 1280px) {
+        .hero-text-content h1, .hero-text-content h2 { font-size: 3.75rem !important; }
+    }
+
+    /* Hero text giriş animasyonu — slide active olunca tetiklenir */
+    @keyframes heroFadeUp {
+        from { opacity: 0; transform: translateY(22px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-slide .hero-text-content > * { opacity: 0; }
+    .hero-slide.active .hero-text-content > *:nth-child(1) { animation: heroFadeUp 0.65s cubic-bezier(0.16,1,0.3,1) 0.05s both; }
+    .hero-slide.active .hero-text-content > *:nth-child(2) { animation: heroFadeUp 0.65s cubic-bezier(0.16,1,0.3,1) 0.20s both; }
+    .hero-slide.active .hero-text-content > *:nth-child(3) { animation: heroFadeUp 0.65s cubic-bezier(0.16,1,0.3,1) 0.34s both; }
+    .hero-slide.active .hero-text-content > *:nth-child(4) { animation: heroFadeUp 0.65s cubic-bezier(0.16,1,0.3,1) 0.47s both; }
+
+    /* Buton overflow fix */
+    .hero-btn-wrap { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+    .hero-btn-primary, .hero-btn-secondary {
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        white-space: nowrap; flex-shrink: 0;
+        font-size: 0.875rem; font-weight: 600; letter-spacing: 0.025em;
+        padding: 0.875rem 1.75rem; border-radius: 9999px;
+        transition: all 0.3s ease; cursor: pointer; text-decoration: none;
+    }
+    .hero-btn-primary {
+        background: linear-gradient(110deg,#c93d6e 0%,#E0457B 25%,#ef7fa4 50%,#E0457B 75%,#c93d6e 100%);
+        background-size: 200% 100%; animation: shimmer 4s linear infinite;
+        color: white; box-shadow: 0 8px 24px rgba(224,69,123,0.35);
+    }
+    .hero-btn-primary:hover { filter: brightness(1.08); transform: scale(1.04); }
+    .hero-btn-secondary {
+        background: rgba(255,255,255,0.10); backdrop-filter: blur(12px);
+        border: 1.5px solid rgba(255,255,255,0.28); color: white;
+    }
+    .hero-btn-secondary:hover { background: rgba(255,255,255,0.18); }
+
+    /* Scroll indicator */
+    @keyframes scrollBounce {
+        0%,100% { transform: translateY(0); opacity: 0.7; }
+        50% { transform: translateY(6px); opacity: 1; }
+    }
+    .scroll-indicator { animation: scrollBounce 2s ease-in-out infinite; }
+
+    /* Mobil/Tablet: slide görselleri gizli, video arka plan görünür */
+    @media (max-width: 1023px) {
+        .hero-slide .slide-bg, .hero-slide .slide-overlay { display: none; }
         .hero-text-content { text-align: center; }
-        .hero-text-content h1,
-        .hero-text-content h2 { font-size: 2.5rem !important; line-height: 1.15 !important; text-shadow: 0 3px 20px rgba(0,0,0,0.8), 0 1px 6px rgba(0,0,0,0.6); }
-        .hero-text-content > p { font-size: 1rem !important; color: rgba(255,255,255,0.85) !important; text-shadow: 0 2px 12px rgba(0,0,0,0.7); }
         .hero-text-content .flex { justify-content: center; }
+        .hero-text-content h1, .hero-text-content h2 { font-size: 2.4rem !important; line-height: 1.15 !important; text-shadow: 0 3px 24px rgba(0,0,0,0.9); }
+        .hero-text-content > p { font-size: 0.9rem !important; color: rgba(255,255,255,0.88) !important; text-shadow: 0 2px 12px rgba(0,0,0,0.8); }
+        .hero-label { display: none; }
+        @media (min-width: 1024px) { .hero-label { display: block !important; } }
+        /* Metin her zaman istatistik barının üstünde kalsın */
+        .hero-text-outer { padding-bottom: 0 !important; align-items: flex-end !important; }
+        .hero-text-inner { position: absolute !important; bottom: 10rem; left: 1rem; right: 1rem; }
+        .hero-btn-wrap { justify-content: center !important; }
+    }
+
+    /* Floating video card — sadece desktop */
+    #heroVideoCard { display: none; position: absolute; z-index: 20; }
+    @media (min-width: 1024px) {
+        #heroVideoCard {
+            display: block;
+            top: 50%;
+            right: 8%;
+            transform: translateY(-50%);
+            width: clamp(300px, 28vw, 400px);
+            aspect-ratio: 9 / 16;
+            max-height: 86vh;
+        }
+    }
+    @media (min-width: 1280px) {
+        #heroVideoCard { right: 10%; width: clamp(320px, 27vw, 420px); }
+    }
+    @media (min-width: 1536px) {
+        #heroVideoCard { right: 12%; width: clamp(340px, 26vw, 440px); }
     }
 
     /* Reveal animations — JS hazir olana kadar icerik gorunur kalir */
@@ -90,19 +198,48 @@
     .reveal-ready .reveal.visible, .reveal-ready .reveal-left.visible, .reveal-ready .reveal-right.visible, .reveal-ready .reveal-scale.visible { opacity: 1; transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
     .stagger-1 { transition-delay: 0.1s; } .stagger-2 { transition-delay: 0.2s; } .stagger-3 { transition-delay: 0.3s; } .stagger-4 { transition-delay: 0.4s; } .stagger-5 { transition-delay: 0.5s; } .stagger-6 { transition-delay: 0.6s; }
 
+    /* Glass Stats Bar */
+    .glass-stat {
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.13);
+        border-radius: 14px;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 4px 20px rgba(0,0,0,0.18);
+        transition: background 0.3s ease, box-shadow 0.3s ease;
+        padding: 12px 8px;
+        text-align: center;
+    }
+    .glass-stat:hover {
+        background: rgba(255,255,255,0.11);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 8px 28px rgba(224,69,123,0.14);
+    }
+    .glass-stat-icon {
+        width: 32px; height: 32px;
+        background: linear-gradient(135deg, rgba(224,69,123,0.28), rgba(224,69,123,0.10));
+        border: 1px solid rgba(224,69,123,0.32);
+        border-radius: 10px;
+        display: flex; align-items: center; justify-content: center;
+        margin: 0 auto 8px;
+    }
+
     /* Marquee */
     @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    .marquee-track { display: flex; animation: marquee 35s linear infinite; width: max-content; }
+    .marquee-track { display: flex; animation: marquee 38s linear infinite; width: max-content; }
     @media (hover: hover) { .marquee-track:hover { animation-play-state: paused; } }
-    .marquee-track span span { font-size: 0.875rem !important; font-style: normal !important; font-weight: 500 !important; color: #fff !important; text-transform: uppercase; letter-spacing: 0.2em; white-space: nowrap; opacity: 1 !important; }
+    .marquee-banner {
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+    }
+    .marquee-item { display: flex; align-items: center; gap: 7px; color: white; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; white-space: nowrap; opacity: 0.92; }
+    .marquee-item svg { flex-shrink: 0; opacity: 0.85; }
+    .marquee-sep { color: rgba(255,255,255,0.22); font-size: 8px; flex-shrink: 0; }
     .animate-float div, .animate-float p { text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
     .hero-secondary-btn { text-shadow: 0 1px 6px rgba(0,0,0,0.7); letter-spacing: 0.03em; }
 
     /* Nav states */
     .nav-glass-pill { background: rgba(255,255,255,0.14) !important; border: 1px solid rgba(255,255,255,0.32); border-radius: 999px; padding: 6px !important; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); gap: 2px !important; box-shadow: 0 4px 24px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.2); }
     .nav-link { position: relative; transition: all 0.3s ease; color: #FFFFFF; font-weight: 700; padding: 9px 18px !important; border-radius: 999px; }
-    .nav-link:hover { background: rgba(232,115,74,0.15); color: #E0457B !important; }
-    .nav-link.active { background: #E0457B !important; color: #FFFFFF !important; box-shadow: 0 2px 14px rgba(232,115,74,0.3); font-weight: 800; }
+    .nav-link:hover { background: rgba(224,69,123,0.15); color: #E0457B !important; }
+    .nav-link.active { background: #E0457B !important; color: #FFFFFF !important; box-shadow: 0 2px 14px rgba(224,69,123,0.3); font-weight: 800; }
 
     .nav-hero { background: transparent; }
     .nav-hero .nav-link { color: #FFFFFF !important; font-weight: 700 !important; text-shadow: 0 1px 4px rgba(0,0,0,0.4); }
@@ -113,7 +250,7 @@
 
     .nav-scrolled { background: #2E1548; box-shadow: 0 4px 30px rgba(0,0,0,0.3); backdrop-filter: blur(12px); }
     .nav-scrolled .nav-link { color: #FFFFFF !important; font-weight: 700 !important; }
-    .nav-scrolled .nav-link:hover { background: rgba(232,115,74,0.15); color: #E0457B !important; }
+    .nav-scrolled .nav-link:hover { background: rgba(224,69,123,0.15); color: #E0457B !important; }
     .nav-scrolled .nav-link.active { background: #E0457B !important; color: #FFFFFF !important; }
     .nav-scrolled .logo-text { color: white; }
     .nav-scrolled #mobileMenuBtn { color: white !important; }
@@ -254,197 +391,272 @@
 <!-- ==================== HERO — CINEMATIC SPLIT ==================== -->
 <main id="ana-icerik">
 <header class="relative h-screen min-h-[700px] max-h-[1000px] overflow-hidden" id="hero" role="banner">
-    <!-- Slide 1 -->
+
+    <!-- ═══ MOBİL / TABLET: Video tam ekran arka plan ═══ -->
+    <div class="lg:hidden absolute inset-0 z-0">
+        <video autoplay muted loop playsinline class="w-full h-full object-cover" poster="images/heroweb-1.webp">
+            <source src="images/hero-video.mp4" type="video/mp4">
+        </video>
+        <!-- Mobil overlay: üst hafif, alt güçlü (text okunabilirliği) -->
+        <div class="absolute inset-0" style="background:linear-gradient(180deg,rgba(46,21,72,0.25) 0%,rgba(46,21,72,0.20) 30%,rgba(46,21,72,0.70) 58%,rgba(46,21,72,0.95) 100%);"></div>
+    </div>
+
+    <!-- ═══ SLAYT 1 ═══ -->
     <div class="hero-slide active" data-index="0">
-        <div class="slide-bg" style="background: radial-gradient(ellipse at 30% 50%, #8E5CC0 0%, #5B2C87 40%, #2E1548 100%);">
-            <picture>
-                <source media="(max-width: 768px)" srcset="images/heromobil-1.webp">
-                <img src="images/heroweb-1.webp" alt="Bank Halı Yıkama halı yıkama hizmeti" class="absolute inset-0 w-full h-full object-cover" loading="eager" fetchpriority="high" onerror="this.style.display='none'">
-            </picture>
+        <div class="slide-bg" style="background:radial-gradient(ellipse at 40% 50%,#8E5CC0 0%,#5B2C87 45%,#2E1548 100%);">
+            <img src="images/heroweb-1.webp" alt="Bank Halı Yıkama halı yıkama hizmeti" class="absolute inset-0 w-full h-full object-cover" loading="eager" fetchpriority="high" onerror="this.style.display='none'">
         </div>
         <div class="slide-overlay"></div>
-        <div class="relative z-10 flex items-center justify-center h-full px-4">
-            <div class="w-full max-w-7xl mx-auto px-0 sm:px-6 lg:px-10">
-                <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-                    <div class="hero-text-content">
-                        <p class="hidden sm:block text-xs sm:text-sm uppercase tracking-[0.3em] text-[#E0457B] mb-6">Sincan'ın Güvenilir Halı Yıkama Ustası</p>
-                        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-light leading-[1.2] sm:leading-[1.1] md:leading-[0.95] text-white mb-6 sm:mb-8 tracking-wide">
-                            Halınız Bizde<br/>
-                            <span class="text-[#E0457B] italic">Emin Ellerde</span>
-                        </h1>
-                        <p class="text-white/60 text-sm sm:text-base sm:text-lg max-w-lg mb-8 sm:mb-10 leading-relaxed sm:text-white/70">Sincan ve çevresinde kapıdan kapıya ücretsiz servis, derinlemesine hijyenik yıkama.</p>
-                        <div class="flex flex-wrap gap-4 sm:gap-6">
-                            <a href="#iletisim" class="btn-cta text-white px-8 sm:px-10 py-4 rounded-full font-semibold text-sm sm:text-base tracking-wide shadow-xl shadow-[#E0457B]/30 hover:scale-105 transition-transform duration-300 inline-block">
-                                Ücretsiz Fiyat Alın
-                            </a>
-                            <a href="tel:05456876161" data-kv-href="phone_raw" data-kv-href-prefix="tel:" class="hero-secondary-btn hidden sm:inline-flex bg-[#2E1548]/70 backdrop-blur-sm border border-white/40 text-white px-8 sm:px-10 py-4 rounded-full font-semibold text-sm sm:text-base tracking-wide hover:bg-[#2E1548]/90 transition-all duration-300 items-center gap-2 shadow-lg">
-                                <svg style="width:1.25em;height:1.25em;vertical-align:middle" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                                Hemen Ara
-                            </a>
-                        </div>
-                    </div>
-                    <div class="hidden lg:flex justify-end items-end">
-                        <div class="animate-float bg-[#2E1548]/85 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-2xl">
-                            <div class="flex items-center gap-3 mb-3">
-                                <div class="w-10 h-10 rounded-full bg-[#E0457B] flex items-center justify-center">
-                                    <svg style="width:1.25em;height:1.25em" viewBox="0 0 24 24" fill="white"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                                </div>
-                                <div>
-                                    <div class="text-white font-bold text-sm">Google Değerlendirme</div>
-                                    <div class="text-[#E0457B] text-xs font-semibold">★★★★★ 4.9</div>
-                                </div>
-                            </div>
-                            <p class="text-white/90 text-xs leading-relaxed">"Her halı bir hikaye anlatır, biz o hikayeyi parlaklığıyla yaşatıyoruz."</p>
-                        </div>
+        <!-- Text: desktop ortada, mobil altta -->
+        <div class="hero-text-outer relative z-10 h-full flex items-end px-4 pb-36">
+            <div class="hero-text-inner w-full max-w-7xl mx-auto">
+                <div class="hero-text-content">
+                    <p class="hero-label text-[11px] uppercase tracking-[0.35em] text-[#E0457B] mb-4 font-bold">10 Yıllık Deneyim · Ankara'nın Güvenilir Adresi</p>
+                    <h1 class="text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-light leading-[1.1] text-white mb-4 tracking-wide">
+                        Temiz Bir Ev,<br/>
+                        <span class="text-[#E0457B] italic font-semibold">Sağlıklı Bir Yaşam</span>
+                    </h1>
+                    <div class="hero-btn-wrap">
+                        <a href="#iletisim" class="hero-btn-primary">Ücretsiz Fiyat Al</a>
+                        <a href="tel:05456876161" data-kv-href="phone_raw" data-kv-href-prefix="tel:" class="hero-btn-secondary">
+                            <svg style="width:1em;height:1em;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                            Hemen Ara
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Slide 2 -->
+
+    <!-- ═══ SLAYT 2 ═══ -->
     <div class="hero-slide" data-index="1">
-        <div class="slide-bg" style="background: radial-gradient(ellipse at 70% 40%, #8E5CC0 0%, #5B2C87 40%, #2E1548 100%);">
-            <picture>
-                <source media="(max-width: 768px)" srcset="images/heromobil-2.webp">
-                <img src="images/heroweb-2.webp" alt="Bank Halı Yıkama profesyonel temizlik" class="absolute inset-0 w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'">
-            </picture>
+        <div class="slide-bg" style="background:radial-gradient(ellipse at 60% 40%,#8E5CC0 0%,#5B2C87 45%,#2E1548 100%);">
+            <img src="images/heroweb-2.webp" alt="Bank Halı Yıkama koltuk yorgan yıkama" class="absolute inset-0 w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'">
         </div>
         <div class="slide-overlay"></div>
-        <div class="relative z-10 flex items-center justify-center h-full px-4">
-            <div class="w-full max-w-7xl mx-auto px-0 sm:px-6 lg:px-10">
-                <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-                    <div class="hero-text-content">
-                        <p class="hidden sm:block text-xs sm:text-sm uppercase tracking-[0.3em] text-[#E0457B] mb-6">Koltuk, Yorgan & Battaniye Yıkama</p>
-                        <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-light leading-[1.2] sm:leading-[1.1] md:leading-[0.95] text-white mb-6 sm:mb-8 tracking-wide">
-                            Evinizin Her<br/>
-                            <span class="text-[#E0457B] italic">Köşesi Tertemiz</span>
-                        </h2>
-                        <p class="text-white/60 text-sm sm:text-base sm:text-lg max-w-lg mb-10 leading-relaxed sm:text-white/70">Halıdan koltuğa, yorgandan perdeye — hepsini endüstriyel makinelerle yıkıyoruz.</p>
-                        <div class="flex flex-wrap gap-4 sm:gap-6">
-                            <a href="#iletisim" class="btn-cta text-white px-8 sm:px-10 py-4 rounded-full font-semibold text-sm sm:text-base tracking-wide shadow-xl shadow-[#E0457B]/30 hover:scale-105 transition-transform duration-300 inline-block">
-                                Ücretsiz Keşif
-                            </a>
-                            <a href="tel:05456876161" data-kv-href="phone_raw" data-kv-href-prefix="tel:" class="hero-secondary-btn hidden sm:inline-flex bg-[#2E1548]/70 backdrop-blur-sm border border-white/40 text-white px-8 sm:px-10 py-4 rounded-full font-semibold text-sm sm:text-base tracking-wide hover:bg-[#2E1548]/90 transition-all duration-300 items-center gap-2 shadow-lg">
-                                <svg style="width:1.25em;height:1.25em;vertical-align:middle" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                                Hemen Ara
-                            </a>
-                        </div>
-                    </div>
-                    <div class="hidden lg:flex justify-end items-end">
-                        <div class="animate-float bg-[#2E1548]/85 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-2xl">
-                            <div class="flex items-center gap-3 mb-3">
-                                <div class="w-10 h-10 rounded-full bg-[#E0457B] flex items-center justify-center">
-                                    <svg style="width:1.25em;height:1.25em" viewBox="0 0 24 24" fill="white"><path d="M19.56 11.36L13 8.44V7c0-.55-.45-1-1-1s-1 .45-1 1v1.44l-6.56 2.92c-.88.39-.88 1.63 0 2.02L11 16.36V19c0 .55.45 1 1 1s1-.45 1-1v-2.64l6.56-2.92c.88-.39.88-1.63 0-2.08z"/></svg>
-                                </div>
-                                <div>
-                                    <div class="text-white font-bold text-sm">Profesyonel Ekipman</div>
-                                    <div class="text-[#E0457B] text-xs font-semibold">Son Teknoloji Cihazlar</div>
-                                </div>
-                            </div>
-                            <p class="text-white/90 text-xs leading-relaxed">"Endüstriyel yıkama makineleri ile derinlemesine hijyenik temizlik."</p>
-                        </div>
+        <div class="hero-text-outer relative z-10 h-full flex items-end px-4 pb-36">
+            <div class="hero-text-inner w-full max-w-7xl mx-auto">
+                <div class="hero-text-content">
+                    <p class="hero-label text-[11px] uppercase tracking-[0.35em] text-[#E0457B] mb-4 font-bold">Koltuk · Yorgan · Battaniye · Perde</p>
+                    <h2 class="text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-light leading-[1.1] text-white mb-4 tracking-wide">
+                        Her Tekstilinize<br/>
+                        <span class="text-[#E0457B] italic font-semibold">Uzman Dokunuşu</span>
+                    </h2>
+                    <div class="hero-btn-wrap">
+                        <a href="#iletisim" class="hero-btn-primary">Hizmetleri İncele</a>
+                        <a href="tel:05456876161" data-kv-href="phone_raw" data-kv-href-prefix="tel:" class="hero-btn-secondary">
+                            <svg style="width:1em;height:1em;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                            Hemen Ara
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Slide 3 -->
+
+    <!-- ═══ SLAYT 3 ═══ -->
     <div class="hero-slide" data-index="2">
-        <div class="slide-bg" style="background: radial-gradient(ellipse at 50% 60%, #8E5CC0 0%, #5B2C87 40%, #2E1548 100%);">
-            <picture>
-                <source media="(max-width: 768px)" srcset="images/heromobil-3.webp">
-                <img src="images/heroweb-3.webp" alt="Bank Halı Yıkama güvenilir hizmet" class="absolute inset-0 w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'">
-            </picture>
+        <div class="slide-bg" style="background:radial-gradient(ellipse at 50% 55%,#8E5CC0 0%,#5B2C87 45%,#2E1548 100%);">
+            <img src="images/heroweb-3.webp" alt="Bank Halı Yıkama ücretsiz servis Ankara" class="absolute inset-0 w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'">
         </div>
         <div class="slide-overlay"></div>
-        <div class="relative z-10 flex items-center justify-center h-full px-4">
-            <div class="w-full max-w-7xl mx-auto px-0 sm:px-6 lg:px-10">
-                <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-                    <div class="hero-text-content">
-                        <p class="hidden sm:block text-xs sm:text-sm uppercase tracking-[0.3em] text-[#E0457B] mb-6">Ücretsiz Alım & Teslim Servisi</p>
-                        <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-light leading-[1.2] sm:leading-[1.1] md:leading-[0.95] text-white mb-6 sm:mb-8 tracking-wide">
-                            Kapınıza Kadar<br/>
-                            <span class="text-[#E0457B] italic">Biz Geliyoruz</span>
-                        </h2>
-                        <p class="text-white/60 text-sm sm:text-base sm:text-lg max-w-lg mb-10 leading-relaxed sm:text-white/70">Taşıma derdiniz olmasın — Sincan, Eryaman, Batıkent ve tüm Ankara'ya ücretsiz servis.</p>
-                        <div class="flex flex-wrap gap-4 sm:gap-6">
-                            <a href="#yorumlar" class="btn-cta text-white px-8 sm:px-10 py-4 rounded-full font-semibold text-sm sm:text-base tracking-wide shadow-xl shadow-[#E0457B]/30 hover:scale-105 transition-transform duration-300 inline-block">
-                                Müşteri Yorumları
-                            </a>
-                            <a href="#iletisim" class="hero-secondary-btn hidden sm:inline-flex bg-[#2E1548]/70 backdrop-blur-sm border border-white/40 text-white px-8 sm:px-10 py-4 rounded-full font-semibold text-sm sm:text-base tracking-wide hover:bg-[#2E1548]/90 transition-all duration-300 items-center gap-2 shadow-lg">
-                                <svg style="width:1.25em;height:1.25em;vertical-align:middle" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                                Bize Ulaşın
-                            </a>
-                        </div>
-                    </div>
-                    <div class="hidden lg:flex justify-end items-end">
-                        <div class="animate-float bg-[#2E1548]/85 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-2xl">
-                            <div class="flex items-center gap-3 mb-3">
-                                <div class="w-10 h-10 rounded-full bg-[#E0457B] flex items-center justify-center">
-                                    <svg style="width:1.25em;height:1.25em" viewBox="0 0 24 24" fill="white"><path d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.69 3.1 5.5l.34 3.7L1 12l2.44 2.79-.34 3.7 3.61.82L8.6 22.5l3.4-1.47 3.4 1.46 1.89-3.19 3.61-.82-.34-3.69L23 12zm-12.91 4.72l-3.8-3.8 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.34z"/></svg>
-                                </div>
-                                <div>
-                                    <div class="text-white font-bold text-sm">%100 Memnuniyet</div>
-                                    <div class="text-[#E0457B] text-xs font-semibold">Garantili Hizmet</div>
-                                </div>
-                            </div>
-                            <p class="text-white/90 text-xs leading-relaxed">"Memnun kalmazsanız ücretsiz tekrar yıkama garantisi."</p>
-                        </div>
+        <div class="hero-text-outer relative z-10 h-full flex items-end px-4 pb-36">
+            <div class="hero-text-inner w-full max-w-7xl mx-auto">
+                <div class="hero-text-content">
+                    <p class="hero-label text-[11px] uppercase tracking-[0.35em] text-[#E0457B] mb-4 font-bold">Kapınıza Kadar Ücretsiz Servis</p>
+                    <h2 class="text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-light leading-[1.1] text-white mb-4 tracking-wide">
+                        Siz Sadece<br/>
+                        <span class="text-[#E0457B] italic font-semibold">Bir Telefon Açın</span>
+                    </h2>
+                    <div class="hero-btn-wrap">
+                        <a href="tel:05456876161" data-kv-href="phone_raw" data-kv-href-prefix="tel:" class="hero-btn-primary">
+                            <svg style="width:1em;height:1em;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                            Hemen Ara
+                        </a>
+                        <a href="#yorumlar" class="hero-btn-secondary">
+                            <svg style="width:1em;height:1em;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            Yorumlar
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Slider Arrows -->
-    <button class="hero-arrow-left absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full border border-white/30 bg-black/30 backdrop-blur-sm hidden md:flex items-center justify-center text-white hover:text-[#E0457B] hover:border-[#E0457B]/50 hover:bg-black/50 transition-all duration-300">
-        <svg style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+
+    <!-- ═══ DESKTOP: Floating video card ═══ -->
+    <!-- Dekoratif blur orb — videonun arkasında derinlik (mor) -->
+    <div class="hidden lg:block absolute z-10 pointer-events-none" style="top:38%;right:0%;transform:translateY(-50%);width:44%;aspect-ratio:1/1;border-radius:50%;background:radial-gradient(circle,rgba(91,44,135,0.35) 0%,rgba(91,44,135,0.10) 55%,transparent 72%);filter:blur(72px);"></div>
+    <!-- Dekoratif orb 2 — pembe accent (sol alt köşe) -->
+    <div class="hidden lg:block absolute z-10 pointer-events-none" style="bottom:12%;right:2%;width:22%;aspect-ratio:1/1;border-radius:50%;background:radial-gradient(circle,rgba(224,69,123,0.22) 0%,transparent 70%);filter:blur(48px);"></div>
+    <!-- Video kart: solid panel YOK, slide bg arkada görünür -->
+    <div class="hero-video-card" id="heroVideoCard">
+        <!-- Glow efekti (telefon arkasında) -->
+        <div style="position:absolute;inset:-30%;border-radius:3rem;filter:blur(70px);opacity:0.28;background:#E0457B;pointer-events:none;z-index:-1;"></div>
+        <!-- Telefon ekranı (overflow:hidden buraya) -->
+        <div style="position:absolute;inset:0;overflow:hidden;border-radius:2.2rem;background:#000;">
+            <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                <source src="images/hero-video.mp4" type="video/mp4">
+            </video>
+            <!-- Alt vignette -->
+            <div style="position:absolute;bottom:0;left:0;right:0;height:30%;background:linear-gradient(to top,rgba(46,21,72,0.4) 0%,transparent 100%);border-radius:0 0 2.2rem 2.2rem;pointer-events:none;"></div>
+        </div>
+        <!-- Notch (üst orta) -->
+        <div style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:76px;height:18px;background:#080808;border-radius:0 0 12px 12px;z-index:10;pointer-events:none;"></div>
+        <!-- Sol ses butonları -->
+        <div style="position:absolute;left:-5px;top:88px;width:3px;height:24px;background:rgba(255,255,255,0.2);border-radius:2px;z-index:10;pointer-events:none;"></div>
+        <div style="position:absolute;left:-5px;top:122px;width:3px;height:40px;background:rgba(255,255,255,0.2);border-radius:2px;z-index:10;pointer-events:none;"></div>
+        <div style="position:absolute;left:-5px;top:172px;width:3px;height:40px;background:rgba(255,255,255,0.2);border-radius:2px;z-index:10;pointer-events:none;"></div>
+        <!-- Sağ power butonu -->
+        <div style="position:absolute;right:-5px;top:128px;width:3px;height:52px;background:rgba(255,255,255,0.2);border-radius:2px;z-index:10;pointer-events:none;"></div>
+        <!-- CANLI badge -->
+        <div style="position:absolute;top:34px;right:12px;display:flex;align-items:center;gap:5px;background:#dc2626;padding:4px 10px;border-radius:999px;box-shadow:0 2px 12px rgba(220,38,38,0.5);z-index:10;">
+            <div style="width:5px;height:5px;border-radius:50%;background:#fff;animation:pulse 1.4s ease-in-out infinite;"></div>
+            <span style="color:#fff;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Canlı</span>
+        </div>
+    </div>
+
+    <!-- ═══ Ok Butonları ═══ -->
+    <button class="hero-arrow hero-arrow-left" aria-label="Önceki slayt">
+        <svg style="width:1.4em;height:1.4em" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
     </button>
-    <button class="hero-arrow-right absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full border border-white/30 bg-black/30 backdrop-blur-sm hidden md:flex items-center justify-center text-white hover:text-[#E0457B] hover:border-[#E0457B]/50 hover:bg-black/50 transition-all duration-300">
-        <svg style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    <button class="hero-arrow hero-arrow-right" aria-label="Sonraki slayt">
+        <svg style="width:1.4em;height:1.4em" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
     </button>
-    <!-- Slider Bullets -->
+
+    <!-- ═══ Slider Bullets ═══ -->
     <div class="absolute bottom-28 left-1/2 -translate-x-1/2 z-20 flex gap-4" id="heroBullets">
         <button class="hero-bullet active" data-slide="0" aria-label="Slayt 1"></button>
         <button class="hero-bullet" data-slide="1" aria-label="Slayt 2"></button>
         <button class="hero-bullet" data-slide="2" aria-label="Slayt 3"></button>
     </div>
-    <!-- Stats Bar -->
-    <div class="absolute bottom-0 left-0 right-0 z-20 bg-[#5B2C87]/70 backdrop-blur-md border-t border-white/10">
-        <div class="max-w-4xl mx-auto grid grid-cols-3 divide-x divide-white/20 py-6 px-4">
-            <div class="text-center">
-                <span class="text-2xl sm:text-3xl text-[#E0457B] font-bold count-up" data-target="10" data-suffix="+">0</span>
-                <span class="block text-[10px] uppercase tracking-widest text-white/70 mt-1">Yıllık Tecrübe</span>
+
+    <!-- Scroll indikatörü — sadece desktop -->
+    <div class="hidden lg:flex absolute flex-col items-center gap-2 z-20 scroll-indicator" style="bottom:6.5rem;left:50%;transform:translateX(-50%);">
+        <span class="text-white/40 text-[9px] uppercase tracking-[0.2em]">Keşfet</span>
+        <svg style="width:18px;height:18px;color:rgba(255,255,255,0.35)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+
+    <!-- Floating Google Review kartı — video sol altı -->
+    <div class="hidden lg:block absolute z-30" style="right:9%;bottom:7rem;" id="heroReviewCard">
+        <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.08);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.15);border-radius:1rem;padding:10px 14px;box-shadow:0 16px 40px rgba(0,0,0,0.3);animation:float 5s ease-in-out infinite;">
+            <div style="width:36px;height:36px;border-radius:50%;background:#E0457B;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg style="width:1em;height:1em" viewBox="0 0 24 24" fill="white"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
             </div>
-            <div class="text-center">
-                <span class="text-2xl sm:text-3xl text-[#E0457B] font-bold count-up" data-target="3000" data-suffix="+">0</span>
-                <span class="block text-[10px] uppercase tracking-widest text-white/70 mt-1">Mutlu Müşteri</span>
+            <div>
+                <div style="color:white;font-size:12px;font-weight:700;">4.9 / 5.0</div>
+                <div style="color:rgba(255,255,255,0.55);font-size:10px;">3.000+ Google Yorumu</div>
             </div>
-            <div class="text-center">
-                <span class="text-2xl sm:text-3xl text-[#E0457B] font-bold count-up" data-target="4.9" data-decimal="true">0</span>
-                <span class="block text-[10px] uppercase tracking-widest text-white/70 mt-1">Google Puanı</span>
+        </div>
+    </div>
+
+    <!-- ═══ Stats Bar — Glassmorphism ═══ -->
+    <div class="absolute bottom-0 left-0 right-0 z-20" style="background: linear-gradient(180deg, transparent 0%, rgba(46,21,72,0.72) 35%, rgba(46,21,72,0.96) 100%); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border-top: 1px solid rgba(255,255,255,0.06); padding: 14px 16px 18px;">
+        <div class="max-w-3xl mx-auto grid grid-cols-3 gap-2 sm:gap-3">
+
+            <div class="glass-stat">
+                <div class="glass-stat-icon">
+                    <svg style="width:15px;height:15px" viewBox="0 0 24 24" fill="#E0457B"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM7 10.86C5.84 10.4 5 9.3 5 8V7h2v3.86zm10 0V7h2v1c0 1.3-.84 2.4-2 2.86z"/></svg>
+                </div>
+                <span class="text-xl sm:text-2xl lg:text-[1.75rem] font-bold count-up" style="color:#E0457B;display:block;line-height:1" data-target="10" data-suffix="+">0</span>
+                <span style="display:block;font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.48);margin-top:5px">Yıllık Tecrübe</span>
             </div>
+
+            <div class="glass-stat">
+                <div class="glass-stat-icon">
+                    <svg style="width:15px;height:15px" viewBox="0 0 24 24" fill="#E0457B"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                </div>
+                <span class="text-xl sm:text-2xl lg:text-[1.75rem] font-bold count-up" style="color:#E0457B;display:block;line-height:1" data-target="3000" data-suffix="+">0</span>
+                <span style="display:block;font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.48);margin-top:5px">Mutlu Müşteri</span>
+            </div>
+
+            <div class="glass-stat">
+                <div class="glass-stat-icon">
+                    <svg style="width:15px;height:15px" viewBox="0 0 24 24" fill="#E0457B"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <span class="text-xl sm:text-2xl lg:text-[1.75rem] font-bold count-up" style="color:#E0457B;display:block;line-height:1" data-target="4.9" data-decimal="true">0</span>
+                <span style="display:block;font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.48);margin-top:5px">Google Puanı</span>
+            </div>
+
         </div>
     </div>
 </header>
 
 <!-- ==================== MARQUEE BANNER ==================== -->
-<div class="bg-[#E0457B] py-4 overflow-hidden">
-    <div class="marquee-track text-white font-semibold text-sm uppercase tracking-[0.2em]">
-        <span class="flex items-center gap-8 px-8">
-            <span>Halı Yıkama</span><span class="text-white/40">◆</span>
-            <span>Koltuk Yıkama</span><span class="text-white/40">◆</span>
-            <span>Yorgan & Battaniye</span><span class="text-white/40">◆</span>
-            <span>Leke Çıkarma</span><span class="text-white/40">◆</span>
-            <span>Perde Yıkama</span><span class="text-white/40">◆</span>
-            <span>Ücretsiz Servis</span><span class="text-white/40">◆</span>
+<div class="marquee-banner overflow-hidden" style="background: linear-gradient(90deg, #2E1548 0%, #5B2C87 28%, #8B3070 52%, #5B2C87 76%, #2E1548 100%); padding: 15px 0;">
+    <div class="marquee-track">
+        <span style="display:flex;align-items:center;gap:22px;padding:0 22px">
+            <span class="marquee-item">
+                <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="currentColor"><path d="M19.56 11.36L13 8.44V7c0-.55-.45-1-1-1s-1 .45-1 1v1.44l-6.56 2.92c-.88.39-.88 1.63 0 2.02L11 16.36V19c0 .55.45 1 1 1s1-.45 1-1v-2.64l6.56-2.92c.88-.39.88-1.63 0-2.08zM12 14.3l-4.74-2.12L12 10.06l4.74 2.12L12 14.3z"/></svg>
+                Halı Yıkama
+            </span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">
+                <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="currentColor"><path d="M21 9V7c0-1.1-.9-2-2-2H5C3.9 5 3 5.9 3 7v2c-1.1 0-2 .9-2 2v5h1.33L3 18h1l.67-2h12.67l.66 2H19l.67-2H21v-5c0-1.1-.9-2-2-2zm-9 0H5V7h7v2zm9 0h-7V7h7v2z"/></svg>
+                Koltuk Yıkama
+            </span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">
+                <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="currentColor"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z"/></svg>
+                Yorgan &amp; Battaniye
+            </span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">
+                <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.92 2 11.7c0 2.6 1.34 4.93 3.46 6.48L4 21l3.5-1.56C8.97 20.44 10.44 21 12 21c5.52 0 10-3.92 10-8.7S17.52 3 12 3zm1 13h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>
+                Leke Çıkarma
+            </span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">
+                <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="currentColor"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM9 8H7V6h2v2zm0 4H7v-2h2v2zm0 4H7v-2h2v2zm8-8h-6V6h6v2zm0 4h-6v-2h6v2zm0 4h-6v-2h6v2z"/></svg>
+                Perde Yıkama
+            </span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">
+                <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="currentColor"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zm-.5 1.5l1.96 2.5H17V9.5h2.5zM6 18c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm2.22-3c-.55-.61-1.33-1-2.22-1s-1.67.39-2.22 1H3V6h12v9H8.22zM18 18c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
+                Ücretsiz Servis
+            </span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">
+                <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                Garantili Hijyen
+            </span>
+            <span class="marquee-sep">✦</span>
         </span>
-        <span class="flex items-center gap-8 px-8" aria-hidden="true">
-            <span>Halı Yıkama</span><span class="text-white/40">◆</span>
-            <span>Koltuk Yıkama</span><span class="text-white/40">◆</span>
-            <span>Yorgan & Battaniye</span><span class="text-white/40">◆</span>
-            <span>Leke Çıkarma</span><span class="text-white/40">◆</span>
-            <span>Perde Yıkama</span><span class="text-white/40">◆</span>
-            <span>Ücretsiz Servis</span><span class="text-white/40">◆</span>
+        <span style="display:flex;align-items:center;gap:22px;padding:0 22px" aria-hidden="true">
+            <span class="marquee-item">
+                <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="currentColor"><path d="M19.56 11.36L13 8.44V7c0-.55-.45-1-1-1s-1 .45-1 1v1.44l-6.56 2.92c-.88.39-.88 1.63 0 2.02L11 16.36V19c0 .55.45 1 1 1s1-.45 1-1v-2.64l6.56-2.92c.88-.39.88-1.63 0-2.08zM12 14.3l-4.74-2.12L12 10.06l4.74 2.12L12 14.3z"/></svg>
+                Halı Yıkama
+            </span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">
+                <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="currentColor"><path d="M21 9V7c0-1.1-.9-2-2-2H5C3.9 5 3 5.9 3 7v2c-1.1 0-2 .9-2 2v5h1.33L3 18h1l.67-2h12.67l.66 2H19l.67-2H21v-5c0-1.1-.9-2-2-2zm-9 0H5V7h7v2zm9 0h-7V7h7v2z"/></svg>
+                Koltuk Yıkama
+            </span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">
+                <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="currentColor"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z"/></svg>
+                Yorgan &amp; Battaniye
+            </span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">
+                <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.92 2 11.7c0 2.6 1.34 4.93 3.46 6.48L4 21l3.5-1.56C8.97 20.44 10.44 21 12 21c5.52 0 10-3.92 10-8.7S17.52 3 12 3zm1 13h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>
+                Leke Çıkarma
+            </span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">
+                <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="currentColor"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM9 8H7V6h2v2zm0 4H7v-2h2v2zm0 4H7v-2h2v2zm8-8h-6V6h6v2zm0 4h-6v-2h6v2zm0 4h-6v-2h6v2z"/></svg>
+                Perde Yıkama
+            </span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">
+                <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="currentColor"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zm-.5 1.5l1.96 2.5H17V9.5h2.5zM6 18c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm2.22-3c-.55-.61-1.33-1-2.22-1s-1.67.39-2.22 1H3V6h12v9H8.22zM18 18c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
+                Ücretsiz Servis
+            </span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">
+                <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                Garantili Hijyen
+            </span>
+            <span class="marquee-sep">✦</span>
         </span>
     </div>
 </div>
@@ -784,25 +996,25 @@
             <a href="blog/index.html" class="text-[#E0457B] font-bold text-sm hover:underline reveal">Tüm Yazılar →</a>
         </div>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="blogGrid">
-            <a href="blog/hali-bakiminin-onemi-ve-profesyonel-yikamanin-faydalari.html" class="group bg-surface-container rounded-2xl border border-outline-variant/10 overflow-hidden card-glow block reveal stagger-1">
+            <a href="blog/profesyonel-hali-yikamanin-onemi-sagliginiz-ve-halilariniz-icin-neden-sart.html" class="group bg-surface-container rounded-2xl border border-outline-variant/10 overflow-hidden card-glow block reveal stagger-1">
     <div class="h-48 bg-gradient-to-br from-primary/10 via-surface-container-high to-secondary/10 flex items-center justify-center relative overflow-hidden">
         <svg class="text-on-surface-variant/10 group-hover:text-primary/20 transition-all duration-700" style="width:80px;height:80px" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
         <div class="absolute top-4 left-4">
-            <span class="bg-primary-container/70 text-primary px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider">Halı Bakımı</span>
+            <span class="bg-primary-container/70 text-primary px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider">Halı Yıkama</span>
         </div>
     </div>
     <div class="p-6">
         <div class="flex items-center gap-3 text-on-surface-variant text-xs mb-3">
             <span class="flex items-center gap-1"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg> 01 Mart 2026</span>
-            <span class="flex items-center gap-1"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg> 3 dk</span>
+            <span class="flex items-center gap-1"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg> 4 dk</span>
         </div>
-        <h3 class="font-headline text-lg text-on-background mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">Halı Bakımının Önemi: Evde ve Profesyonel Yıkama Farkı</h3>
-        <p class="text-on-surface-variant text-sm leading-relaxed line-clamp-3 mb-4">Halılarınızın ömrünü uzatmak, renklerini korumak ve hijyenik bir ortam sağlamak için düzenli bakımı çok önemlidir. Peki, evde temizlik mi, yoksa profesyonel halı yıkama mı daha etkili? Bu blog yazımızda, her iki yöntemin avantajlarını ve dezavantajlarını karşılaştırarak, Bank Halı Yıkama'nın size nasıl yardımcı olabileceğini açıklıyoruz.</p>
+        <h3 class="font-headline text-lg text-on-background mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">Profesyonel Halı Yıkamanın Önemi: Sağlığınız İçin Neden Şart?</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed line-clamp-3 mb-4">Evde süpürge veya kuru temizlik yeterli görünse de halılarda biriken akarlar, bakteriler ve kimyasal kalıntılar yalnızca profesyonel yıkama ile tam anlamıyla temizlenebilir. Sağlığınız ve halınızın ömrü için farkı keşfedin.</p>
         <span class="text-primary text-sm font-semibold flex items-center gap-1 group-hover:gap-2 transition-all duration-300">
             Devamını Oku <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
         </span>
     </div>
-</a><a href="blog/evde-leke-cikarma-rehberi.html" class="group bg-surface-container rounded-2xl border border-outline-variant/10 overflow-hidden card-glow block reveal stagger-2">
+</a><a href="blog/zorlu-hali-lekelerine-kesin-cozumler-bank-hali-yikama-farki.html" class="group bg-surface-container rounded-2xl border border-outline-variant/10 overflow-hidden card-glow block reveal stagger-2">
     <div class="h-48 bg-gradient-to-br from-primary/10 via-surface-container-high to-secondary/10 flex items-center justify-center relative overflow-hidden">
         <svg class="text-on-surface-variant/10 group-hover:text-primary/20 transition-all duration-700" style="width:80px;height:80px" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
         <div class="absolute top-4 left-4">
@@ -814,17 +1026,17 @@
             <span class="flex items-center gap-1"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg> 22 Şubat 2026</span>
             <span class="flex items-center gap-1"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg> 3 dk</span>
         </div>
-        <h3 class="font-headline text-lg text-on-background mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">Evde Halı Lekeleriyle Mücadele: Yapılması ve Yapılmaması Gerekenler</h3>
-        <p class="text-on-surface-variant text-sm leading-relaxed line-clamp-3 mb-4">Halıya dökülen bir sıvı veya oluşan bir leke can sıkıcı olabilir. Bu rehberde, evde sık karşılaşılan halı lekeleriyle nasıl başa çıkacağınızı, hangi adımları uygulamanız gerektiğini ve kesinlikle kaçınmanız gereken hataları bulacaksınız. Doğru müdahale ile lekenin kalıcı hale gelmesini engelleyin.</p>
+        <h3 class="font-headline text-lg text-on-background mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">Zorlu Halı Lekelerine Kesin Çözümler: Bank Halı Yıkama Farkı</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed line-clamp-3 mb-4">Kahve, çay, boya veya hayvan lekeleri gibi inatçı lekeler evde çıkmıyor mu? Bank Halı Yıkama'nın özel leke çıkarma solüsyonları ve endüstriyel ekipmanları ile en zorlu lekelere bile etkili çözüm sunuyoruz.</p>
         <span class="text-primary text-sm font-semibold flex items-center gap-1 group-hover:gap-2 transition-all duration-300">
             Devamını Oku <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
         </span>
     </div>
-</a><a href="blog/farkli-hali-turleri-icin-ozel-yikama-metotlari.html" class="group bg-surface-container rounded-2xl border border-outline-variant/10 overflow-hidden card-glow block reveal stagger-3">
+</a><a href="blog/hali-bakimi-ipuclari-profesyonel-yikamadan-once-ve-sonra.html" class="group bg-surface-container rounded-2xl border border-outline-variant/10 overflow-hidden card-glow block reveal stagger-3">
     <div class="h-48 bg-gradient-to-br from-primary/10 via-surface-container-high to-secondary/10 flex items-center justify-center relative overflow-hidden">
         <svg class="text-on-surface-variant/10 group-hover:text-primary/20 transition-all duration-700" style="width:80px;height:80px" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
         <div class="absolute top-4 left-4">
-            <span class="bg-primary-container/70 text-primary px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider">Halı Yıkama Rehberi</span>
+            <span class="bg-primary-container/70 text-primary px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider">Halı Bakımı</span>
         </div>
     </div>
     <div class="p-6">
@@ -832,8 +1044,8 @@
             <span class="flex items-center gap-1"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg> 15 Şubat 2026</span>
             <span class="flex items-center gap-1"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg> 3 dk</span>
         </div>
-        <h3 class="font-headline text-lg text-on-background mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">Halı Türlerine Göre Özel Yıkama: Hangi Halı Nasıl Temizlenir?</h3>
-        <p class="text-on-surface-variant text-sm leading-relaxed line-clamp-3 mb-4">Her halı aynı değildir ve her halı aynı şekilde temizlenemez. Yün, ipek, shaggy, el dokuma gibi farklı halı türleri, özel yıkama teknikleri ve ürünler gerektirir. Bu yazımızda, halınızın türüne göre doğru temizlik yöntemlerini keşfedin ve Bank Halı Yıkama'nın uzmanlığını öğrenin.</p>
+        <h3 class="font-headline text-lg text-on-background mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">Halı Bakımı İpuçları: Profesyonel Yıkamadan Önce ve Sonra</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed line-clamp-3 mb-4">Halınızı profesyonel yıkamaya göndermeden önce ve teslim aldıktan sonra yapmanız gerekenler nelerdir? Yıkama sürecini kolaylaştıracak, halınızın temizliğini daha uzun süre korumanıza yardımcı olacak pratik ipuçları burada.</p>
         <span class="text-primary text-sm font-semibold flex items-center gap-1 group-hover:gap-2 transition-all duration-300">
             Devamını Oku <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
         </span>
@@ -912,7 +1124,7 @@
                     </div>
                 </div>
                 <!-- Adres -->
-                <a href="https://www.google.com/maps?q=39.951900482177734,32.58756637573242&z=17&hl=tr" target="_blank" class="flex items-center gap-5 group p-4 rounded-2xl border border-gray-200 hover:border-red-300 hover:bg-red-50 hover:shadow-md transition-all duration-300 cursor-pointer">
+                <a href="https://www.google.com/maps?q=39.9669408,32.5897397&z=17&hl=tr" target="_blank" class="flex items-center gap-5 group p-4 rounded-2xl border border-gray-200 hover:border-red-300 hover:bg-red-50 hover:shadow-md transition-all duration-300 cursor-pointer">
                     <div class="w-12 h-12 min-w-[3rem] rounded-2xl border border-gray-200 bg-white flex items-center justify-center transition-colors duration-300" style="color:#EA4335">
                         <svg class="text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                     </div>
@@ -975,8 +1187,8 @@
                 </div>
             </form>
             <div class="rounded-3xl overflow-hidden shadow-2xl h-[250px] border border-gray-100 relative mt-8">
-                <iframe class="w-full h-full transition-all duration-700" src="https://maps.google.com/maps?q=39.951900482177734,32.58756637573242&z=17&output=embed&hl=tr" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Bank Halı Yıkama konum haritası"></iframe>
-                <a href="https://www.google.com/maps?q=39.951900482177734,32.58756637573242&z=17&hl=tr" target="_blank" class="absolute bottom-3 right-3 bg-[#E0457B] text-white px-4 py-2 rounded-full text-xs uppercase tracking-widest hover:opacity-90 transition-all duration-500 shadow-lg flex items-center gap-2">
+                <iframe class="w-full h-full transition-all duration-700" src="https://maps.google.com/maps?q=39.9669408,32.5897397&z=17&output=embed&hl=tr" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Bank Halı Yıkama konum haritası"></iframe>
+                <a href="https://www.google.com/maps?q=39.9669408,32.5897397&z=17&hl=tr" target="_blank" class="absolute bottom-3 right-3 bg-[#E0457B] text-white px-4 py-2 rounded-full text-xs uppercase tracking-widest hover:opacity-90 transition-all duration-500 shadow-lg flex items-center gap-2">
                     <svg class="text-base" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg> Haritada Aç
                 </a>
             </div>
