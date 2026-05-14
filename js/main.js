@@ -8,7 +8,7 @@
   var s = document.createElement('style');
   s.textContent =
     '#galleryDesktopGrid > a[href="/galeri"]{transition:transform .5s,box-shadow .5s,background .5s}' +
-    '#galleryDesktopGrid > a[href="/galeri"]:hover{transform:scale(1.03);box-shadow:0 25px 50px -12px rgba(91,44,135,.4);background:linear-gradient(to top left,#5B2C87,#8E5CC0)!important}' +
+    '#galleryDesktopGrid > a[href="/galeri"]:hover{transform:scale(1.03);box-shadow:0 25px 50px -12px rgba(109,49,196,.4);background:linear-gradient(to top left,#6D31C4,#9D68DB)!important}' +
     '#galleryDesktopGrid > a[href="/galeri"]:hover svg:first-child{transform:scale(1.15)}' +
     '#galleryDesktopGrid > a[href="/galeri"]:hover svg:last-child{transform:translateX(6px);color:#fff}' +
     '#galleryDesktopGrid > a[href="/galeri"] svg{transition:transform .5s,color .5s}' +
@@ -87,7 +87,7 @@ if (nav && topBar) {
         var topBarH = topBar.offsetHeight;
         if (window.scrollY > topBarH) {
             nav.style.top = '0';
-            nav.style.background = 'linear-gradient(135deg, rgba(46,21,72,0.97), rgba(91,44,135,0.95))';
+            nav.style.background = 'linear-gradient(135deg, rgba(37,21,96,0.97), rgba(109,49,196,0.95))';
             nav.style.backdropFilter = 'blur(20px)';
             nav.style.borderBottom = '1px solid rgba(224,69,123,0.15)';
             nav.style.boxShadow = '0 4px 30px rgba(0,0,0,0.2)';
@@ -217,7 +217,7 @@ function _showToast(message, type) {
     if (existing) existing.remove();
     var toast = document.createElement('div');
     toast.id = 'lfToast';
-    var bg = type === 'success' ? '#5B2C87' : type === 'error' ? '#dc2626' : '#2563eb';
+    var bg = type === 'success' ? '#6D31C4' : type === 'error' ? '#dc2626' : '#2563eb';
     var icon = type === 'success' ? '&#10003;' : type === 'error' ? '&#10007;' : '&#8505;';
     toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);z-index:9999;background:' + bg + ';color:#fff;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:500;box-shadow:0 10px 40px rgba(0,0,0,.2);display:flex;align-items:center;gap:10px;opacity:0;transition:opacity .3s,transform .3s;max-width:90vw;';
     toast.innerHTML = '<span style="font-size:18px;">' + icon + '</span><span>' + message + '</span>';
@@ -465,9 +465,9 @@ if (mobileMenuBtn && mobileMenu) {
         + '<h3 class="font-headline text-2xl mb-4">' + svc.name + '</h3>'
         + '<p class="text-on-surface-variant mb-6 text-sm leading-relaxed">' + (svc.desc || '') + '</p>'
         + '</div>'
-        + '<div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;background:linear-gradient(135deg,rgba(91,44,135,0.03),rgba(142,92,192,0.06));border-top:1px solid rgba(91,44,135,0.08);transition:background 0.3s ease">'
+        + '<div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;background:linear-gradient(135deg,rgba(109,49,196,0.03),rgba(157,104,219,0.06));border-top:1px solid rgba(109,49,196,0.08);transition:background 0.3s ease">'
         + (priceHtml || '<span></span>')
-        + '<span style="font-size:0.8rem;font-weight:600;color:#5B2C87;display:flex;align-items:center;gap:0.35rem;letter-spacing:0.02em">Detaylar <svg style="width:1.1em;height:1.1em;transition:transform 0.3s ease" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>'
+        + '<span style="font-size:0.8rem;font-weight:600;color:#6D31C4;display:flex;align-items:center;gap:0.35rem;letter-spacing:0.02em">Detaylar <svg style="width:1.1em;height:1.1em;transition:transform 0.3s ease" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>'
         + '</div></a>';
     });
     container.innerHTML = html;
@@ -551,7 +551,7 @@ if (mobileMenuBtn && mobileMenu) {
           '</div>';
       });
       // 9. hücre: buton
-      html += '<a href="/galeri" class="aspect-[4/3] rounded-2xl flex flex-col items-center justify-center gap-3 shadow-lg cursor-pointer reveal" style="background:linear-gradient(to bottom right,#5B2C87,#8E5CC0)">' +
+      html += '<a href="/galeri" class="aspect-[4/3] rounded-2xl flex flex-col items-center justify-center gap-3 shadow-lg cursor-pointer reveal" style="background:linear-gradient(to bottom right,#6D31C4,#9D68DB)">' +
         '<svg class="text-white/90 text-3xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>' +
         '<span class="text-white font-semibold text-sm tracking-wide">Tümünü Gör</span>' +
         '<svg class="text-white/60 text-lg" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>' +

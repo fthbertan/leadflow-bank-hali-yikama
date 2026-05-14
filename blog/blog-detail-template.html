@@ -39,9 +39,9 @@
 <style>
 ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #F5F0FF; }
-    ::-webkit-scrollbar-thumb { background: #8E5CC0; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #9D68DB; border-radius: 10px; }
     .text-gradient-gold {
-        background: linear-gradient(135deg, #5B2C87, #8E5CC0, #8E5CC0);
+        background: linear-gradient(135deg, #6D31C4, #9D68DB, #9D68DB);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
@@ -52,14 +52,14 @@
         animation: shimmer 4s linear infinite;
     }
     .btn-cta {
-        background: linear-gradient(110deg, #2E1548 0%, #E0457B 25%, #B33562 50%, #E0457B 75%, #2E1548 100%);
+        background: linear-gradient(110deg, #251560 0%, #E0457B 25%, #B33562 50%, #E0457B 75%, #251560 100%);
         background-size: 200% 100%;
         animation: shimmer 4s linear infinite;
     }
     .btn-cta:hover { filter: brightness(1.1); transform: scale(1.05); }
 
 .card-glow { transition: transform 0.5s ease, box-shadow 0.5s ease; }
-    .card-glow:hover { box-shadow: 0 0 40px rgba(91,44,135,0.08), 0 8px 32px rgba(142,92,192,0.12); transform: translateY(-2px); }
+    .card-glow:hover { box-shadow: 0 0 40px rgba(109,49,196,0.08), 0 8px 32px rgba(157,104,219,0.12); transform: translateY(-2px); }
     #scrollTopBtn { opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
     #scrollTopBtn.visible { opacity: 1; pointer-events: auto; }
 
@@ -84,7 +84,7 @@
     .blog-content figure figcaption { text-align: center; font-size: 0.875rem; color: #5A6674; margin-top: 0.5rem; font-style: italic; }
     #blogToc ol { counter-reset: toc; list-style: none; padding: 0; }
     #blogToc ol li { counter-increment: toc; }
-    #blogToc ol li a::before { content: counter(toc) ". "; color: #5B2C87; font-weight: 600; }
+    #blogToc ol li a::before { content: counter(toc) ". "; color: #6D31C4; font-weight: 600; }
 
     #mobileMenu { max-height: 0; opacity: 0; overflow: hidden; transition: max-height .4s ease, opacity .3s ease, padding .3s ease; padding-top: 0; padding-bottom: 0; }
     #mobileMenu.open { max-height: calc(100vh - 120px); opacity: 1; padding-top: .5rem; padding-bottom: 1.5rem; overflow-y: auto; }
@@ -150,7 +150,7 @@
     .nav-hero .logo-text { color: white; }
     .nav-hero #mobileMenuBtn { color: white !important; }
 
-    .nav-scrolled { background: #2E1548; box-shadow: 0 4px 30px rgba(0,0,0,0.3); backdrop-filter: blur(12px); }
+    .nav-scrolled { background: #251560; box-shadow: 0 4px 30px rgba(0,0,0,0.3); backdrop-filter: blur(12px); }
     .nav-scrolled .nav-link { color: #FFFFFF !important; font-weight: 700 !important; }
     .nav-scrolled .nav-link:hover { background: rgba(224,69,123,0.15); color: #E0457B !important; }
     .nav-scrolled .nav-link.active { background: #E0457B !important; color: #FFFFFF !important; }
@@ -178,7 +178,7 @@
 <!-- Blog Header -->
 <header class="pt-16 sm:pt-20 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 bg-surface relative">
     <div class="absolute inset-0 opacity-[0.03] pointer-events-none">
-        <div class="absolute inset-0" style="background: radial-gradient(ellipse at 30% 30%, rgba(91,44,135,0.03) 0%, transparent 50%), radial-gradient(ellipse at 70% 70%, rgba(142,92,192,0.03) 0%, transparent 50%);"></div>
+        <div class="absolute inset-0" style="background: radial-gradient(ellipse at 30% 30%, rgba(109,49,196,0.03) 0%, transparent 50%), radial-gradient(ellipse at 70% 70%, rgba(157,104,219,0.03) 0%, transparent 50%);"></div>
     </div>
     <div class="max-w-3xl mx-auto relative z-10">
         <!-- Breadcrumb -->
@@ -241,7 +241,7 @@
         <!-- Yazar Kutusu (E-E-A-T) -->
         <div class="mt-10 p-6 bg-surface-container-low rounded-2xl border border-outline-variant/10">
             <div class="flex items-start gap-4">
-                <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#5B2C87] to-[#8E5CC0] flex items-center justify-center flex-shrink-0">
+                <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#6D31C4] to-[#9D68DB] flex items-center justify-center flex-shrink-0">
                     <svg class="text-white text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                 </div>
                 <div>
@@ -257,7 +257,7 @@
         </div>
 
         <!-- Makale İçi CTA -->
-        <div class="mt-10 p-6 sm:p-8 bg-gradient-to-r from-[#5B2C87] to-[#8E5CC0] rounded-2xl text-white text-center">
+        <div class="mt-10 p-6 sm:p-8 bg-gradient-to-r from-[#6D31C4] to-[#9D68DB] rounded-2xl text-white text-center">
             <h3 class="font-headline text-xl sm:text-2xl mb-3">Halılarınız Bizimle Güvende</h3>
             <p class="text-white/80 text-sm mb-5 max-w-lg mx-auto">Profesyonel ekibimiz ve son teknoloji ekipmanlarımızla halılarınızı ilk günkü temizliğine kavuşturuyoruz.</p>
             <div class="flex flex-wrap justify-center gap-3">
@@ -302,7 +302,7 @@
 </section>
 
 <!-- CTA Banner -->
-<section class="bg-gradient-to-r from-[#5B2C87] via-[#8E5CC0] to-[#5B2C87] relative overflow-hidden">
+<section class="bg-gradient-to-r from-[#6D31C4] via-[#9D68DB] to-[#6D31C4] relative overflow-hidden">
     <div class="absolute inset-0" style="background: radial-gradient(circle at 30% 50%, rgba(224,69,123,0.15), transparent 50%), radial-gradient(circle at 80% 50%, rgba(5,191,219,0.12), transparent 50%);"></div>
     <div class="relative z-10 max-w-4xl mx-auto text-center py-16 sm:py-20 px-4">
         <h2 class="font-headline text-3xl sm:text-4xl text-white mb-6 tracking-wide">Halılarınız Bizimle Güvende</h2>

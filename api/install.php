@@ -375,7 +375,7 @@ if (empty($errors)) {
 <body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl shadow-lg max-w-lg w-full p-8">
         <div class="text-center mb-6">
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#8E5CC0] to-[#5B2C87] flex items-center justify-center mx-auto mb-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#9D68DB] to-[#6D31C4] flex items-center justify-center mx-auto mb-4">
                 <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
             </div>
             <h1 class="text-2xl font-bold text-gray-800">LeadFlow Kurulum</h1>
@@ -391,10 +391,10 @@ if (empty($errors)) {
         <?php endif; ?>
 
         <?php if (!empty($messages)): ?>
-            <div class="bg-[#F5F0FF] border border-[#8E5CC0] rounded-xl p-4 mb-4">
-                <h3 class="font-bold text-[#5B2C87] mb-2">Basarili:</h3>
+            <div class="bg-[#F5F0FF] border border-[#9D68DB] rounded-xl p-4 mb-4">
+                <h3 class="font-bold text-[#6D31C4] mb-2">Basarili:</h3>
                 <?php foreach ($messages as $msg): ?>
-                    <p class="text-[#5B2C87] text-sm"><?= htmlspecialchars($msg) ?></p>
+                    <p class="text-[#6D31C4] text-sm"><?= htmlspecialchars($msg) ?></p>
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
@@ -405,7 +405,7 @@ if (empty($errors)) {
         </div>
 
         <div class="space-y-3">
-            <a href="../" class="block w-full bg-gradient-to-r from-[#8E5CC0] to-[#5B2C87] text-white text-center font-bold py-3 rounded-xl hover:opacity-90 transition">Siteye Git</a>
+            <a href="../" class="block w-full bg-gradient-to-r from-[#9D68DB] to-[#6D31C4] text-white text-center font-bold py-3 rounded-xl hover:opacity-90 transition">Siteye Git</a>
             <a href="../admin/" class="block w-full bg-gray-100 text-gray-700 text-center font-bold py-3 rounded-xl hover:bg-gray-200 transition">Admin Paneli</a>
         </div>
     </div>

@@ -1,7 +1,7 @@
 <?php // LeadFlow — Ortak Head Bileşenleri (otomatik üretildi) ?>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
-<meta name="theme-color" content="#5B2C87"/>
+<meta name="theme-color" content="#6D31C4"/>
 <link rel="manifest" href="/manifest.json"/>
 <link rel="stylesheet" href="/css/style.css"/>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
@@ -19,9 +19,9 @@
 </style>
 <style>
 :root {
-  --lf-primary: #5B2C87;
+  --lf-primary: #6D31C4;
   --lf-primary-rgb: 91, 44, 135;
-  --lf-primary-light: #8E5CC0;
+  --lf-primary-light: #9D68DB;
   --lf-primary-light-rgb: 142, 92, 192;
   --lf-accent: #E0457B;
   --lf-accent-rgb: 224, 69, 123;
@@ -29,7 +29,7 @@
   --lf-accent-dim-rgb: 201, 58, 106;
   --lf-accent-dark: #A52E55;
   --lf-accent-dark-rgb: 165, 46, 85;
-  --lf-dark: #2E1548;
+  --lf-dark: #251560;
   --lf-dark-rgb: 46, 21, 72;
   --lf-surface: #F5F0FF;
   --lf-surface-rgb: 245, 240, 255;

@@ -1,7 +1,7 @@
 <?php // LeadFlow — Footer Include (Bank Halı Yıkama) ?>
 
 <!-- ==================== FOOTER ==================== -->
-<footer class="bg-[#2E1548] pt-16 sm:pt-24 pb-12 px-4 sm:px-6 lg:px-8 border-t border-white/10" role="contentinfo">
+<footer class="bg-[#251560] pt-16 sm:pt-24 pb-12 px-4 sm:px-6 lg:px-8 border-t border-white/10" role="contentinfo">
     <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
         <div>
             <div class="flex items-center gap-3 mb-6">

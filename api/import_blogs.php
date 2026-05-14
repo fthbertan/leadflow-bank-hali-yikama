@@ -146,7 +146,7 @@ foreach ($files as $file) {
 }
 
 echo '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Blog Import</title></head><body style="font-family:Inter,sans-serif;max-width:700px;margin:40px auto;padding:20px;">';
-echo '<h2 style="color:#5B2C87">Blog Import Sonucu</h2>';
+echo '<h2 style="color:#6D31C4">Blog Import Sonucu</h2>';
 echo '<p style="color:green;font-size:18px;font-weight:bold">' . $imported . ' blog basariyla aktarildi.</p>';
 if ($skipped > 0) {
     echo '<p style="color:orange">' . $skipped . ' blog zaten mevcut, atlandi.</p>';

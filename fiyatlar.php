@@ -94,12 +94,12 @@ function svcIcon($name) {
     overflow: hidden;
 }
 .pricing-card:hover {
-    box-shadow: 0 12px 40px rgba(46,21,72,0.08);
+    box-shadow: 0 12px 40px rgba(37,21,96,0.08);
     border-color: #E0457B;
     transform: translateY(-4px);
 }
 .pricing-card-header {
-    background: linear-gradient(135deg, #2E1548, #5B2C87);
+    background: linear-gradient(135deg, #251560, #6D31C4);
     padding: 24px 28px;
     display: flex;
     align-items: center;
@@ -159,7 +159,7 @@ function svcIcon($name) {
 .price-row-value {
     font-size: 0.95rem;
     font-weight: 700;
-    color: #2E1548;
+    color: #251560;
     white-space: nowrap;
 }
 .pricing-card-footer {
@@ -210,7 +210,7 @@ function svcIcon($name) {
 .nav-hero .nav-link.active { color: #E0457B !important; }
 .nav-hero .logo-text { color: white; }
 .nav-hero #mobileMenuBtn { color: white !important; }
-.nav-scrolled { background: #2E1548; box-shadow: 0 4px 30px rgba(0,0,0,0.3); backdrop-filter: blur(12px); }
+.nav-scrolled { background: #251560; box-shadow: 0 4px 30px rgba(0,0,0,0.3); backdrop-filter: blur(12px); }
 .nav-scrolled .nav-link { color: rgba(255,255,255,0.85) !important; }
 .nav-scrolled .nav-link:hover { color: #E0457B !important; }
 .nav-scrolled .nav-link.active { color: #E0457B !important; }
@@ -240,9 +240,9 @@ function svcIcon($name) {
 <?php $pageType = 'sub'; include __DIR__ . '/includes/navbar.php'; ?>
 
 <!-- Page Header -->
-<header class="bg-gradient-to-br from-[#2E1548] via-[#5B2C87] to-[#2E1548] py-16 sm:py-24 text-center relative overflow-hidden">
+<header class="bg-gradient-to-br from-[#251560] via-[#6D31C4] to-[#251560] py-16 sm:py-24 text-center relative overflow-hidden">
     <div class="absolute top-10 right-10 w-64 h-64 bg-[#E0457B]/5 rounded-full blur-[80px]"></div>
-    <div class="absolute bottom-0 left-10 w-48 h-48 bg-[#5B2C87]/20 rounded-full blur-[60px]"></div>
+    <div class="absolute bottom-0 left-10 w-48 h-48 bg-[#6D31C4]/20 rounded-full blur-[60px]"></div>
     <div class="relative z-10 max-w-4xl mx-auto px-4">
         <nav class="flex justify-center items-center gap-2 text-white/50 text-xs mb-8">
             <a href="/" class="hover:text-[#E0457B] transition-colors">Ana Sayfa</a>
@@ -316,8 +316,10 @@ function svcIcon($name) {
 
 </main>
 
+<?php include __DIR__ . '/includes/price-calculator.php'; ?>
+
 <!-- CTA -->
-<section class="bg-gradient-to-r from-[#2E1548] via-[#5B2C87] to-[#2E1548] py-16 text-center px-4">
+<section class="bg-gradient-to-r from-[#251560] via-[#6D31C4] to-[#251560] py-16 text-center px-4">
     <h2 class="text-2xl sm:text-3xl font-black text-white mb-4">Ücretsiz Keşif İçin <span class="text-[#E0457B]">Hemen Arayın</span></h2>
     <p class="text-white/50 text-base mb-8 max-w-xl mx-auto">Halılarınızı yerinde inceliyor, net fiyat teklifi sunuyoruz. Sürpriz ücret yok.</p>
     <div class="flex flex-wrap justify-center gap-4">
@@ -350,8 +352,30 @@ function svcIcon($name) {
     <div class="absolute right-14 bg-[#128C7E] text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold text-sm">WhatsApp</div>
 </div>
 <?php endif; ?>
+<!-- Sticky Randevu Butonu -->
+<div id="stickyRandevu" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);z-index:89;transition:transform .45s cubic-bezier(.34,1.56,.64,1);padding-bottom:env(safe-area-inset-bottom,0px)">
+    <a href="/randevu" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(110deg,#251560,#6D31C4,#E0457B);background-size:200% 100%;animation:rdvShimmer 4s linear infinite;color:#fff;font-weight:700;font-size:.875rem;letter-spacing:.06em;text-transform:uppercase;padding:13px 28px;border-radius:999px;box-shadow:0 8px 32px rgba(109,49,196,.45),0 2px 8px rgba(0,0,0,.15);white-space:nowrap;text-decoration:none;" aria-label="Online Randevu Al">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Randevu Al
+    </a>
+</div>
+<style>@keyframes rdvShimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}</style>
+<script>
+(function(){
+    var bar = document.getElementById('stickyRandevu');
+    if (!bar) return;
+    var shown = false;
+    function show() { bar.style.transform = 'translateX(-50%) translateY(0)'; shown = true; }
+    function hide() { bar.style.transform = 'translateX(-50%) translateY(100px)'; shown = false; }
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 120 && !shown) show();
+        else if (window.scrollY <= 120 && shown) hide();
+    }, {passive: true});
+})();
+</script>
+
 <!-- Scroll to Top -->
-<button id="scrollTopBtn" class="fixed bottom-6 left-6 md:bottom-8 md:left-8 bg-[#5B2C87] text-white w-12 h-12 rounded-full shadow-lg shadow-[#5B2C87]/20 hover:scale-105 hover:shadow-[#5B2C87]/40 transition-all duration-500 ease-out z-[100] flex items-center justify-center" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Yukarı çık">
+<button id="scrollTopBtn" class="fixed bottom-6 left-6 md:bottom-8 md:left-8 bg-[#6D31C4] text-white w-12 h-12 rounded-full shadow-lg shadow-[#6D31C4]/20 hover:scale-105 hover:shadow-[#6D31C4]/40 transition-all duration-500 ease-out z-[100] flex items-center justify-center" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Yukarı çık">
     <svg class="text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8z"/></svg>
 </button>
 

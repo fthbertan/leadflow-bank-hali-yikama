@@ -151,7 +151,7 @@ header('Content-Type: text/html; charset=utf-8');
 </style>
 <style>
 .fonts-loaded
-.text-gradient-gold{background:linear-gradient(135deg,#5B2C87,#8E5CC0,#8E5CC0);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.text-gradient-gold{background:linear-gradient(135deg,#6D31C4,#9D68DB,#9D68DB);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 .btn-shimmer{background:linear-gradient(110deg,#C93A6A 0%,#E0457B 25%,#E0457B 50%,#E0457B 75%,#C93A6A 100%);background-size:200% 100%;animation:shimmer 4s linear infinite}
 .nav-link{position:relative}
@@ -231,8 +231,8 @@ header('Content-Type: text/html; charset=utf-8');
 
 
 <!-- Hero -->
-<header class="relative bg-gradient-to-br from-[#2E1548] via-[#5B2C87] to-[#8E5CC0] overflow-hidden">
-    <div class="absolute inset-0 opacity-10" style="background:radial-gradient(ellipse 50% 50% at 80% 20%,#E0457B,transparent),radial-gradient(ellipse 40% 40% at 15% 85%,#8E5CC0,transparent)"></div>
+<header class="relative bg-gradient-to-br from-[#251560] via-[#6D31C4] to-[#9D68DB] overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background:radial-gradient(ellipse 50% 50% at 80% 20%,#E0457B,transparent),radial-gradient(ellipse 40% 40% at 15% 85%,#9D68DB,transparent)"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 text-center">
         <!-- Breadcrumb -->
         <nav class="flex justify-center items-center gap-2 text-white/70 text-xs mb-8" aria-label="Breadcrumb">
@@ -265,21 +265,21 @@ header('Content-Type: text/html; charset=utf-8');
     <section class="mb-20">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-                <span class="text-[#8E5CC0] font-semibold text-xs uppercase tracking-[0.2em] block mb-4"><?= htmlspecialchars($loc['name']) ?> Hizmet Detayı</span>
+                <span class="text-[#9D68DB] font-semibold text-xs uppercase tracking-[0.2em] block mb-4"><?= htmlspecialchars($loc['name']) ?> Hizmet Detayı</span>
                 <h2 class="font-headline text-3xl sm:text-4xl text-gray-900 mb-6"><?= htmlspecialchars($loc['name']) ?>'da Profesyonel <span class="text-gradient-gold italic"><?= htmlspecialchars($svc['name']) ?></span></h2>
                 <p class="text-gray-600 text-lg leading-relaxed mb-6"><?= htmlspecialchars($svc['intro']) ?></p>
                 <p class="text-gray-600 leading-relaxed mb-8"><?= htmlspecialchars($svc['desc']) ?></p>
                 <div class="grid sm:grid-cols-2 gap-3">
                     <?php foreach ($svc['features'] as $feat): ?>
                     <div class="flex items-center gap-3">
-                        <svg class="text-[#8E5CC0] text-lg" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        <svg class="text-[#9D68DB] text-lg" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
                         <span class="text-gray-700 font-medium text-sm"><?= htmlspecialchars($feat) ?></span>
                     </div>
                     <?php endforeach; ?>
                 </div>
             </div>
             <div class="relative">
-                <div class="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#8E5CC0]/20 to-[#5B2C87]/10">
+                <div class="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#9D68DB]/20 to-[#6D31C4]/10">
                     <img src="/images/heroweb-1.webp" alt="<?= htmlspecialchars($loc['name'] . ' ' . $svc['name'] . ' hizmeti') ?>" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'">
                 </div>
             </div>
@@ -288,7 +288,7 @@ header('Content-Type: text/html; charset=utf-8');
 
     <!-- Bölgeye Özel Bilgi -->
     <section class="mb-20">
-        <div class="bg-gradient-to-br from-[#2E1548] to-[#5B2C87] rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden">
+        <div class="bg-gradient-to-br from-[#251560] to-[#6D31C4] rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden">
             <div class="absolute top-0 right-0 w-full h-full" style="background:radial-gradient(ellipse 40% 40% at 90% 10%,rgba(var(--accent-rgb),0.1),transparent)"></div>
             <div class="relative z-10">
                 <span class="text-[#E0457B] font-semibold text-xs uppercase tracking-[0.2em] block mb-4">Bölge Bilgisi</span>
@@ -346,8 +346,8 @@ header('Content-Type: text/html; charset=utf-8');
             foreach ($reasons as $r):
             ?>
             <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                <div class="w-12 h-12 rounded-xl bg-[#8E5CC0]/10 flex items-center justify-center mb-4">
-                    <?= svgIcon($r[0], 'text-[#8E5CC0]', '1.25rem') ?>
+                <div class="w-12 h-12 rounded-xl bg-[#9D68DB]/10 flex items-center justify-center mb-4">
+                    <?= svgIcon($r[0], 'text-[#9D68DB]', '1.25rem') ?>
                 </div>
                 <h3 class="font-headline text-lg text-gray-900 mb-2"><?= htmlspecialchars($r[1]) ?></h3>
                 <p class="text-gray-500 text-sm leading-relaxed"><?= htmlspecialchars($r[2]) ?></p>
@@ -372,7 +372,7 @@ header('Content-Type: text/html; charset=utf-8');
             foreach ($steps as $i => $step):
             ?>
             <div class="text-center p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#8E5CC0] to-[#5B2C87] flex items-center justify-center mx-auto mb-4">
+                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#9D68DB] to-[#6D31C4] flex items-center justify-center mx-auto mb-4">
                     <?= svgIcon($step[0], 'text-white', '1.5rem') ?>
                 </div>
                 <div class="text-[#E0457B] font-bold text-sm mb-2"><?= $i + 1 ?>. Adım</div>
@@ -393,7 +393,7 @@ header('Content-Type: text/html; charset=utf-8');
             <details class="group bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
                 <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors">
                     <h3 class="font-semibold text-gray-900 text-base pr-4"><?= htmlspecialchars($f['Soru'] ?? $f[0] ?? '') ?></h3>
-                    <svg class="text-[#8E5CC0] group-open:rotate-180 transition-transform duration-300 flex-shrink-0" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+                    <svg class="text-[#9D68DB] group-open:rotate-180 transition-transform duration-300 flex-shrink-0" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
                 </summary>
                 <div class="px-6 pb-6 text-gray-600 leading-relaxed"><?= htmlspecialchars($f['Cevap'] ?? $f[1] ?? '') ?></div>
             </details>
@@ -445,8 +445,8 @@ header('Content-Type: text/html; charset=utf-8');
             </a>
             <?php endforeach; ?>
             <?php foreach ($otherLocations as $ol): ?>
-            <a href="/<?= htmlspecialchars($ol['slug'] . '-' . $svcSlug) ?>" class="bg-white p-4 rounded-xl border border-gray-100 text-center hover:border-[#8E5CC0]/30 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                <svg class="text-[#8E5CC0] text-2xl mb-2 block" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <a href="/<?= htmlspecialchars($ol['slug'] . '-' . $svcSlug) ?>" class="bg-white p-4 rounded-xl border border-gray-100 text-center hover:border-[#9D68DB]/30 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                <svg class="text-[#9D68DB] text-2xl mb-2 block" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                 <span class="font-semibold text-gray-800 text-sm"><?= htmlspecialchars($ol['name']) ?></span>
                 <span class="block text-gray-400 text-xs mt-1"><?= htmlspecialchars($svc['name']) ?></span>
             </a>
@@ -463,9 +463,9 @@ header('Content-Type: text/html; charset=utf-8');
         <div class="grid sm:grid-cols-3 gap-6">
             <?php foreach ($recentBlogs as $rb): ?>
             <a href="/blog/<?= htmlspecialchars($rb['slug']) ?>" class="bg-white p-6 rounded-2xl border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 block group">
-                <h3 class="font-headline text-lg text-gray-900 mb-3 group-hover:text-[#8E5CC0] transition-colors line-clamp-2"><?= htmlspecialchars($rb['title']) ?></h3>
+                <h3 class="font-headline text-lg text-gray-900 mb-3 group-hover:text-[#9D68DB] transition-colors line-clamp-2"><?= htmlspecialchars($rb['title']) ?></h3>
                 <p class="text-gray-500 text-sm leading-relaxed line-clamp-3 mb-4"><?= htmlspecialchars($rb['summary'] ?? '') ?></p>
-                <span class="text-[#8E5CC0] text-sm font-semibold flex items-center gap-1">Devamını Oku <svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+                <span class="text-[#9D68DB] text-sm font-semibold flex items-center gap-1">Devamını Oku <svg class="text-sm" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
             </a>
             <?php endforeach; ?>
         </div>
@@ -475,7 +475,7 @@ header('Content-Type: text/html; charset=utf-8');
 </main>
 
 <!-- CTA -->
-<section class="bg-gradient-to-r from-[#2E1548] via-[#5B2C87] to-[#8E5CC0] py-20 text-center px-4">
+<section class="bg-gradient-to-r from-[#251560] via-[#6D31C4] to-[#9D68DB] py-20 text-center px-4">
     <h2 class="font-headline text-3xl sm:text-4xl text-white mb-6"><?= htmlspecialchars($loc['name']) ?>'da <?= htmlspecialchars($svc['name']) ?> İçin <span class="text-[#E0457B] italic">Hemen Arayın</span></h2>
     <p class="text-white/70 text-lg mb-10 max-w-2xl mx-auto">Ücretsiz keşif ve fiyat teklifi için bizi arayın. <?= htmlspecialchars($loc['name']) ?> ve çevresine ücretsiz servis hizmeti sunuyoruz.</p>
     <div class="flex flex-wrap justify-center gap-4">
@@ -560,7 +560,7 @@ header('Content-Type: text/html; charset=utf-8');
 <!-- Call Button -->
 <a href="tel:<?= htmlspecialchars($phoneRaw) ?>" data-kv-href="phone_raw" data-kv-href-prefix="tel:" class="fixed bottom-20 right-6 md:bottom-22 md:right-8 bg-gradient-to-br from-[#4CAF50] to-[#2E7D32] text-white w-12 h-12 rounded-full shadow-[0_0_24px_rgba(76,175,80,0.4)] hover:scale-110 hover:shadow-[0_0_32px_rgba(76,175,80,0.5)] transition-all duration-500 ease-out z-[100] flex items-center justify-center cursor-pointer group" id="callButton">
     <svg class="text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-    <div class="absolute right-14 bg-[#2E1548] text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold text-sm">Hemen Ara</div>
+    <div class="absolute right-14 bg-[#251560] text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold text-sm">Hemen Ara</div>
 </a>
 
 <!-- WhatsApp Button -->

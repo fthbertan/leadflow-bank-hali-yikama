@@ -2,45 +2,76 @@
   "services": [
     {
       "icon": "dry_cleaning",
-      "name": "Makine Halısı Yıkama",
+      "name": "Halı Yıkama",
       "desc": "Modern ekipmanlarla derinlemesine ve hijyenik temizlik sağlıyoruz, halınızın dokusuna zarar vermeden parlaklığını geri getiriyoruz.",
       "price": "₺30/m²'den",
-      "image": ""
+      "image": "",
+      "items": [
+        {"name": "Çift Mekik / Polyester Halı", "description": "", "price": "30", "unit": "m²"},
+        {"name": "Mega / Shaggy Halı", "description": "", "price": "40", "unit": "m²"},
+        {"name": "Yün Tuşe / Pamuk Halı", "description": "", "price": "50", "unit": "m²"},
+        {"name": "El Dokuma / Yün Halı", "description": "Değerli halılara özel hassas yıkama", "price": "50", "unit": "m²"},
+        {"name": "Yerinde Halı Yıkama", "description": "Minimum 10 m²", "price": "65", "unit": "m²"}
+      ]
     },
     {
       "icon": "weekend",
-      "name": "El Dokuma & Yün Halı Yıkama",
-      "desc": "Değerli el dokuma ve yün halılarınıza özel, hassas ve doğal yöntemlerle, renklerini koruyarak yıkama hizmeti sunuyoruz.",
-      "price": "₺50/m²'den",
-      "image": ""
-    },
-    {
-      "icon": "bed",
-      "name": "Koltuk Takımı Yıkama",
-      "desc": "Koltuklarınızdaki derinlemesine kir, leke ve kötü kokuları profesyonelce temizleyerek yaşam alanlarınıza ferahlık katıyoruz.",
+      "name": "Koltuk Yıkama",
+      "desc": "Ev ve ofis koltuklarınızı yerinde, özel makinelerle temizliyoruz.",
       "price": "₺450/takım'dan",
-      "image": ""
+      "image": "",
+      "items": [
+        {"name": "Sabit Minderli Koltuk", "description": "", "price": "450", "unit": "takım"},
+        {"name": "Minderli / Yastıklı Koltuk", "description": "", "price": "600", "unit": "takım"},
+        {"name": "Chester / Avangart Koltuk", "description": "", "price": "750", "unit": "takım"}
+      ]
     },
     {
       "icon": "auto_awesome",
       "name": "Yorgan & Battaniye Yıkama",
       "desc": "Yorgan ve battaniyelerinizi hijyenik koşullarda, anti-alerjik ürünlerle yıkayıp, tam kurutma sonrası paketliyoruz.",
       "price": "₺180/adet'ten",
-      "image": ""
+      "image": "",
+      "items": [
+        {"name": "Yorgan / Battaniye", "description": "", "price": "180", "unit": "adet"}
+      ]
+    },
+    {
+      "icon": "bed",
+      "name": "Yatak Yıkama",
+      "desc": "Yataklarınızı profesyonel yöntemlerle derinlemesine temizleyerek hijyenik uyku ortamı sağlıyoruz.",
+      "price": "₺250/adet'ten",
+      "image": "",
+      "items": [
+        {"name": "Tek Kişilik Yatak", "description": "", "price": "250", "unit": "adet"},
+        {"name": "Çift Kişilik Yatak", "description": "", "price": "350", "unit": "adet"}
+      ]
+    },
+    {
+      "icon": "curtains",
+      "name": "Perde Yıkama",
+      "desc": "Perdelerinizi kumaş türüne uygun yöntemlerle profesyonelce temizliyoruz.",
+      "price": "₺120/adet'ten",
+      "image": "",
+      "items": [
+        {"name": "Stor / Zebra Perde", "description": "", "price": "120", "unit": "adet"}
+      ]
     },
     {
       "icon": "cleaning_services",
       "name": "Özel Leke Çıkarma",
       "desc": "Zorlu ve inatçı lekelere özel olarak geliştirdiğimiz formüller ve tekniklerle etkili çözümler sunuyoruz.",
       "price": "Keşif Üzerine",
-      "image": ""
+      "image": "",
+      "items": []
     },
     {
       "icon": "local_shipping",
       "name": "Ücretsiz Servis",
       "desc": "Sincan ve çevresindeki tüm müşterilerimizden halılarınızı kapınızdan alıp, temizlenmiş olarak kapınıza teslim ediyoruz.",
       "price": "Ücretsiz",
-      "image": ""
+      "image": "",
+      "items": []
     }
   ]
 }

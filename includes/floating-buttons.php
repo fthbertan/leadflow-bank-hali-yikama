@@ -28,8 +28,30 @@
     <div class="absolute right-14 bg-[#128C7E] text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold text-sm">WhatsApp</div>
 </a>
 
+<!-- Sticky Randevu Butonu (merkez alt, scroll-aware) -->
+<div id="stickyRandevu" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);z-index:89;transition:transform .45s cubic-bezier(.34,1.56,.64,1);padding-bottom:env(safe-area-inset-bottom,0px)">
+    <a href="/randevu" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(110deg,#251560,#6D31C4,#E0457B);background-size:200% 100%;animation:rdvShimmer 4s linear infinite;color:#fff;font-weight:700;font-size:.875rem;letter-spacing:.06em;text-transform:uppercase;padding:13px 28px;border-radius:999px;box-shadow:0 8px 32px rgba(109,49,196,.45),0 2px 8px rgba(0,0,0,.15);white-space:nowrap;text-decoration:none;" aria-label="Online Randevu Al">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Randevu Al
+    </a>
+</div>
+<style>@keyframes rdvShimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}</style>
+<script>
+(function(){
+    var bar = document.getElementById('stickyRandevu');
+    if (!bar) return;
+    var shown = false;
+    function show() { bar.style.transform = 'translateX(-50%) translateY(0)'; shown = true; }
+    function hide() { bar.style.transform = 'translateX(-50%) translateY(100px)'; shown = false; }
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 120 && !shown) show();
+        else if (window.scrollY <= 120 && shown) hide();
+    }, {passive: true});
+})();
+</script>
+
 <!-- Scroll to Top -->
-<button id="scrollTopBtn" class="fixed bottom-6 left-6 md:bottom-8 md:left-8 bg-[#5B2C87] text-white w-12 h-12 rounded-full shadow-lg shadow-[#5B2C87]/20 hover:scale-105 hover:shadow-[#5B2C87]/40 transition-all duration-500 ease-out z-[100] flex items-center justify-center" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Yukarı çık">
+<button id="scrollTopBtn" class="fixed bottom-6 left-6 md:bottom-8 md:left-8 bg-[#6D31C4] text-white w-12 h-12 rounded-full shadow-lg shadow-[#6D31C4]/20 hover:scale-105 hover:shadow-[#6D31C4]/40 transition-all duration-500 ease-out z-[100] flex items-center justify-center" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Yukarı çık">
     <svg class="text-2xl" style="width:1em;height:1em;vertical-align:middle;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8z"/></svg>
 </button>
 
@@ -39,12 +61,12 @@
         <div style="background:#fff;border-radius:1rem;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);border:1px solid #e5e7eb;padding:1.25rem;display:flex;flex-wrap:wrap;align-items:center;gap:1rem;">
             <div style="flex:1;min-width:200px;font-size:.875rem;color:#374151;line-height:1.6;">
                 Bu web sitesi deneyiminizi iyileştirmek için çerezler kullanmaktadır.
-                <a href="/gizlilik-politikasi" style="text-decoration:underline;color:#5B2C87;">Gizlilik Politikası</a> ve
-                <a href="/kvkk" style="text-decoration:underline;color:#5B2C87;">KVKK Aydınlatma Metni</a>'ni inceleyebilirsiniz.
+                <a href="/gizlilik-politikasi" style="text-decoration:underline;color:#6D31C4;">Gizlilik Politikası</a> ve
+                <a href="/kvkk" style="text-decoration:underline;color:#6D31C4;">KVKK Aydınlatma Metni</a>'ni inceleyebilirsiniz.
             </div>
             <div style="display:flex;gap:.5rem;flex-shrink:0;">
                 <button id="cookieReject" style="padding:.5rem 1rem;font-size:.875rem;font-weight:500;color:#4b5563;border:1px solid #d1d5db;border-radius:.5rem;background:#fff;cursor:pointer;">Reddet</button>
-                <button id="cookieAccept" style="padding:.5rem 1rem;font-size:.875rem;font-weight:500;color:#fff;background:#5B2C87;border:none;border-radius:.5rem;cursor:pointer;">Kabul Et</button>
+                <button id="cookieAccept" style="padding:.5rem 1rem;font-size:.875rem;font-weight:500;color:#fff;background:#6D31C4;border:none;border-radius:.5rem;cursor:pointer;">Kabul Et</button>
             </div>
         </div>
     </div>

@@ -10,7 +10,7 @@ $linkPrefix = $isSub ? '/' : '';
 ?>
 
 <!-- Topbar -->
-<div id="topBar" class="bg-[#2E1548] border-b border-white/10 py-2 text-xs z-[60] relative">
+<div id="topBar" class="bg-[#251560] border-b border-white/10 py-2 text-xs z-[60] relative">
     <div class="flex justify-between items-center px-4 sm:px-6 lg:px-10 max-w-full">
         <div class="flex items-center gap-5 text-white/70">
             <a href="tel:05456876161" data-kv-href="phone_raw" data-kv-href-prefix="tel:" class="flex items-center gap-1.5 hover:text-white transition-colors">
@@ -40,14 +40,15 @@ $linkPrefix = $isSub ? '/' : '';
         </a>
         <div class="flex items-center gap-4">
             <div class="hidden lg:flex items-center nav-glass-pill">
-                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="<?= $linkPrefix ?>#hizmetlerimiz">Hizmetlerimiz</a>
-                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/fiyatlar">Fiyatlarımız</a>
-                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="<?= $linkPrefix ?>#surecimiz">Sürecimiz</a>
-                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="<?= $linkPrefix ?>#hakkimizda">Hakkımızda</a>
-                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/galeri">Galeri</a>
-                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="<?= $linkPrefix ?>#yorumlar">Yorumlar</a>
-                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="/blog/">Blog</a>
-                <a class="nav-link text-xs font-semibold uppercase tracking-[0.15em]" href="<?= $linkPrefix ?>#iletisim">İletişim</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.06em]" href="<?= $linkPrefix ?>#hizmetlerimiz">Hizmetler</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.06em]" href="/fiyatlar">Fiyatlar</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.06em]" href="/randevu">Randevu</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.06em]" href="<?= $linkPrefix ?>#surecimiz">Süreç</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.06em]" href="<?= $linkPrefix ?>#hakkimizda">Hakkında</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.06em]" href="/galeri">Galeri</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.06em]" href="<?= $linkPrefix ?>#yorumlar">Yorumlar</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.06em]" href="/blog/">Blog</a>
+                <a class="nav-link text-xs font-semibold uppercase tracking-[0.06em]" href="<?= $linkPrefix ?>#iletisim">İletişim</a>
             </div>
             <a class="hidden sm:inline-flex btn-cta text-white px-6 py-2.5 rounded-full font-semibold text-sm tracking-wide shadow-lg shadow-[#E0457B]/30 hover:scale-105 transition-transform duration-300" href="<?= $linkPrefix ?>#iletisim">Ücretsiz Keşif</a>
             <button id="mobileMenuBtn" class="lg:hidden p-2">
@@ -56,9 +57,10 @@ $linkPrefix = $isSub ? '/' : '';
             </button>
         </div>
     </div>
-    <div id="mobileMenu" class="lg:hidden w-full px-6 space-y-4 bg-[#2E1548]/95 backdrop-blur-xl border-t border-white/10">
+    <div id="mobileMenu" class="lg:hidden w-full px-6 space-y-4 bg-[#251560]/95 backdrop-blur-xl border-t border-white/10">
         <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="<?= $linkPrefix ?>#hizmetlerimiz">Hizmetlerimiz</a>
         <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/fiyatlar">Fiyatlarımız</a>
+        <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/randevu">Randevu Al</a>
         <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="<?= $linkPrefix ?>#surecimiz">Sürecimiz</a>
         <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="<?= $linkPrefix ?>#hakkimizda">Hakkımızda</a>
         <a class="nav-link block text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-[#E0457B] py-2" href="/galeri">Galeri</a>

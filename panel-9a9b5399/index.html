@@ -17,14 +17,14 @@
     body { font-family: 'Inter', sans-serif; }
     .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; font-size: 0 !important; overflow: hidden; }
     .fonts-loaded .material-symbols-outlined { font-size: inherit !important; overflow: visible; }
-    .sidebar-link.active { background: rgba(91,44,135,0.1); color: #5B2C87; border-right: 3px solid #5B2C87; }
+    .sidebar-link.active { background: rgba(109,49,196,0.1); color: #6D31C4; border-right: 3px solid #6D31C4; }
     .toast { animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s; }
     @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
     /* Editor toolbar */
     .editor-btn { transition: all 0.15s; }
     .editor-btn:hover { background: #F5F0FF; }
-    .editor-btn.active { background: #5B2C87; color: #FFFFFF; }
+    .editor-btn.active { background: #6D31C4; color: #FFFFFF; }
     #blogContent { min-height: 400px; outline: none; line-height: 1.8; }
     #blogContent h2 { font-size: 1.5rem; font-weight: 700; margin: 1.5rem 0 0.75rem; color: #1A1A2E; }
     #blogContent h3 { font-size: 1.25rem; font-weight: 600; margin: 1.25rem 0 0.5rem; color: #2D3748; }
@@ -33,7 +33,7 @@
     #blogContent ul { list-style: disc; }
     #blogContent ol { list-style: decimal; }
     #blogContent blockquote { border-left: 3px solid #E0457B; padding: 0.5rem 1rem; margin: 1rem 0; background: rgba(224,69,123,0.05); }
-    #blogContent a { color: #5B2C87; text-decoration: underline; }
+    #blogContent a { color: #6D31C4; text-decoration: underline; }
 </style>
 <script>
 tailwind.config = {
@@ -45,8 +45,8 @@ tailwind.config = {
                 "panel-border": "#D8DDE3",
                 "panel-text": "#1A1A2E",
                 "panel-muted": "#5A6674",
-                "accent": "#5B2C87",
-                "accent-dim": "#8E5CC0",
+                "accent": "#6D31C4",
+                "accent-dim": "#9D68DB",
                 "success": "#E0457B",
                 "danger": "#ef4444",
                 "warning": "#f59e0b"
@@ -122,6 +122,13 @@ tailwind.config = {
             <a href="#" onclick="showPage('messages')" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-panel-muted hover:text-panel-text hover:bg-panel-bg/30 transition-all" data-page="messages">
                 <span class="material-symbols-outlined text-xl">mail</span> Mesajlar
                 <span id="unreadBadge" class="hidden ml-auto bg-danger text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+            </a>
+            <a href="#" onclick="showPage('reservations')" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-panel-muted hover:text-panel-text hover:bg-panel-bg/30 transition-all" data-page="reservations">
+                <span class="material-symbols-outlined text-xl">event_available</span> Randevular
+                <span id="pendingBadge" class="hidden ml-auto bg-warning text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+            </a>
+            <a href="#" onclick="showPage('areas')" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-panel-muted hover:text-panel-text hover:bg-panel-bg/30 transition-all" data-page="areas">
+                <span class="material-symbols-outlined text-xl">map</span> Hizmet Bölgeleri
             </a>
             <a href="#" onclick="showPage('gallery')" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-panel-muted hover:text-panel-text hover:bg-panel-bg/30 transition-all" data-page="gallery">
                 <span class="material-symbols-outlined text-xl">photo_library</span> Görseller
@@ -683,6 +690,48 @@ tailwind.config = {
                 </div>
             </div>
         </div>
+
+        <!-- ═══════ RESERVATIONS PAGE ═══════ -->
+        <div id="page-reservations" class="page-content hidden p-4 sm:p-8">
+            <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                <div class="flex gap-2 flex-wrap">
+                    <button onclick="filterReservations('all')" id="res-filter-all" class="res-filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-accent text-white">Tümü</button>
+                    <button onclick="filterReservations('pending')" id="res-filter-pending" class="res-filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-panel-surface border border-panel-border text-panel-muted hover:border-accent/40">Bekleyen</button>
+                    <button onclick="filterReservations('confirmed')" id="res-filter-confirmed" class="res-filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-panel-surface border border-panel-border text-panel-muted hover:border-accent/40">Onaylı</button>
+                    <button onclick="filterReservations('picked_up')" id="res-filter-picked_up" class="res-filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-panel-surface border border-panel-border text-panel-muted hover:border-accent/40">Alındı</button>
+                    <button onclick="filterReservations('in_progress')" id="res-filter-in_progress" class="res-filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-panel-surface border border-panel-border text-panel-muted hover:border-accent/40">Yıkanıyor</button>
+                    <button onclick="filterReservations('delivered')" id="res-filter-delivered" class="res-filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-panel-surface border border-panel-border text-panel-muted hover:border-accent/40">Teslim Edildi</button>
+                    <button onclick="filterReservations('cancelled')" id="res-filter-cancelled" class="res-filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-panel-surface border border-panel-border text-panel-muted hover:border-accent/40">İptal</button>
+                </div>
+                <button onclick="loadReservations()" class="ml-auto flex items-center gap-2 text-sm text-panel-muted hover:text-accent border border-panel-border rounded-xl px-4 py-2">
+                    <span class="material-symbols-outlined text-lg">refresh</span> Yenile
+                </button>
+            </div>
+            <div id="reservationsList" class="space-y-3"></div>
+        </div>
+
+        <!-- ═══════ AREAS PAGE ═══════ -->
+        <div id="page-areas" class="page-content hidden p-4 sm:p-8">
+            <div class="max-w-2xl">
+                <div class="bg-panel-surface rounded-2xl border border-panel-border mb-6">
+                    <div class="px-6 py-4 border-b border-panel-border flex items-center justify-between">
+                        <h3 class="font-bold flex items-center gap-2"><span class="material-symbols-outlined text-accent">map</span> Hizmet Bölgeleri</h3>
+                        <button onclick="addAreaRow()" class="flex items-center gap-2 text-sm bg-accent text-white px-4 py-2 rounded-xl hover:opacity-90">
+                            <span class="material-symbols-outlined text-lg">add</span> Bölge Ekle
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-xs text-panel-muted mb-4">Her bölge için servis günlerini işaretleyin. (0=Paz, 1=Pzt, 2=Sal, 3=Çar, 4=Per, 5=Cum, 6=Cmt)</p>
+                        <div id="areasList" class="space-y-3"></div>
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <button onclick="saveAreas()" class="bg-gradient-to-r from-accent-dim to-accent text-white font-bold px-8 py-3 rounded-xl text-sm flex items-center gap-2 hover:opacity-90 transition-opacity">
+                        <span class="material-symbols-outlined text-sm">save</span> Bölgeleri Kaydet
+                    </button>
+                </div>
+            </div>
+        </div>
     </main>
 </div>
 
@@ -731,6 +780,8 @@ let messages = [];
 let galleryImages = [];
 let waTemplates = [];
 let specialDays = [];
+let reservations = [];
+let serviceAreas = [];
 let editingBlogId = null;
 let deleteCallback = null;
 
@@ -916,7 +967,7 @@ async function loadData() {
     try {
         // Önce PHP API dene
         const fetchOpts = { credentials: 'same-origin' };
-        const [settingsRes, blogsRes, servicesRes, testimonialsRes, messagesRes, galleryRes, waRes, specialRes] = await Promise.all([
+        const [settingsRes, blogsRes, servicesRes, testimonialsRes, messagesRes, galleryRes, waRes, specialRes, reservationsRes, areasRes] = await Promise.all([
             fetch('/api/settings.php', fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null),
             fetch('/api/blogs.php', fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null),
             fetch('/api/services.php', fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null),
@@ -925,6 +976,8 @@ async function loadData() {
             fetch('/api/gallery.php', fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null),
             fetch('/api/whatsapp_templates.php', fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null),
             fetch('/api/special_days.php', fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null),
+            fetch('/api/reservations.php', fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null),
+            fetch('/api/areas.php', fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null),
         ]);
 
         if (settingsRes && Object.keys(settingsRes).length > 0) {
@@ -976,6 +1029,12 @@ async function loadData() {
         if (specialRes && specialRes.special_days) {
             specialDays = specialRes.special_days;
         }
+        if (reservationsRes && reservationsRes.reservations) {
+            reservations = reservationsRes.reservations;
+        }
+        if (areasRes && areasRes.areas) {
+            serviceAreas = areasRes.areas;
+        }
     } catch (e) {
         settings = INLINE_SETTINGS || {};
         blogs = (INLINE_BLOGS && INLINE_BLOGS.blogs) ? INLINE_BLOGS.blogs : [];
@@ -992,6 +1051,8 @@ async function loadData() {
     renderGallery();
     renderWaTemplates();
     renderSpecialDays();
+    renderReservationsList();
+    renderAreasList();
     loadVisitorStats();
     loadQRCodes();
     document.getElementById('sidebarBizName').textContent = settings.business_name || 'Admin Panel';
@@ -1040,7 +1101,7 @@ function showPage(page) {
     document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
     document.querySelector('[data-page="' + page + '"]').classList.add('active');
 
-    const titles = { dashboard: 'Dashboard', messages: 'İletişim Mesajları', gallery: 'Görsel Yönetimi', services: 'Hizmet Yönetimi', testimonials: 'Yorum Yönetimi', blogs: 'Blog Yönetimi', qrcode: 'QR Kod Üretici', settings: 'Ayarlar' };
+    const titles = { dashboard: 'Dashboard', messages: 'İletişim Mesajları', gallery: 'Görsel Yönetimi', services: 'Hizmet Yönetimi', testimonials: 'Yorum Yönetimi', blogs: 'Blog Yönetimi', qrcode: 'QR Kod Üretici', settings: 'Ayarlar', reservations: 'Randevu Yönetimi', areas: 'Hizmet Bölgeleri' };
     document.getElementById('pageTitle').textContent = titles[page] || page;
 
     // Close mobile sidebar
@@ -2348,6 +2409,243 @@ async function deleteMessage(id) {
     };
     document.getElementById('deleteModalText').textContent = 'Bu mesaj kalıcı olarak silinecek.';
     document.getElementById('deleteModal').classList.remove('hidden');
+}
+
+// ═══════════════════════════════════════════════════════
+// RESERVATIONS
+// ═══════════════════════════════════════════════════════
+var _resFilter = 'all';
+
+const RES_STATUS_LABELS = {
+    pending: 'Bekliyor', confirmed: 'Onaylandı', picked_up: 'Alındı',
+    in_progress: 'Yıkanıyor', delivered: 'Teslim Edildi', cancelled: 'İptal'
+};
+const RES_STATUS_COLORS = {
+    pending: 'bg-warning/10 text-warning', confirmed: 'bg-blue-100 text-blue-700',
+    picked_up: 'bg-purple-100 text-purple-700', in_progress: 'bg-accent/10 text-accent',
+    delivered: 'bg-success/10 text-success', cancelled: 'bg-danger/10 text-danger'
+};
+const SLOT_LABELS = { sabah: 'Sabah (08-12)', oglen: 'Öğlen (12-17)', aksam: 'Akşam (17-20)' };
+
+async function loadReservations() {
+    try {
+        const res = await fetch('/api/reservations.php', { credentials: 'same-origin' });
+        if (res.ok) {
+            const data = await res.json();
+            reservations = data.reservations || [];
+            renderReservationsList();
+            updatePendingBadge();
+        }
+    } catch(e) {}
+}
+
+function updatePendingBadge() {
+    const pending = reservations.filter(r => r.status === 'pending').length;
+    const badge = document.getElementById('pendingBadge');
+    if (pending > 0) { badge.textContent = pending; badge.classList.remove('hidden'); }
+    else { badge.classList.add('hidden'); }
+}
+
+function filterReservations(status) {
+    _resFilter = status;
+    document.querySelectorAll('.res-filter-btn').forEach(function(btn) {
+        btn.classList.remove('bg-accent', 'text-white');
+        btn.classList.add('bg-panel-surface', 'text-panel-muted', 'border', 'border-panel-border');
+    });
+    var activeBtn = document.getElementById('res-filter-' + status);
+    if (activeBtn) {
+        activeBtn.classList.add('bg-accent', 'text-white');
+        activeBtn.classList.remove('bg-panel-surface', 'text-panel-muted', 'border', 'border-panel-border');
+    }
+    renderReservationsList();
+}
+
+function renderReservationsList() {
+    const container = document.getElementById('reservationsList');
+    if (!container) return;
+
+    var list = _resFilter === 'all' ? reservations : reservations.filter(function(r) { return r.status === _resFilter; });
+
+    if (list.length === 0) {
+        container.innerHTML = '<div class="text-center py-12 text-panel-muted">' +
+            '<span class="material-symbols-outlined text-4xl block mb-3">event_busy</span>' +
+            '<p>Randevu bulunamadı.</p></div>';
+        return;
+    }
+
+    var html = '';
+    list.forEach(function(r) {
+        var statusColor = RES_STATUS_COLORS[r.status] || 'bg-panel-bg text-panel-muted';
+        var statusLabel = RES_STATUS_LABELS[r.status] || r.status;
+        var slotLabel = r.pickup_slot ? (SLOT_LABELS[r.pickup_slot] || r.pickup_slot) : '—';
+        var price = r.estimated_price ? '₺' + parseFloat(r.estimated_price).toLocaleString('tr-TR') : '—';
+        var qty = r.quantity ? r.quantity + ' ' + (r.unit || '') : '—';
+
+        html += '<div class="bg-panel-surface rounded-2xl border border-panel-border overflow-hidden">' +
+            '<div class="px-6 py-4 flex flex-wrap items-start gap-4">' +
+                '<div class="flex-1 min-w-0">' +
+                    '<div class="flex items-center gap-3 mb-1">' +
+                        '<span class="font-bold text-sm">' + escapeHtml(r.name) + '</span>' +
+                        '<span class="text-xs px-2 py-0.5 rounded-full font-medium ' + statusColor + '">' + statusLabel + '</span>' +
+                    '</div>' +
+                    '<div class="text-xs text-panel-muted space-y-0.5">' +
+                        '<div><span class="material-symbols-outlined text-xs align-middle">phone</span> ' + escapeHtml(r.phone || '—') + '</div>' +
+                        '<div><span class="material-symbols-outlined text-xs align-middle">location_on</span> ' + escapeHtml(r.district || '—') + '</div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="text-xs text-panel-muted space-y-0.5 min-w-[140px]">' +
+                    '<div><strong>Hizmet:</strong> ' + escapeHtml(r.service_type || '—') + '</div>' +
+                    '<div><strong>Alt tür:</strong> ' + escapeHtml(r.service_item || '—') + '</div>' +
+                    '<div><strong>Miktar:</strong> ' + escapeHtml(String(qty)) + '</div>' +
+                    '<div><strong>Tutar:</strong> ' + price + '</div>' +
+                '</div>' +
+                '<div class="text-xs text-panel-muted space-y-0.5 min-w-[140px]">' +
+                    '<div><strong>Alım:</strong> ' + formatDateTR(r.pickup_date) + '</div>' +
+                    '<div><strong>Saat:</strong> ' + slotLabel + '</div>' +
+                    '<div><strong>Teslim:</strong> ' + (r.delivery_date ? formatDateTR(r.delivery_date) : '—') + '</div>' +
+                '</div>' +
+            '</div>' +
+            (r.notes ? '<div class="px-6 py-2 border-t border-panel-border bg-panel-bg text-xs text-panel-muted"><strong>Not:</strong> ' + escapeHtml(r.notes) + '</div>' : '') +
+            '<div class="px-6 py-3 border-t border-panel-border bg-panel-bg/50 flex flex-wrap gap-2 items-center">' +
+                '<select onchange="updateReservationStatus(' + r.id + ', this.value)" class="text-xs bg-panel-surface border border-panel-border rounded-lg px-2 py-1.5 focus:ring-1 focus:ring-accent outline-none">' +
+                    Object.keys(RES_STATUS_LABELS).map(function(s) {
+                        return '<option value="' + s + '"' + (r.status === s ? ' selected' : '') + '>' + RES_STATUS_LABELS[s] + '</option>';
+                    }).join('') +
+                '</select>' +
+                '<input type="date" id="del-date-' + r.id + '" value="' + (r.delivery_date || '') + '" class="text-xs bg-panel-surface border border-panel-border rounded-lg px-2 py-1.5 focus:ring-1 focus:ring-accent outline-none" placeholder="Teslim tarihi"/>' +
+                '<button onclick="saveDeliveryDate(' + r.id + ')" class="text-xs bg-panel-surface border border-panel-border rounded-lg px-3 py-1.5 hover:border-accent/40 transition-colors">Tarihi Kaydet</button>' +
+                '<span class="ml-auto text-xs text-panel-muted">' + formatDateTR(r.created_at ? r.created_at.substring(0,10) : '') + '</span>' +
+            '</div>' +
+        '</div>';
+    });
+    container.innerHTML = html;
+}
+
+async function updateReservationStatus(id, status) {
+    try {
+        var res = await fetch('/api/reservations.php', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({ id: id, status: status })
+        });
+        if (res.ok) {
+            var r = reservations.find(function(x) { return x.id === id; });
+            if (r) r.status = status;
+            renderReservationsList();
+            updatePendingBadge();
+            showToast('Durum güncellendi', 'success');
+        } else {
+            showToast('Güncelleme başarısız', 'danger');
+        }
+    } catch(e) { showToast('Sunucu hatası', 'danger'); }
+}
+
+async function saveDeliveryDate(id) {
+    var input = document.getElementById('del-date-' + id);
+    var date = input ? input.value : '';
+    try {
+        var res = await fetch('/api/reservations.php', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({ id: id, delivery_date: date || null })
+        });
+        if (res.ok) {
+            var r = reservations.find(function(x) { return x.id === id; });
+            if (r) r.delivery_date = date || null;
+            showToast('Teslim tarihi kaydedildi', 'success');
+        } else {
+            showToast('Kaydetme başarısız', 'danger');
+        }
+    } catch(e) { showToast('Sunucu hatası', 'danger'); }
+}
+
+// ═══════════════════════════════════════════════════════
+// SERVICE AREAS
+// ═══════════════════════════════════════════════════════
+const DAY_NAMES = ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'];
+
+function renderAreasList() {
+    var container = document.getElementById('areasList');
+    if (!container) return;
+
+    if (serviceAreas.length === 0) {
+        container.innerHTML = '<div class="text-center py-6 text-panel-muted text-sm">Henüz bölge eklenmemiş.</div>';
+        return;
+    }
+    var html = '';
+    serviceAreas.forEach(function(area, idx) {
+        var days = area.available_days || [];
+        html += '<div class="flex flex-wrap items-center gap-3 p-4 bg-panel-bg rounded-xl border border-panel-border" id="area-row-' + idx + '">' +
+            '<input type="text" class="flex-1 min-w-[120px] bg-panel-surface border border-panel-border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-accent outline-none" ' +
+                'value="' + escapeHtml(area.name) + '" id="area-name-' + idx + '" placeholder="Bölge adı"/>' +
+            '<div class="flex gap-1">';
+        DAY_NAMES.forEach(function(dayName, d) {
+            var checked = days.indexOf(d) !== -1;
+            html += '<label class="flex flex-col items-center gap-0.5 cursor-pointer">' +
+                '<input type="checkbox" class="area-day-cb" data-area="' + idx + '" data-day="' + d + '"' + (checked ? ' checked' : '') + ' style="accent-color:#6D31C4">' +
+                '<span class="text-xs text-panel-muted">' + dayName + '</span>' +
+                '</label>';
+        });
+        html += '</div>' +
+            '<label class="flex items-center gap-1 text-xs text-panel-muted cursor-pointer">' +
+                '<input type="checkbox" class="area-active-cb" data-area="' + idx + '"' + (area.is_active ? ' checked' : '') + ' style="accent-color:#6D31C4">' +
+                ' Aktif' +
+            '</label>' +
+            '<button onclick="removeAreaRow(' + idx + ')" class="text-danger hover:text-danger/70 transition-colors">' +
+                '<span class="material-symbols-outlined text-lg">delete</span>' +
+            '</button>' +
+        '</div>';
+    });
+    container.innerHTML = html;
+}
+
+function addAreaRow() {
+    serviceAreas.push({ name: '', available_days: [1,2,3,4,5], is_active: 1 });
+    renderAreasList();
+    // Focus the new input
+    var inputs = document.querySelectorAll('#areasList input[type=text]');
+    if (inputs.length > 0) inputs[inputs.length - 1].focus();
+}
+
+function removeAreaRow(idx) {
+    serviceAreas.splice(idx, 1);
+    renderAreasList();
+}
+
+async function saveAreas() {
+    // Read current values from DOM
+    var rows = document.querySelectorAll('#areasList [id^="area-row-"]');
+    var newAreas = [];
+    serviceAreas.forEach(function(area, idx) {
+        var nameEl = document.getElementById('area-name-' + idx);
+        var name = nameEl ? nameEl.value.trim() : area.name;
+        if (!name) return;
+        var days = [];
+        document.querySelectorAll('.area-day-cb[data-area="' + idx + '"]').forEach(function(cb) {
+            if (cb.checked) days.push(parseInt(cb.dataset.day));
+        });
+        var activeCb = document.querySelector('.area-active-cb[data-area="' + idx + '"]');
+        var isActive = activeCb ? (activeCb.checked ? 1 : 0) : 1;
+        newAreas.push({ name: name, available_days: days, is_active: isActive });
+    });
+
+    try {
+        var res = await fetch('/api/areas.php', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({ areas: newAreas })
+        });
+        if (res.ok) {
+            serviceAreas = newAreas;
+            renderAreasList();
+            showToast('Bölgeler kaydedildi', 'success');
+        } else {
+            showToast('Kaydetme başarısız', 'danger');
+        }
+    } catch(e) { showToast('Sunucu hatası', 'danger'); }
 }
 
 // ═══════════════════════════════════════════════════════

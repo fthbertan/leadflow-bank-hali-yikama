@@ -148,7 +148,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .container{max-width:800px;margin:0 auto}
 h1{font-size:1.5rem;margin-bottom:8px}
 .status-bar{padding:12px 20px;border-radius:12px;margin-bottom:20px;font-weight:bold;font-size:0.9rem}
-.ok{background:#F5F0FF;color:#5B2C87}
+.ok{background:#F5F0FF;color:#6D31C4}
 .fail{background:#f8d7da;color:#721c24}
 table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
 th,td{padding:10px 16px;text-align:left;border-bottom:1px solid #eee;font-size:0.85rem}

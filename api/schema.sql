@@ -151,3 +151,41 @@ CREATE TABLE IF NOT EXISTS `special_days` (
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     INDEX `idx_date` (`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ══════════════════════════════════════
+-- Hizmet bölgeleri (servis günleri ile)
+-- ══════════════════════════════════════
+CREATE TABLE IF NOT EXISTS `service_areas` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(255) NOT NULL,
+    `available_days` JSON COMMENT '0=Pazar,1=Pzt,2=Sal,3=Çar,4=Per,5=Cum,6=Cmt',
+    `is_active` TINYINT(1) DEFAULT 1,
+    `sort_order` INT DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ══════════════════════════════════════
+-- Randevular
+-- ══════════════════════════════════════
+CREATE TABLE IF NOT EXISTS `reservations` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(255) NOT NULL,
+    `phone` VARCHAR(50),
+    `district` VARCHAR(255),
+    `address` TEXT,
+    `service_type` VARCHAR(255),
+    `service_item` VARCHAR(255),
+    `quantity` DECIMAL(8,2),
+    `unit` VARCHAR(50),
+    `estimated_price` DECIMAL(10,2),
+    `pickup_date` DATE,
+    `pickup_slot` ENUM('sabah','oglen','aksam'),
+    `delivery_date` DATE NULL,
+    `notes` TEXT,
+    `status` ENUM('pending','confirmed','picked_up','in_progress','delivered','cancelled') DEFAULT 'pending',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX `idx_status` (`status`),
+    INDEX `idx_pickup_date` (`pickup_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
